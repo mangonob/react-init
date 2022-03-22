@@ -1,11 +1,10 @@
 import { Calendar } from "antd";
-import "antd/es/calendar/style/css";
 import React from "react";
 
 export default function Home() {
   return (
     <>
-      <div>Hello React</div>
+      <h1>Hello React</h1>
       <Calendar />
     </>
   );
