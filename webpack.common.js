@@ -3,9 +3,8 @@ const path = require("path");
 
 /** @type { import("webpack").Configuration } */
 module.exports = {
-  mode: "development",
   entry: {
-    index: "./src/index.ts",
+    index: "./src/index.tsx",
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,6 +19,9 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
   },
   output: {
     filename: "[name].[contenthash].js",
