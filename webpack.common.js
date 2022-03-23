@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 const path = require("path");
 
 /** @type { import("webpack").Configuration } */
@@ -10,6 +11,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new webpack.ContextReplacementPlugin(
+      /moment[\/\\]locale$/,
+      /zh-cn|zh-hk|en/
+    ),
   ],
   module: {
     rules: [
