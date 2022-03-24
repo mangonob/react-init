@@ -19,6 +19,11 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /(\.m?js|.tsx?|.jsx?)$/,
+        loader: "babel-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: /\.tsx?$/,
         loader: "ts-loader",
         exclude: /node_modules/,
@@ -35,11 +40,6 @@ module.exports = {
           "css-loader",
           "less-loader",
         ],
-      },
-      {
-        test: /(\.m?js|.tsx?|.jsx?)$/,
-        loader: "babel-loader",
-        exclude: /node_modules/,
       },
     ],
   },
