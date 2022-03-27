@@ -10,6 +10,10 @@ module.exports = merge(
     devServer: {
       static: "./dist",
       hot: true,
+      historyApiFallback: true,
+    },
+    output: {
+      publicPath: "/",
     },
   }
 );

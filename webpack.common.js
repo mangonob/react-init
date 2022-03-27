@@ -3,6 +3,16 @@ const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 
+const cssModule = {
+  loader: "css-loader",
+  options: {
+    modules: {
+      auto: true,
+      exportLocalsConvention: "camelCaseOnly",
+    },
+  },
+};
+
 /** @type { import("webpack").Configuration } */
 module.exports = {
   entry: {
@@ -31,18 +41,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                auto: true,
-                exportLocalsConvention: "camelCaseOnly",
-              },
-            },
-          },
-        ],
+        use: ["style-loader", cssModule],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", cssModule, "sass-loader"],
       },
       {
         test: /\.less$/i,
