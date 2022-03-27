@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 
@@ -44,7 +45,8 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".jsx", ".js"],
+    plugins: [new TsconfigPathsPlugin()],
   },
   output: {
     filename: "[name].[contenthash].js",
