@@ -75,7 +75,7 @@ export default function PostList() {
                     <Checkbox className={styles.checkbox} />
                   </Form.Item>
                 )}
-                {!isEditing && <Link to={`post/${id}`}>{title}</Link>}
+                {!isEditing && <Link to={`/post/${id}`}>{title}</Link>}
                 {isEditing && <a>{title}</a>}
                 {isEditing && (
                   <MinusCircleOutlined
@@ -92,7 +92,7 @@ export default function PostList() {
         </ul>
       </Form>
       <Space>
-        <Link to="create">
+        <Link to="/create">
           <Button icon={<PlusCircleOutlined />}>Add Post</Button>
         </Link>
         {(isEditing || posts.length !== 0) && (

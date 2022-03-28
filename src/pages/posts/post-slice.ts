@@ -26,9 +26,18 @@ const postSlice = createSlice({
         1
       );
     },
+    postUpdate(state, action) {
+      const { id, title, content }: Post = action.payload;
+      const post = state.find((p) => p.id === id);
+
+      if (post) {
+        post.title = title;
+        post.content = content;
+      }
+    },
   },
 });
 
-export const { postAdded, removePost } = postSlice.actions;
+export const { postAdded, removePost, postUpdate } = postSlice.actions;
 
 export default postSlice.reducer;
