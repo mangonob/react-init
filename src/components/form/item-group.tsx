@@ -1,6 +1,6 @@
-import { Form, FormItemProps } from "antd";
-import { NamePath } from "antd/lib/form/interface";
-import React, { createContext, PropsWithChildren, useContext } from "react";
+import { Form, FormItemProps } from 'antd';
+import { NamePath } from 'antd/lib/form/interface';
+import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 interface FormItemContextData {
   pathes: (string | number)[];

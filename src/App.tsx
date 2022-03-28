@@ -1,12 +1,13 @@
-import React from "react";
-import { Route, Routes } from "react-router";
-import { SinglePostPage } from "./pages/posts";
-import { Button } from "antd";
-import PostList from "./pages/posts/post-list";
-import NavBar from "./components/scaffold/nav-bar";
+/* eslint-disable unicorn/filename-case */
+import React from 'react';
+import { Route, Routes } from 'react-router';
+import { SinglePostPage } from './pages/posts';
+import { Button } from 'antd';
+import PostList from './pages/posts/post-list';
+import NavBar from './components/scaffold/nav-bar';
 
-import styles from "./App.module.scss";
-import EditPost from "./pages/posts/edit-post";
+import styles from './App.module.scss';
+import EditPost from './pages/posts/edit-post';
 
 export default function App() {
   return (
@@ -22,7 +23,7 @@ export default function App() {
         </Routes>
       </section>
       {/* Load antd style */}
-      <Button style={{ display: "none" }}></Button>
+      <Button style={{ display: 'none' }}></Button>
     </section>
   );
 }

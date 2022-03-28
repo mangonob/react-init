@@ -1,10 +1,10 @@
-import { Form, Input } from "antd";
-import { useForm } from "antd/lib/form/Form";
-import React from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { RootState } from "src/store";
-import { Post } from "./post-slice";
+import { Form, Input } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { RootState } from 'src/store';
+import { Post } from './post-slice';
 
 export default function EditPost() {
   const [form] = useForm<Post>();
@@ -13,7 +13,7 @@ export default function EditPost() {
     s.posts.find((p) => p.id === postId)
   );
 
-  const {} = post;
+  // const {} = post;
 
   return (
     <Form form={form}>

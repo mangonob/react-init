@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export interface Post {
   id: string;
@@ -9,12 +9,12 @@ export interface Post {
 }
 
 const initialState: Post[] = [
-  { id: "1", title: "First Post!", content: "Hello!" },
-  { id: "2", title: "Second Post", content: "More text" },
+  { id: '1', title: 'First Post!', content: 'Hello!' },
+  { id: '2', title: 'Second Post', content: 'More text' },
 ];
 
 const postSlice = createSlice({
-  name: "posts",
+  name: 'posts',
   initialState,
   reducers: {
     postAdded(state, action) {

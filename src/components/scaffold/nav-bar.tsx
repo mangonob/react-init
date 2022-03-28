@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import React, { PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 
-import styles from "./nav-bar.module.scss";
+import styles from './nav-bar.module.scss';
 
 export default function NavBar(props: PropsWithChildren<{}>) {
   return (
