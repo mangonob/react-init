@@ -1,7 +1,7 @@
 import { EditOutlined } from '@ant-design/icons';
 import { paramCase } from 'change-case';
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';

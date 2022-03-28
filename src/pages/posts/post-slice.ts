@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface Post {
   id: string;
@@ -17,7 +17,7 @@ const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    postAdded(state, action) {
+    postAdded(state, action: PayloadAction<Post>) {
       state.push(action.payload);
     },
     removePost(state, action) {
@@ -26,7 +26,7 @@ const postSlice = createSlice({
         1
       );
     },
-    postUpdate(state, action) {
+    postUpdate(state, action: PayloadAction<Post>) {
       const { id, title, content }: Post = action.payload;
       const post = state.find((p) => p.id === id);
 

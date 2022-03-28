@@ -27,7 +27,7 @@ export default function PostList() {
   const isAllSelected = useMemo(() => {
     return (
       Object.entries(formValues.selected || {}).filter(
-        ([_, isSelected]) => isSelected
+        ([, isSelected]) => isSelected
       ).length === posts.length
     );
   }, [formValues, posts.length]);
@@ -110,16 +110,7 @@ export default function PostList() {
             {isEditing ? 'Cancel' : 'Edit'}
           </Button>
         )}
-        {isEditing && (
-          <Button
-            type="primary"
-            onClick={async () => {
-              const values = await form.getFieldsValue();
-            }}
-          >
-            Remove Selected
-          </Button>
-        )}
+        {isEditing && <Button type="primary">Remove Selected</Button>}
       </Space>
     </section>
   );

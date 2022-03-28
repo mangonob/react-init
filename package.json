@@ -19,7 +19,8 @@
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",
-    "serve": "webpack serve --config webpack.dev.js"
+    "serve": "webpack serve --config webpack.dev.js",
+    "lint": "eslint . --ext .tsx,.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
