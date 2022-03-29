@@ -1,8 +1,9 @@
-import React from 'react';
 import { Button } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from 'src/store';
-import { Post, Reaction, reactionPost } from './post-slice';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from 'src/store';
+import { usePost } from './hooks';
+import { Reaction, reactionPost } from './post-slice';
 
 const reactionEmojis: [Reaction, string][] = [
   ['thumbsUp', '👍'],
@@ -15,9 +16,7 @@ const reactionEmojis: [Reaction, string][] = [
 export default function ReactionButtons(props: { postId: string }) {
   const { postId } = props;
 
-  const post = useSelector<RootState, Post | undefined>((s) =>
-    s.posts.find((p) => p.id === postId)
-  );
+  const post = usePost(postId);
   const dispatch = useDispatch<AppDispatch>();
 
   return post ? (

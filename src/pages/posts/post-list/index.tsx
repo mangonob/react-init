@@ -3,17 +3,18 @@ import { Button, Checkbox, Form, Space } from 'antd';
 import { FormInstance, useForm } from 'antd/lib/form/Form';
 import produce from 'immer';
 import React, { useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppDispatch, RootState } from 'src/store';
-import { Post, removePost } from '../post-slice';
+import { AppDispatch } from 'src/store';
+import { useAllPosts } from '../hooks';
+import { removePost } from '../post-slice';
 import styles from './index.module.scss';
 
 /** Extra values type from FormInstance */
 export type FormValues<T> = T extends FormInstance<infer V> ? V : unknown;
 
 export default function PostList() {
-  const posts = useSelector<RootState, Post[]>((state) => state.posts);
+  const posts = useAllPosts();
   const dispatch = useDispatch<AppDispatch>();
 
   const [isEditing, setEditing] = useState(false);

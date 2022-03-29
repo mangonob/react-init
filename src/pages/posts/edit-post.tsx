@@ -1,20 +1,19 @@
 import { Button, Form, Input, Select } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { AppDispatch, RootState } from 'src/store';
-import { User } from '../user/user-slice';
+import { AppDispatch } from 'src/store';
+import { useAllUsers, usePost } from './hooks';
 import { Post, postAdded, postUpdate } from './post-slice';
 
 export default function EditPost() {
   const [form] = useForm<Omit<Post, 'id'>>();
   const { postId } = useParams();
+
   const dispatch = useDispatch<AppDispatch>();
-  const post = useSelector<RootState, Post | undefined>((s) =>
-    s.posts.find((p) => p.id === postId)
-  );
-  const users = useSelector<RootState, User[]>((s) => s.users);
+  const post = usePost(postId);
+  const users = useAllUsers();
 
   const { id, title, content, user } = post || {};
 

@@ -2,13 +2,11 @@ import { EditOutlined } from '@ant-design/icons';
 import { paramCase } from 'change-case';
 import classNames from 'classnames';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import { RootState } from 'src/store';
 import User from '../user';
+import { usePost } from './hooks';
 import styles from './index.module.scss';
-import { Post } from './post-slice';
 import ReactionButtons from './reaction-buttons';
 import TimeAgo from './time-ago';
 
@@ -17,9 +15,7 @@ export function SinglePostPage() {
 
   const { postId } = params;
 
-  const post = useSelector<RootState, Post | undefined>((state) =>
-    state.posts.find((post) => post.id === postId)
-  );
+  const post = usePost(postId);
 
   if (!post) {
     return (
