@@ -1,4 +1,3 @@
-import { nanoid } from '@reduxjs/toolkit';
 import { Button, Form, Input } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import React, { useCallback } from 'react';
@@ -8,7 +7,7 @@ import { AppDispatch, RootState } from 'src/store';
 import { Post, postAdded, postUpdate } from './post-slice';
 
 export default function EditPost() {
-  const [form] = useForm<Post>();
+  const [form] = useForm<Omit<Post, 'id'>>();
   const { postId } = useParams();
   const dispatch = useDispatch<AppDispatch>();
   const post = useSelector<RootState, Post | undefined>((s) =>
@@ -22,7 +21,7 @@ export default function EditPost() {
     if (id) {
       dispatch(postUpdate({ id, ...values }));
     } else {
-      dispatch(postAdded({ id: nanoid(), ...values }));
+      dispatch(postAdded(values.title, values.content));
     }
   }, [form, dispatch, id]);
 

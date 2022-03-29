@@ -29,9 +29,7 @@ export function SinglePostPage() {
 
     return (
       <section>
-        <article
-          className={classNames(styles.post, paramCase(`post-${postId}`))}
-        >
+        <article className={classNames(styles.post, paramCase(`post-${id}`))}>
           <h2>
             {title}{' '}
             <Link to={`/edit/${id}`}>
