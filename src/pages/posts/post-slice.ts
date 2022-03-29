@@ -1,11 +1,16 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 
+export type Reaction = 'thumbsUp' | 'hooray' | 'heart' | 'rocket' | 'eyes';
+
 export interface Post {
   id: string;
   title: string;
   content?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  /** User id */
+  user?: string;
+  createdAt?: number;
+  updatedAt?: number;
+  reactions?: { [key in Reaction]?: number };
 }
 
 const initialState: Post[] = [
@@ -21,12 +26,14 @@ const postSlice = createSlice({
       reducer(state, action: PayloadAction<Post>) {
         state.push(action.payload);
       },
-      prepare(title: string, content?: string) {
+      prepare(title: string, content?: string, user?: string) {
         return {
           payload: {
             id: nanoid(),
             title,
             content,
+            user,
+            createdAt: Date.now(),
           },
         };
       },
@@ -38,17 +45,38 @@ const postSlice = createSlice({
       );
     },
     postUpdate(state, action: PayloadAction<Post>) {
-      const { id, title, content }: Post = action.payload;
+      const { id, title, content, user }: Post = action.payload;
       const post = state.find((p) => p.id === id);
 
       if (post) {
         post.title = title;
         post.content = content;
+        post.user = user;
       }
+    },
+    reactionPost: {
+      reducer(state, action: PayloadAction<[Reaction, string]>) {
+        const {
+          payload: [reaction, postId],
+        } = action;
+
+        const post = state.find((p) => p.id === postId);
+        if (post) {
+          if (post.reactions) {
+            post.reactions[reaction] = (post.reactions[reaction] ?? 0) + 1;
+          } else {
+            post.reactions = { [reaction]: 1 };
+          }
+        }
+      },
+      prepare(reaction: Reaction, postId: string) {
+        return { payload: [reaction, postId] as [Reaction, string] };
+      },
     },
   },
 });
 
-export const { postAdded, removePost, postUpdate } = postSlice.actions;
+export const { postAdded, removePost, postUpdate, reactionPost } =
+  postSlice.actions;
 
 export default postSlice.reducer;
