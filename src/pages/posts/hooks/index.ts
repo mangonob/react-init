@@ -4,13 +4,13 @@ import { RootState } from 'src/store';
 import { Post } from '../post-slice';
 
 export function usePost(postId?: string): Post | undefined {
-  return useSelector<RootState, Post | undefined>((s) =>
-    s.posts.find((p) => p.id === postId)
+  return useSelector<RootState, Post | undefined>(({ posts: { posts } }) =>
+    posts.find((p) => p.id === postId)
   );
 }
 
 export function useAllPosts(): Post[] {
-  return useSelector<RootState, Post[]>((s) => s.posts);
+  return useSelector<RootState, Post[]>(({ posts: { posts } }) => posts);
 }
 
 export function useUser(userId?: string): User | undefined {

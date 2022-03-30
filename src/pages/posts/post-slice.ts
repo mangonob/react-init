@@ -13,10 +13,19 @@ export interface Post {
   reactions?: { [key in Reaction]?: number };
 }
 
-const initialState: Post[] = [
-  { id: '1', title: 'First Post!', content: 'Hello!' },
-  { id: '2', title: 'Second Post', content: 'More text' },
-];
+export interface PostsState {
+  status: 'idle' | 'loading' | 'successed' | 'failed';
+  error?: string;
+  posts: Post[];
+}
+
+const initialState: PostsState = {
+  status: 'idle',
+  posts: [
+    { id: '1', title: 'First Post!', content: 'Hello!' },
+    { id: '2', title: 'Second Post', content: 'More text' },
+  ],
+};
 
 const postSlice = createSlice({
   name: 'posts',
@@ -24,7 +33,7 @@ const postSlice = createSlice({
   reducers: {
     postAdded: {
       reducer(state, action: PayloadAction<Post>) {
-        state.push(action.payload);
+        state.posts.push(action.payload);
       },
       prepare(title: string, content?: string, user?: string) {
         return {
@@ -38,15 +47,15 @@ const postSlice = createSlice({
         };
       },
     },
-    removePost(state, action) {
-      state.splice(
-        state.findIndex((post) => post.id === action.payload),
+    removePost({ posts }, action) {
+      posts.splice(
+        posts.findIndex((post) => post.id === action.payload),
         1
       );
     },
-    postUpdate(state, action: PayloadAction<Post>) {
+    postUpdate({ posts }, action: PayloadAction<Post>) {
       const { id, title, content, user }: Post = action.payload;
-      const post = state.find((p) => p.id === id);
+      const post = posts.find((p) => p.id === id);
 
       if (post) {
         post.title = title;
@@ -55,12 +64,12 @@ const postSlice = createSlice({
       }
     },
     reactionPost: {
-      reducer(state, action: PayloadAction<[Reaction, string]>) {
+      reducer({ posts }, action: PayloadAction<[Reaction, string]>) {
         const {
           payload: [reaction, postId],
         } = action;
 
-        const post = state.find((p) => p.id === postId);
+        const post = posts.find((p) => p.id === postId);
         if (post) {
           if (post.reactions) {
             post.reactions[reaction] = (post.reactions[reaction] ?? 0) + 1;

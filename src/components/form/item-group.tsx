@@ -1,9 +1,9 @@
 import { Form, FormItemProps } from 'antd';
-import { NamePath } from 'antd/lib/form/interface';
+import { InternalNamePath, NamePath } from 'antd/lib/form/interface';
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
 interface FormItemContextData {
-  pathes: (string | number)[];
+  pathes: InternalNamePath;
 }
 
 const FormItemContext = createContext<FormItemContextData>({ pathes: [] });
@@ -21,7 +21,7 @@ export default function FormItemGroup(
     return <Provider value={{ pathes: [] }} {...extra}></Provider>;
   } else {
     const newPathes = Array.isArray(name)
-      ? pathes.concat(name as [])
+      ? pathes.concat(name)
       : [...pathes, name];
 
     return <Provider value={{ pathes: newPathes }} {...extra}></Provider>;
@@ -32,9 +32,13 @@ export function FormItem(props: FormItemProps) {
   const { name, ...extra } = props;
   const { pathes } = useContext(FormItemContext);
 
-  const newPathes = Array.isArray(name)
-    ? pathes.concat(name as [])
-    : [...pathes, name];
+  if (name) {
+    const newPathes = Array.isArray(name)
+      ? pathes.concat(name)
+      : [...pathes, name];
 
-  return <Form.Item name={newPathes} {...extra}></Form.Item>;
+    return <Form.Item name={newPathes} {...extra}></Form.Item>;
+  } else {
+    return <Form.Item name={pathes} {...extra}></Form.Item>;
+  }
 }
