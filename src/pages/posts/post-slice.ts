@@ -1,4 +1,5 @@
-import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { addNewPost, fetchPosts } from './thunk';
 
 export type Reaction = 'thumbsUp' | 'hooray' | 'heart' | 'rocket' | 'eyes';
 
@@ -13,8 +14,10 @@ export interface Post {
   reactions?: { [key in Reaction]?: number };
 }
 
+export type PostStatus = 'idle' | 'loading' | 'success' | 'failed';
+
 export interface PostsState {
-  status: 'idle' | 'loading' | 'successed' | 'failed';
+  status: PostStatus;
   error?: string;
   posts: Post[];
 }
@@ -31,22 +34,6 @@ const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    postAdded: {
-      reducer(state, action: PayloadAction<Post>) {
-        state.posts.push(action.payload);
-      },
-      prepare(title: string, content?: string, user?: string) {
-        return {
-          payload: {
-            id: nanoid(),
-            title,
-            content,
-            user,
-            createdAt: Date.now(),
-          },
-        };
-      },
-    },
     removePost({ posts }, action) {
       posts.splice(
         posts.findIndex((post) => post.id === action.payload),
@@ -83,9 +70,24 @@ const postSlice = createSlice({
       },
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPosts.pending, (state) => {
+      state.status = 'loading';
+    });
+    builder.addCase(fetchPosts.fulfilled, (state, action) => {
+      state.posts = action.payload;
+      state.status = 'success';
+    });
+    builder.addCase(fetchPosts.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.error.message;
+    });
+    builder.addCase(addNewPost.fulfilled, (state, action) => {
+      state.posts.push(action.payload);
+    });
+  },
 });
 
-export const { postAdded, removePost, postUpdate, reactionPost } =
-  postSlice.actions;
+export const { removePost, postUpdate, reactionPost } = postSlice.actions;
 
 export default postSlice.reducer;

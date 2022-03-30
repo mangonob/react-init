@@ -1,11 +1,13 @@
+import { nanoid } from '@reduxjs/toolkit';
 import { Button, Form, Input, Select } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { AppDispatch } from 'src/store';
 import { useAllUsers, usePost } from './hooks';
-import { Post, postAdded, postUpdate } from './post-slice';
+import { Post, PostStatus, postUpdate } from './post-slice';
+import { addNewPost } from './thunk';
 
 export default function EditPost() {
   const [form] = useForm<Omit<Post, 'id'>>();
@@ -17,12 +19,26 @@ export default function EditPost() {
 
   const { id, title, content, user } = post || {};
 
+  const [addingStatus, setAddingStatus] = useState<PostStatus>('idle');
+  const isAdding = useMemo(() => addingStatus === 'loading', [addingStatus]);
+
   const onSave = useCallback(async () => {
     const values = await form.validateFields();
     if (id) {
       dispatch(postUpdate({ id, ...values }));
     } else {
-      dispatch(postAdded(values.title, values.content, values.user));
+      setAddingStatus('loading');
+      try {
+        await dispatch(
+          addNewPost({
+            id: nanoid(),
+            ...values,
+          })
+        );
+      } catch {
+        setAddingStatus('failed');
+      }
+      setAddingStatus('success');
     }
   }, [form, dispatch, id]);
 
@@ -46,7 +62,9 @@ export default function EditPost() {
           <Input.TextArea></Input.TextArea>
         </Form.Item>
       </Form>
-      <Button onClick={onSave}>{(id && 'Save') || 'Create Post'}</Button>
+      <Button loading={isAdding} onClick={onSave}>
+        {(id && 'Save') || 'Create Post'}
+      </Button>
     </>
   );
 }

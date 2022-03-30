@@ -28,7 +28,6 @@ module.exports = {
 
     // unicorn custom rules
     'unicorn/prevent-abbreviations': 'off',
-    'unicorn/prefer-module': 'off',
     'unicorn/prefer-spread': 'off',
     'unicorn/no-array-for-each': 'warn',
 

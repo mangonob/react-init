@@ -1,13 +1,14 @@
 import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Space } from 'antd';
+import { Button, Checkbox, Form, Space, Spin } from 'antd';
 import { FormInstance, useForm } from 'antd/lib/form/Form';
 import produce from 'immer';
-import React, { useMemo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AppDispatch } from 'src/store';
+import { AppDispatch, RootState } from 'src/store';
 import { useAllPosts } from '../hooks';
-import { removePost } from '../post-slice';
+import { PostStatus, removePost } from '../post-slice';
+import { fetchPosts } from '../thunk';
 import styles from './index.module.scss';
 
 /** Extra values type from FormInstance */
@@ -15,6 +16,9 @@ export type FormValues<T> = T extends FormInstance<infer V> ? V : unknown;
 
 export default function PostList() {
   const posts = useAllPosts();
+  const postStatus = useSelector<RootState, PostStatus>(
+    ({ posts: { status } }) => status
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   const [isEditing, setEditing] = useState(false);
@@ -24,6 +28,12 @@ export default function PostList() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const formValues = useMemo(() => form.getFieldsValue(), [form, valuesDep]);
+
+  useEffect(() => {
+    if (postStatus === 'idle') {
+      dispatch(fetchPosts());
+    }
+  }, [postStatus, dispatch]);
 
   const isAllSelected = useMemo(() => {
     return (
@@ -64,34 +74,36 @@ export default function PostList() {
               <a>Select All</a>
             </li>
           )}
-          {posts.map((post) => {
-            const { id, title } = post;
+          <Spin spinning={postStatus === 'loading'}>
+            {posts.map((post) => {
+              const { id, title } = post;
 
-            return (
-              <li key={`postItem-${id}`}>
-                {isEditing && (
-                  <Form.Item
-                    name={['selected', id]}
-                    noStyle
-                    valuePropName="checked"
-                  >
-                    <Checkbox className={styles.checkbox} />
-                  </Form.Item>
-                )}
-                {!isEditing && <Link to={`/post/${id}`}>{title}</Link>}
-                {isEditing && <a>{title}</a>}
-                {isEditing && (
-                  <MinusCircleOutlined
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      dispatch(removePost(id));
-                    }}
-                    style={{ color: 'red', marginLeft: 8 }}
-                  />
-                )}
-              </li>
-            );
-          })}
+              return (
+                <li key={`postItem-${id}`}>
+                  {isEditing && (
+                    <Form.Item
+                      name={['selected', id]}
+                      noStyle
+                      valuePropName="checked"
+                    >
+                      <Checkbox className={styles.checkbox} />
+                    </Form.Item>
+                  )}
+                  {!isEditing && <Link to={`/post/${id}`}>{title}</Link>}
+                  {isEditing && <a>{title}</a>}
+                  {isEditing && (
+                    <MinusCircleOutlined
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(removePost(id));
+                      }}
+                      style={{ color: 'red', marginLeft: 8 }}
+                    />
+                  )}
+                </li>
+              );
+            })}
+          </Spin>
         </ul>
       </Form>
       <Space>
