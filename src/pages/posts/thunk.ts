@@ -10,11 +10,16 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', _fetchFakePosts);
 async function _fetchFakePosts(): Promise<Post[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const posts = [
-        { id: '1', title: 'First Post!', content: 'Hello!' },
-        { id: '2', title: 'Second Post', content: 'More text' },
-        { id: '3', title: 'Third Post', content: 'Some others text' },
-        { id: '4', title: 'Fourth Post', content: 'Some more text' },
+      const posts: Post[] = [
+        { id: '1', title: 'First Post!', content: 'Hello!', user: '1' },
+        { id: '2', title: 'Second Post', content: 'More text', user: '1' },
+        {
+          id: '3',
+          title: 'Third Post',
+          content: 'Some others text',
+          user: '1',
+        },
+        { id: '4', title: 'Fourth Post', content: 'Some more text', user: '0' },
         { id: '5', title: 'Fifth Post', content: 'More more text' },
         { id: '6', title: 'Sixth Post', content: 'Some more more text' },
       ];
