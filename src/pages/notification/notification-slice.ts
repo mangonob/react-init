@@ -1,6 +1,5 @@
 import faker from '@faker-js/faker';
 import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
-import { notification } from 'antd';
 import { random } from 'lodash';
 import { RootState } from 'src/store';
 

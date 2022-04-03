@@ -1,4 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import faker from '@faker-js/faker';
+import { createAsyncThunk, nanoid } from '@reduxjs/toolkit';
+import { random } from 'lodash';
 import { Post } from './post-slice';
 
 /** Async thunk to load posts  */
@@ -10,19 +12,15 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', _fetchFakePosts);
 async function _fetchFakePosts(): Promise<Post[]> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const posts: Post[] = [
-        { id: '1', title: 'First Post!', content: 'Hello!', user: '1' },
-        { id: '2', title: 'Second Post', content: 'More text', user: '1' },
-        {
-          id: '3',
-          title: 'Third Post',
-          content: 'Some others text',
-          user: '1',
-        },
-        { id: '4', title: 'Fourth Post', content: 'Some more text', user: '0' },
-        { id: '5', title: 'Fifth Post', content: 'More more text' },
-        { id: '6', title: 'Sixth Post', content: 'Some more more text' },
-      ];
+      const posts = Array.from({ length: Math.floor(random(1, 42)) }).map(
+        (): Post => {
+          return {
+            id: nanoid(),
+            title: faker.random.words(3),
+            content: faker.random.words(10),
+          };
+        }
+      );
       resolve(posts);
     }, 1000);
   });

@@ -2,12 +2,12 @@ import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Space, Spin } from 'antd';
 import { FormInstance, useForm } from 'antd/lib/form/Form';
 import produce from 'immer';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppDispatch, RootState } from 'src/store';
 import { useAllPosts } from '../hooks';
-import { PostStatus, removePost } from '../post-slice';
+import { Post, PostStatus, removePost } from '../post-slice';
 import { fetchPosts } from '../thunk';
 import styles from './index.module.scss';
 
@@ -75,34 +75,9 @@ export default function PostList() {
             </li>
           )}
           <Spin spinning={postStatus === 'loading'}>
-            {posts.map((post) => {
-              const { id, title } = post;
-
-              return (
-                <li key={`postItem-${id}`}>
-                  {isEditing && (
-                    <Form.Item
-                      name={['selected', id]}
-                      noStyle
-                      valuePropName="checked"
-                    >
-                      <Checkbox className={styles.checkbox} />
-                    </Form.Item>
-                  )}
-                  {!isEditing && <Link to={`/post/${id}`}>{title}</Link>}
-                  {isEditing && <a>{title}</a>}
-                  {isEditing && (
-                    <MinusCircleOutlined
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        dispatch(removePost(id));
-                      }}
-                      style={{ color: 'red', marginLeft: 8 }}
-                    />
-                  )}
-                </li>
-              );
-            })}
+            {posts.map((post) => (
+              <_PostItem post={post} isEditing={isEditing} key={post.id} />
+            ))}
           </Spin>
         </ul>
       </Form>
@@ -128,3 +103,33 @@ export default function PostList() {
     </section>
   );
 }
+
+function PostItem(props: { post: Post; isEditing?: boolean }) {
+  const { post, isEditing = false } = props;
+  const { id, title } = post;
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  return (
+    <li>
+      {isEditing && (
+        <Form.Item name={['selected', id]} noStyle valuePropName="checked">
+          <Checkbox className={styles.checkbox} />
+        </Form.Item>
+      )}
+      {!isEditing && <Link to={`/post/${id}`}>{title}</Link>}
+      {isEditing && <a>{title}</a>}
+      {isEditing && (
+        <MinusCircleOutlined
+          onClick={(e) => {
+            e.stopPropagation();
+            dispatch(removePost(id));
+          }}
+          style={{ color: 'red', marginLeft: 8 }}
+        />
+      )}
+    </li>
+  );
+}
+
+const _PostItem = memo(PostItem);
