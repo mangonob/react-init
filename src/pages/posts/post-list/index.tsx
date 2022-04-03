@@ -6,7 +6,7 @@ import {
 import { Button, Spin } from 'antd';
 import { FormInstance } from 'antd/lib/form/Form';
 import classNames from 'classnames';
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { AppDispatch, RootState } from 'src/store';
@@ -24,12 +24,6 @@ export default function PostList() {
     ({ posts: { status } }) => status
   );
   const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    if (postStatus === 'idle') {
-      dispatch(fetchPosts());
-    }
-  }, [postStatus, dispatch]);
 
   const isLoading = postStatus === 'loading';
 
@@ -72,14 +66,14 @@ function PostItem(props: { post: Post }) {
 
   return (
     <li>
-      <Link to={`/post/${id}`}>{title}</Link>
       <MinusCircleOutlined
         onClick={(e) => {
           e.stopPropagation();
           dispatch(removePost(id));
         }}
-        style={{ color: 'red', marginLeft: 8 }}
+        style={{ color: 'red', marginRight: 8 }}
       />
+      <Link to={`/post/${id}`}>{title}</Link>
     </li>
   );
 }

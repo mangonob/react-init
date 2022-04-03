@@ -1,4 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createEntityAdapter,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import { RootState } from 'src/store';
 import { addNewPost, fetchPosts } from './thunk';
 
@@ -17,33 +21,25 @@ export interface Post {
 
 export type PostStatus = 'idle' | 'loading' | 'success' | 'failed';
 
-export interface PostsState {
+const postsAdapter = createEntityAdapter<Post>();
+
+interface PostsState {
   status: PostStatus;
   error?: string;
-  posts: Post[];
 }
 
-const initialState: PostsState = {
+const initialState = postsAdapter.getInitialState<PostsState>({
   status: 'idle',
-  posts: [
-    { id: '1', title: 'First Post!', content: 'Hello!', user: '0' },
-    { id: '2', title: 'Second Post', content: 'More text', user: '0' },
-  ],
-};
+  error: undefined,
+});
 
 const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    removePost({ posts }, action) {
-      posts.splice(
-        posts.findIndex((post) => post.id === action.payload),
-        1
-      );
-    },
-    postUpdate({ posts }, action: PayloadAction<Post>) {
+    postUpdate({ entities }, action: PayloadAction<Post>) {
       const { id, title, content, user }: Post = action.payload;
-      const post = posts.find((p) => p.id === id);
+      const post = entities[id];
 
       if (post) {
         post.title = title;
@@ -52,12 +48,12 @@ const postSlice = createSlice({
       }
     },
     reactionPost: {
-      reducer({ posts }, action: PayloadAction<[Reaction, string]>) {
+      reducer({ entities }, action: PayloadAction<[Reaction, string]>) {
         const {
           payload: [reaction, postId],
         } = action;
 
-        const post = posts.find((p) => p.id === postId);
+        const post = entities[postId];
         if (post) {
           if (post.reactions) {
             post.reactions[reaction] = (post.reactions[reaction] ?? 0) + 1;
@@ -70,13 +66,17 @@ const postSlice = createSlice({
         return { payload: [reaction, postId] as [Reaction, string] };
       },
     },
+    removePost(state, action: PayloadAction<string>) {
+      postsAdapter.removeOne(state, action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.pending, (state) => {
       state.status = 'loading';
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
-      state.posts = action.payload;
+      postsAdapter.removeAll(state);
+      postsAdapter.upsertMany(state, action.payload);
       state.status = 'success';
     });
     builder.addCase(fetchPosts.rejected, (state, action) => {
@@ -84,13 +84,16 @@ const postSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(addNewPost.fulfilled, (state, action) => {
-      state.posts.push(action.payload);
+      state.entities[action.payload.id] = action.payload;
     });
   },
 });
 
 export const { removePost, postUpdate, reactionPost } = postSlice.actions;
+export const {
+  selectAll: selectAllPost,
+  selectById: selectPostById,
+  selectIds: selectPostIds,
+} = postsAdapter.getSelectors<RootState>((s) => s.posts);
 
 export default postSlice.reducer;
-
-export const selectAllPost = (state: RootState) => state.posts.posts;
