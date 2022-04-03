@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { RootState } from 'src/store';
 import { useUser } from '../posts/hooks';
 import { Post } from '../posts/post-slice';
+import { usePostsByUser } from './hooks';
 import { User as IUser } from './user-slice';
 
 export default function User(props: { userId: string }) {
@@ -22,9 +23,7 @@ export function UserDetail() {
     s.users.find((u) => u.id === userId)
   );
 
-  const posts = useSelector<RootState, Post[]>((s) =>
-    s.posts.posts.filter(({ user: author }) => author === userId)
-  );
+  const posts = usePostsByUser(userId);
 
   const renderPost = (post: Post) => {
     const { title, id } = post;

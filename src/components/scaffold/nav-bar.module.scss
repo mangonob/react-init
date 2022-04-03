@@ -4,7 +4,23 @@
   line-height: 40px;
   padding: 0 16px;
 
-  h1 {
+  h1, h2 {
+    display: inline;
     color: white;
+  }
+
+  .unread {
+    background-color: red;
+    line-height: 1;
+    font-size: 16px;
+    padding: 0px 8px;
+    border-radius: 15px;
+    margin-left: 20px;
+  }
+
+  .notif {
+    font-size: 20px;
+    color: white;
+    margin-left: 10px;
   }
 }

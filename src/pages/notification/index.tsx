@@ -1,11 +1,14 @@
 import { Button, List } from 'antd';
+import classNames from 'classnames';
 import dayjs from 'dayjs';
 import ReactiveTime from 'dayjs/plugin/relativeTime';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'src/store';
 import { useAllUsers } from '../posts/hooks';
+import styles from './index.module.scss';
 import {
+  allNotificationRead,
   fetchNotifications,
   Notification,
   selectAllNotifications,
@@ -18,18 +21,22 @@ export default function NotificationList() {
   const users = useAllUsers();
   const dispatch = useDispatch<AppDispatch>();
 
+  useEffect(() => {
+    dispatch(allNotificationRead());
+  });
+
   const renderNotification = (notification: Notification) => {
-    const { user: userId, date, message } = notification;
+    const { user: userId, date, message, isNew } = notification;
     const user = users.find((u) => u.id === userId);
 
     return (
-      <List.Item>
-        <div>
+      <List.Item
+        className={classNames(styles.notification, { [styles.new]: isNew })}
+      >
+        <span>
           {user && <b>{user.name}</b>} {message}
-        </div>
-        <div>
-          <i>{dayjs(date).fromNow()} Ago</i>
-        </div>
+        </span>
+        <i>{dayjs(date).fromNow()} Ago</i>
       </List.Item>
     );
   };

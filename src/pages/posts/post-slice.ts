@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'src/store';
 import { addNewPost, fetchPosts } from './thunk';
 
 export type Reaction = 'thumbsUp' | 'hooray' | 'heart' | 'rocket' | 'eyes';
@@ -91,3 +92,5 @@ const postSlice = createSlice({
 export const { removePost, postUpdate, reactionPost } = postSlice.actions;
 
 export default postSlice.reducer;
+
+export const selectAllPost = (state: RootState) => state.posts.posts;
