@@ -22,7 +22,7 @@ async function _fetchFakePosts(): Promise<Post[]> {
         }
       );
       resolve(posts);
-    }, 1000);
+    }, 200);
   });
 }
 

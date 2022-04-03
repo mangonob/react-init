@@ -1,5 +1,14 @@
 .post-list {
-  .checkbox {
-    margin-right: 8px;
+  .add-post {
+    margin-left: 20px;
+  }
+
+  .refresh {
+    font-size: 20px;
+    margin-left: 16px;
+
+    &.disabled {
+      color: grey;
+    }
   }
 }
