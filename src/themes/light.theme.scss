@@ -1,0 +1,45 @@
+.theme-light {
+  // 品牌色
+  --main-color: #0f9fff;
+
+  // 辅助色
+  --subs-color-warning: #ff8a14; // 警告，高亮
+  --subs-color-danger: #ee5858; // 危险，错误
+  --subs-color-success: #32bd4a; // 安全，正确
+  --subs-color-01: #54c3f4;
+  --subs-color-02: #00a9a5;
+  --subs-color-03: #9ddd82;
+  --subs-color-04: #f93a3f;
+  --subs-color-05: #8083f0;
+  --subs-color-06: #9ea9bc;
+  --subs-color-07: #a0a6b7;
+  --subs-color-08: #c3c7d6;
+  --subs-color-09: #d6d9e4;
+  --subs-color-10: #e5e8ee;
+  --subs-color-11: #f5f7fb;
+  --subs-color-12: #d8dbdf;
+  --subs-color-13: #f0f3f6;
+  --subs-color-14: #fafbfd;
+  --subs-color-15: #f9fafc;
+  --subs-color-16: #f6f8fa;
+  --subs-color-17: #454d5d;
+  --subs-color-18: #fafcfd;
+
+  // 底色
+  --bg-color-nav: #2a303e; // 导航层
+  --bg-color-modal: #ffffff; // 弹窗层
+  --bg-color-menu: #3e4452; // 菜单层
+  --bg-color-content-01: #f0f3f6; // 内容层（一级）
+  --bg-color-content-02: #ffffff; // 内容层（二级）
+  --bg-color-system: #f8f9fa; // 系统底色
+
+  // 线框
+  --border-color-01: #d8dbdf; // 主要分割线
+  --border-color-02: #e8ebef; // 次要分割线
+  --border-color-03: #f0f2f6; // 辅助分割线
+
+  // 文字
+  --text-color-01: #0c152e; // 主要
+  --text-color-02: #545d78; // 次要
+  --text-color-03: #9fa8ba; // 备注，弱提示
+}

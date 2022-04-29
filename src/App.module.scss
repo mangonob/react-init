@@ -1,5 +1,51 @@
 .app {
-  .app-content {
-    padding: 8px 16px;
+  padding: 20px;
+  background-color: var(--bg-color-content-01);
+  height: 100vh;
+
+  :global(.ant-divider) {
+    color: var(--text-color-01);
+  }
+
+  :global(.ant-divider-horizontal.ant-divider-with-text) {
+    border-color: var(--border-color-02);
+  }
+
+  h1 {
+    color: var(--text-color-01);
+  }
+
+  h2 {
+    color: var(--text-color-02);
+  }
+
+  h3,
+  h4,
+  h5 {
+    color: var(--text-color-03);
+  }
+
+  .danger {
+    color: var(--subs-color-danger);
+  }
+
+  .warning {
+    color: var(--subs-color-warning);
+  }
+
+  .success {
+    color: var(--subs-color-success);
+  }
+
+  .border-primary {
+    color: var(--border-color-01);
+  }
+
+  .border-secondary {
+    color: var(--border-color-02);
+  }
+
+  .border-tertiary {
+    color: var(--border-color-03);
   }
 }

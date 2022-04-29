@@ -9,6 +9,9 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
+    "paths": {
+      "src": ["src"]
+    },
     "strict": true,
     "plugins": [
       {
