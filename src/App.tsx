@@ -4,6 +4,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router';
 import styles from './App.module.scss';
 import NavBar from './components/scaffold/nav-bar';
+import Animations from './pages/animations';
 import NotificationList from './pages/notification';
 import { SinglePostPage } from './pages/posts';
 import EditPost from './pages/posts/edit-post';
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="users" element={<UserList />}></Route>
           <Route path="user/:userId" element={<UserDetail />}></Route>
           <Route path="notifications" element={<NotificationList />}></Route>
+          <Route path="animations" element={<Animations />}></Route>
           <Route path="*" element={<h2>Page Not Found</h2>}></Route>
         </Routes>
       </section>

@@ -9,6 +9,7 @@ const cssModule = {
     modules: {
       auto: true,
       exportLocalsConvention: 'camelCaseOnly',
+      localIdentName: '[hash:base64]__[local]',
     },
   },
 };
