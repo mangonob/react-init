@@ -1,8 +1,25 @@
 .animations {
-  .item {
-    margin-bottom: 16px;
-    width: 50px;
-    height: 50px;
-    background-color: red;
+  .grid {
+    display: flex;
+    flex-direction: column;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+
+      .item {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+
+        &:not(:last-child) {
+          margin-right: 8px;
+        }
+      }
+    }
   }
 }
