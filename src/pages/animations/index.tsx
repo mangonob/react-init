@@ -17,14 +17,22 @@ export default function Animations() {
   }, []);
 
   useEffect(() => {
-    ani.current = anime({
-      targets: `.${styles.item}`,
+    const animation = anime.timeline({
       autoplay: false,
-      scale: [
-        { value: 0.1, easing: 'easeOutSine', duration: 500 },
-        { value: 1, easing: 'easeInOutQuad', duration: 1200 },
-      ],
-      delay: anime.stagger(200, { grid: [14, 5], from: 'center' }),
+      targets: `.${styles.item}`,
+      easing: 'easeOutExpo',
+    });
+    ani.current = animation;
+
+    animation.add({
+      translateX: 300,
+    });
+
+    animation.add({
+      translateY: 100,
+      width: '+=100',
+      height: '+=100',
+      borderRadius: '50%',
     });
   });
 
@@ -45,7 +53,7 @@ export default function Animations() {
   return (
     <div className={styles.animations}>
       <Button onClick={onClick}>Reverse</Button>
-      <div className={styles.grid}>{renderGrid(5, 14)}</div>
+      <div className={styles.grid}>{renderGrid(1, 1)}</div>
     </div>
   );
 }
