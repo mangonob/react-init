@@ -1,1 +1,1 @@
-console.info(42);
+import axios from 'axios';
