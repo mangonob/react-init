@@ -12,6 +12,7 @@ specifiers:
   '@types/lodash': ^4.14.180
   '@types/react': ^17.0.41
   '@types/react-dom': ^17.0.14
+  '@types/react-redux': ^7.1.24
   '@types/styled-components': ^5.1.25
   '@typescript-eslint/eslint-plugin': ^5.17.0
   '@typescript-eslint/parser': ^5.17.0
@@ -80,6 +81,7 @@ devDependencies:
   '@types/lodash': 4.14.182
   '@types/react': 17.0.47
   '@types/react-dom': 17.0.17
+  '@types/react-redux': 7.1.24
   '@types/styled-components': 5.1.25
   '@typescript-eslint/eslint-plugin': 5.29.0_qqmbkyiaixvppdwswpytuf2hgm
   '@typescript-eslint/parser': 5.29.0_b5e7v2qnwxfo6hmiq56u52mz3e
@@ -1689,7 +1691,6 @@ packages:
       '@types/react': 17.0.47
       hoist-non-react-statics: 3.3.2
       redux: 4.2.0
-    dev: false
 
   /@types/react/17.0.47:
     resolution: {integrity: sha512-mk0BL8zBinf2ozNr3qPnlu1oyVTYq+4V7WA76RgxUAtf0Em/Wbid38KN6n4abEkvO4xMTBWmnP1FtQzgkEiJoA==}
@@ -5735,7 +5736,6 @@ packages:
     resolution: {integrity: sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==}
     dependencies:
       '@babel/runtime': 7.18.3
-    dev: false
 
   /regenerate-unicode-properties/10.0.1:
     resolution: {integrity: sha512-vn5DU6yg6h8hP/2OkQo3K7uVILvY4iu0oI4t3HFa81UPkhGJwkRwM10JEc3upjdhHjs/k8GJY1sRBhk5sr69Bw==}
