@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
+const WebpackBar = require('webpackbar');
 
 const cssModule = {
   loader: 'css-loader',
@@ -27,6 +28,7 @@ module.exports = {
       /moment[/\\]locale$/,
       /zh-cn|zh-hk|en/
     ),
+    new WebpackBar(),
   ],
   module: {
     rules: [
