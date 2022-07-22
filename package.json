@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@faker-js/faker": "^6.1.1",
     "@reduxjs/toolkit": "^1.8.0",
     "animejs": "^3.2.1",
     "antd": "^4.19.3",
@@ -12,7 +11,7 @@
     "classnames": "^2.3.1",
     "dayjs": "^1.11.0",
     "immer": "^9.0.12",
-    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -21,8 +20,9 @@
     "styled-components": "^5.3.5"
   },
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
     "serve": "webpack serve --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js --node-env production",
+    "analyze": "webpack --config webpack.prod.js --node-env production --analyze",
     "lint": "eslint . --ext .tsx,.ts"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "@babel/preset-react": "^7.16.7",
     "@babel/preset-typescript": "^7.16.7",
     "@types/animejs": "^3.1.4",
-    "@types/lodash": "^4.14.180",
+    "@types/lodash-es": "^4.17.6",
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
     "@types/react-redux": "^7.1.24",
@@ -48,6 +48,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-unicorn": "^41.0.1",
+    "fork-ts-checker-webpack-plugin": "^7.2.13",
     "html-webpack-plugin": "^5.5.0",
     "less-loader": "^10.2.0",
     "sass": "^1.49.9",

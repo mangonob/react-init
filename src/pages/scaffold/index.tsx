@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 import { Outlet } from 'react-router';
 import NavBar from 'src/components/scaffold/nav-bar';
@@ -9,8 +10,9 @@ export default function Scaffold() {
     <section className={styles.app}>
       <NavBar />
       <section className={styles.appContent}>
-        <Outlet></Outlet>;
+        <Outlet></Outlet>
       </section>
+      <Button style={{ display: 'none' }}></Button>
     </section>
   );
 }

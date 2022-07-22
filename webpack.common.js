@@ -3,6 +3,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const WebpackBar = require('webpackbar');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 const cssModule = {
   loader: 'css-loader',
@@ -10,7 +11,10 @@ const cssModule = {
     modules: {
       auto: true,
       exportLocalsConvention: 'camelCaseOnly',
-      localIdentName: '[hash:base64]__[local]',
+      localIdentName:
+        process.env.NODE_ENV === 'production'
+          ? '[hash:base64]'
+          : '[path][name]__[local]',
     },
   },
 };
@@ -29,6 +33,7 @@ module.exports = {
       /zh-cn|zh-hk|en/
     ),
     new WebpackBar(),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   cache: {
     type: 'filesystem',
@@ -38,11 +43,6 @@ module.exports = {
       {
         test: /\.(m?js|tsx?|jsx?)$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {

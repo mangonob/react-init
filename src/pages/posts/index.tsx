@@ -4,13 +4,13 @@ import classNames from 'classnames';
 import React from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import User from '../user';
+import { User } from '../user';
 import { usePost } from './hooks';
 import styles from './index.module.scss';
 import ReactionButtons from './reaction-buttons';
 import TimeAgo from './time-ago';
 
-export function SinglePostPage() {
+export default function SinglePostPage() {
   const params = useParams();
 
   const { postId } = params;

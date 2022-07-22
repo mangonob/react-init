@@ -8,7 +8,7 @@ import { Post } from '../posts/post-slice';
 import { usePostsByUser } from './hooks';
 import { User as IUser } from './user-slice';
 
-export default function User(props: { userId: string }) {
+export function User(props: { userId: string }) {
   const { userId } = props;
 
   const user = useUser(userId);
@@ -16,7 +16,7 @@ export default function User(props: { userId: string }) {
   return user ? <span>{user.name}</span> : <></>;
 }
 
-export function UserDetail() {
+export default function UserDetail() {
   const { userId } = useParams();
 
   const user = useSelector<RootState, IUser | undefined>((s) =>

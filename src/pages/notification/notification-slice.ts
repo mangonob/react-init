@@ -1,6 +1,5 @@
-import faker from '@faker-js/faker';
 import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
-import { random } from 'lodash';
+import { random } from 'lodash-es';
 import { RootState } from 'src/store';
 
 export interface Notification {
@@ -22,25 +21,19 @@ export const fetchNotifications = createAsyncThunk(
   async (_, { getState }) => {
     return new Promise<Notification[]>((resolve) => {
       setTimeout(() => {
-        const {
-          users,
-          notifications: [least],
-        } = getState() as RootState;
+        const { users } = getState() as RootState;
 
-        const user =
-          (users.length > 0 && faker.random.arrayElement(users)) || undefined;
+        const user = (users.length > 0 && users[0]) || undefined;
 
         const notifications = Array.from({
           length: Math.floor(random(1, 5)),
         }).map((): Notification => {
-          const date =
-            (least && faker.date.future(undefined, new Date(least.date))) ||
-            faker.date.future();
+          const date = new Date();
 
           return {
             id: nanoid(),
             date: date.toISOString(),
-            message: faker.random.words(7),
+            message: 'XXX XXX XXX',
             user: user?.id,
             isNew: true,
           };
