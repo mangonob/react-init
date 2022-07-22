@@ -30,6 +30,9 @@ module.exports = {
     ),
     new WebpackBar(),
   ],
+  cache: {
+    type: 'filesystem',
+  },
   module: {
     rules: [
       {
