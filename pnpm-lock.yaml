@@ -48,6 +48,7 @@ specifiers:
   tsconfig-paths-webpack-plugin: ^3.5.2
   typescript: ^4.6.2
   typescript-plugin-css-modules: ^3.4.0
+  vconsole: ^3.14.7
   webpack: ^5.70.0
   webpack-bundle-analyzer: ^4.5.0
   webpack-cli: ^4.9.2
@@ -72,6 +73,7 @@ dependencies:
   react-router: 6.3.0_react@17.0.2
   react-router-dom: 6.3.0_sfoxds7t5ydpegc3knd667wn6m
   styled-components: 5.3.5_v5ja746gkdtknuc6tj46sve3be
+  vconsole: 3.14.7
 
 devDependencies:
   '@babel/core': 7.18.5
@@ -2683,6 +2685,11 @@ packages:
       is-what: 3.14.1
     dev: true
 
+  /copy-text-to-clipboard/3.0.1:
+    resolution: {integrity: sha512-rvVsHrpFcL4F2P8ihsoLdFHmd404+CMg71S756oRSeQgqk51U3kicGdnvfkrxva0xXH92SjGS62B0XIJsbh+9Q==}
+    engines: {node: '>=12'}
+    dev: false
+
   /copy-to-clipboard/3.3.1:
     resolution: {integrity: sha512-i13qo6kIHTTpCm8/Wup+0b1mVWETvu2kIMzKoK8FpkLkFxlt0znUAHcMzox+T8sPlqtZXq3CulEjQHsYiGFJUw==}
     dependencies:
@@ -2700,6 +2707,11 @@ packages:
     resolution: {integrity: sha512-t6u7H4Ff/yZNk+zqTr74UjCcZ3k8ApBryeLLV4rYQd9aF3gqmjjGjjR44ENfeBMH8VVvSynIjAJ0mUuFhzQtrA==}
     requiresBuild: true
     dev: true
+
+  /core-js/3.25.5:
+    resolution: {integrity: sha512-nbm6eZSjm+ZuBQxCUPQKQCoUEfFOXjUZ8dTTyikyKaWrTYmAVbykQfwsKE5dBK88u3QCkCrzsx/PPlKfhsvgpw==}
+    requiresBuild: true
+    dev: false
 
   /core-util-is/1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -4540,6 +4552,10 @@ packages:
       dns-packet: 5.4.0
       thunky: 1.1.0
     dev: true
+
+  /mutation-observer/1.0.3:
+    resolution: {integrity: sha512-M/O/4rF2h776hV7qGMZUH3utZLO/jK7p8rnNgGkjKUw8zCGjRQPxB8z6+5l8+VjRUQ3dNYu4vjqXYLr+U8ZVNA==}
+    dev: false
 
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
@@ -6698,6 +6714,15 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /vconsole/3.14.7:
+    resolution: {integrity: sha512-48byrra1sZk0zJfUM8HFN/ZKtMzvd7Sirt2h5Hfnf7txKOxL9JfoFKB2uLixmOF3jjxCpwnLLb1tsHlg4YzoyA==}
+    dependencies:
+      '@babel/runtime': 7.18.3
+      copy-text-to-clipboard: 3.0.1
+      core-js: 3.25.5
+      mutation-observer: 1.0.3
+    dev: false
 
   /watchpack/2.4.0:
     resolution: {integrity: sha512-Lcvm7MGST/4fup+ifyKi2hjyIAwcdI4HRgtvTpIUxBRhB+RFtUh8XtDOxUfctVCnhVi+QQj49i91OyvzkJl6cg==}

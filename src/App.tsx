@@ -14,8 +14,8 @@ import UserList from './pages/user/user-list';
 export default function App() {
   return (
     <Routes>
-      <Route index element={<Playground />} />
       <Route path="/" element={<Scaffold />}>
+        <Route index element={<Playground />} />
         <Route path="posts" element={<PostList />}></Route>
         <Route path="post/:postId" element={<SinglePostPage />}></Route>
         <Route path="edit/:postId" element={<EditPost />}></Route>
