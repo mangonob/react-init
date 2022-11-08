@@ -56,30 +56,20 @@ export interface NetService<
   D,
   Resp,
   E,
-  Plugins extends NetServicePlugin[] = []
+  Plugins extends Record<string, NetServicePlugin> = Record<string, never>
 > {
   post(config: NetServiceRequestConfig<D>): Promise<Result<Resp, E>>;
 
   get(config: NetServiceRequestConfig<D>): Promise<Result<Resp, E>>;
 
-  transform<Resp2 = Resp, E2 = E>(): NetService<D, Resp2, E2, Plugins>;
+  transform<Resp2 = Resp, E2 = E>(
+    transformer: (_: Resp) => Resp2
+  ): NetService<D, Resp2, E2, Plugins>;
 
-  pluginWith<P extends NetServicePlugin>(
+  pluginWith<N extends string, P extends NetServicePlugin>(
+    name: N,
     plugin: P
-  ): NetService<D, Resp, E, [...Plugins, P]>;
+  ): NetService<D, Resp, E, Plugins & Record<N, P>>;
 
   plugins(): Plugins;
-}
-
-function withMore<T, D extends [...unknown[]] | []>(d: D, t: T): [...D, T] {
-  return [...d, t];
-}
-
-function foo() {
-  const ss = withMore(
-    withMore(withMore(withMore(withMore([], 23), 'aksjldfk'), {}), Symbol()),
-    () => {
-      /**  */
-    }
-  );
 }
