@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 import { createAsyncThunk, nanoid } from '@reduxjs/toolkit';
-import { random } from 'lodash';
+import { random } from 'lodash-es';
 import { Post } from './post-slice';
 
 /** Async thunk to load posts  */

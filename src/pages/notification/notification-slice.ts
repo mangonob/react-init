@@ -1,6 +1,6 @@
 import faker from '@faker-js/faker';
 import { createAsyncThunk, createSlice, nanoid } from '@reduxjs/toolkit';
-import { random } from 'lodash';
+import { random } from 'lodash-es';
 import { RootState } from 'src/store';
 
 export interface Notification {

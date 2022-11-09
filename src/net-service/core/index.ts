@@ -31,7 +31,7 @@ export function createNetworkService<
       return cast(void 0);
     },
     pluginWith(name, plugin) {
-      _plugins[name] = plugin;
+      // _plugins[name] = plugin;
       return cast(service);
     },
     plugins() {
