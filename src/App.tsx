@@ -1,15 +1,17 @@
 /* eslint-disable unicorn/filename-case */
+import loadable from '@loadable/component';
 import React from 'react';
 import { Route, Routes } from 'react-router';
 import { Scaffold } from './pages';
-import Animations from './pages/animations';
-import NotificationList from './pages/notification';
-import Playground from './pages/playground';
 import { SinglePostPage } from './pages/posts';
-import EditPost from './pages/posts/edit-post';
-import PostList from './pages/posts/post-list';
 import { UserDetail } from './pages/user';
-import UserList from './pages/user/user-list';
+
+const UserList = loadable(() => import('./pages/user/user-list'));
+const PostList = loadable(() => import('./pages/posts/post-list'));
+const EditPost = loadable(() => import('./pages/posts/edit-post'));
+const NotificationList = loadable(() => import('./pages/notification'));
+const Animations = loadable(() => import('./pages/animations'));
+const Playground = loadable(() => import('./pages/playground'));
 
 export default function App() {
   return (
