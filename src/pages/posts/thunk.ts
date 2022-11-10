@@ -1,4 +1,3 @@
-import faker from '@faker-js/faker';
 import { createAsyncThunk, nanoid } from '@reduxjs/toolkit';
 import { random } from 'lodash';
 import { Post } from './post-slice';
@@ -16,8 +15,8 @@ async function _fetchFakePosts(): Promise<Post[]> {
         (): Post => {
           return {
             id: nanoid(),
-            title: faker.random.words(3),
-            content: faker.random.words(10),
+            title: 'New post',
+            content: 'New post content',
           };
         }
       );

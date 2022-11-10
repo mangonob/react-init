@@ -3,8 +3,6 @@ import loadable from '@loadable/component';
 import React from 'react';
 import { Route, Routes } from 'react-router';
 import { Scaffold } from './pages';
-import { SinglePostPage } from './pages/posts';
-import { UserDetail } from './pages/user';
 
 const UserList = loadable(() => import('./pages/user/user-list'));
 const PostList = loadable(() => import('./pages/posts/post-list'));
@@ -12,6 +10,12 @@ const EditPost = loadable(() => import('./pages/posts/edit-post'));
 const NotificationList = loadable(() => import('./pages/notification'));
 const Animations = loadable(() => import('./pages/animations'));
 const Playground = loadable(() => import('./pages/playground'));
+const UserDetail = loadable(() => import('./pages/user'), {
+  resolveComponent: ({ UserDetail }) => UserDetail,
+});
+const SinglePostPage = loadable(() => import('./pages/posts'), {
+  resolveComponent: ({ SinglePostPage }) => SinglePostPage,
+});
 
 export default function App() {
   return (
