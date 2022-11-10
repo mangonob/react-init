@@ -30,6 +30,7 @@ module.exports = {
     'unicorn/prevent-abbreviations': 'off',
     'unicorn/prefer-spread': 'off',
     'unicorn/no-array-for-each': 'warn',
+    'unicorn/consistent-function-scoping': 'off',
 
     // @typescript-eslint custom rules
     '@typescript-eslint/no-floating-promises': 'off',

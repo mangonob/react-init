@@ -9,7 +9,7 @@ export default function Scaffold() {
     <section className={styles.app}>
       <NavBar />
       <section className={styles.appContent}>
-        <Outlet></Outlet>;
+        <Outlet></Outlet>
       </section>
     </section>
   );

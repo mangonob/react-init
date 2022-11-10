@@ -16,7 +16,7 @@ export default function NavBar() {
     <nav className={styles.navBar}>
       <section>
         <Link to="/">
-          <h1>React Redux Demo</h1>
+          <h1>React Demo</h1>
         </Link>
         {unreadCount > 0 && (
           <Link to="/notifications">

@@ -1,0 +1,17 @@
+.flow-chart-container {
+  max-height: 50vh;
+  min-height: 300px;
+  overflow: scroll;
+}
+
+.flow-chart-modal {
+  :global(.ant-modal-body) {
+    padding: 60px 20px 30px;
+  }
+}
+
+.flow-chart-card {
+  &:hover {
+    border: 1px solid #1890ff;
+  }
+}

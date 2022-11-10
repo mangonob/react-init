@@ -1,0 +1,17 @@
+.flow-chart {
+  :global {
+    .react-flow__attribution {
+      display: none;
+    }
+
+    .react-flow__handle {
+      opacity: 0;
+    }
+
+    @each $position in top, bottom, left, right {
+      .react-flow__handle-#{$position} {
+        #{$position}: 0;
+      }
+    }
+  }
+}
