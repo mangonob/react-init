@@ -1,25 +1,37 @@
-import { Button, Form, Select } from 'antd';
+import { Button, Form, Radio, Select } from 'antd';
 import React, { useMemo } from 'react';
 import { useLocalStorage } from 'react-use';
 
 import styles from './index.module.scss';
 
+interface Option {
+  value: string;
+  label: string;
+}
 export default function Playground() {
   const [env, setEnv] = useLocalStorage('storage:env', 'test');
   const downloadURL = useDownloadURL(env || 'test');
+  const options: Option[] = [
+    { value: 'test', label: 'Test' },
+    { value: 'uat', label: 'Uat' },
+  ];
 
   return (
     <div className={styles.download}>
       <Form>
         <Form.Item label="Environment">
-          <Select
-            options={[
-              { value: 'test', label: 'Test' },
-              { value: 'uat', label: 'Uat' },
-            ]}
-            onChange={(env) => setEnv(env)}
+          <Radio.Group
+            onChange={(e) => setEnv(e.target.value as string)}
             defaultValue={env}
-          ></Select>
+          >
+            {options.map(({ value, label }) => {
+              return (
+                <Radio.Button key={value} value={value}>
+                  {label}
+                </Radio.Button>
+              );
+            })}
+          </Radio.Group>
         </Form.Item>
         <Button
           type="primary"
