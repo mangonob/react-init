@@ -36,6 +36,12 @@ export default function Playground() {
 
 function useDownloadURL(env: string): string {
   return useMemo(() => {
-    return `itms-services://?action=download-manifest&url=https://vstone-asa.oss-cn-hangzhou.aliyuncs.com/package/${env.toLowerCase()}/manifest.plist`;
+    if (/iphone/i.test(navigator.userAgent)) {
+      return `itms-services://?action=download-manifest&url=https://vstone-asa.oss-cn-hangzhou.aliyuncs.com/package/${env.toLowerCase()}/manifest.plist`;
+    } else if (/mac/i.test(navigator.userAgent)) {
+      return `https://vstone-asa.oss-cn-hangzhou.aliyuncs.com/package/${env.toLowerCase()}/Runner.ipa`;
+    } else {
+      return `https://vstone-asa.oss-cn-hangzhou.aliyuncs.com/package/${env.toLowerCase()}/Runner.apk`;
+    }
   }, [env]);
 }
