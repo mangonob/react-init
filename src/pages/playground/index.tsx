@@ -1,17 +1,15 @@
-import { Button, Form, Radio, Select } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Button, Form, Segmented } from 'antd';
+import { SegmentedLabeledOption } from 'antd/lib/segmented';
 import React, { useMemo } from 'react';
 import { useLocalStorage } from 'react-use';
 
 import styles from './index.module.scss';
 
-interface Option {
-  value: string;
-  label: string;
-}
 export default function Playground() {
   const [env, setEnv] = useLocalStorage('storage:env', 'test');
   const downloadURL = useDownloadURL(env || 'test');
-  const options: Option[] = [
+  const options: SegmentedLabeledOption[] = [
     { value: 'test', label: 'Test' },
     { value: 'uat', label: 'Uat' },
   ];
@@ -20,21 +18,18 @@ export default function Playground() {
     <div className={styles.download}>
       <Form>
         <Form.Item label="Environment">
-          <Radio.Group
-            onChange={(e) => setEnv(e.target.value as string)}
+          <Segmented
+            options={options}
+            onChange={(env) => {
+              if (typeof env === 'string') setEnv(env);
+            }}
             defaultValue={env}
-          >
-            {options.map(({ value, label }) => {
-              return (
-                <Radio.Button key={value} value={value}>
-                  {label}
-                </Radio.Button>
-              );
-            })}
-          </Radio.Group>
+          ></Segmented>
         </Form.Item>
         <Button
           type="primary"
+          shape="round"
+          icon={<DownloadOutlined />}
           onClick={() => {
             window.location.href = downloadURL;
           }}
