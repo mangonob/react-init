@@ -1,7 +1,8 @@
 import { Collapse } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocalStorage } from 'react-use';
 import { NativeBindings, SafeAreaInsets } from 'runner-bridge';
+import { AppCache } from './children/app-cache';
 import { Navigate } from './children/navigate';
 import { SafeAreaInsetsDemo } from './children/safe-area-insets';
 
@@ -27,6 +28,9 @@ export default function Playground() {
         if (typeof k === 'string') setActive(k);
       }}
     >
+      <Panel header="AppCache" key="app-cache">
+        <AppCache />
+      </Panel>
       <Panel header="Navigate" key="navigate">
         <Navigate />
       </Panel>
@@ -38,18 +42,21 @@ export default function Playground() {
 }
 
 export function useSafeAreaInsets(): SafeAreaInsets {
-  const [safeAreaInsets, setSafeAreaInsets] = useState<SafeAreaInsets>({
+  const zeroInsets = {
     left: 0,
     right: 0,
     top: 0,
     bottom: 0,
-  });
+  };
+
+  const [safeAreaInsets = zeroInsets, setSafeAreaInsets] =
+    useLocalStorage<SafeAreaInsets>('local:safe-area-insets');
 
   useEffect(() => {
     NativeBindings.instance().getSafeAreaInsets().then(setSafeAreaInsets);
     return NativeBindings.instance().listenSafeAreaInsets(setSafeAreaInsets)
       .cancel;
-  }, []);
+  }, [setSafeAreaInsets]);
 
   return safeAreaInsets;
 }

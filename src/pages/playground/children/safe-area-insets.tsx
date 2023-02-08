@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { ColorMode, NativeBindings } from 'runner-bridge';
+import React from 'react';
+import { useSafeAreaInsets } from '..';
 
 export function SafeAreaInsetsDemo() {
-  const [colorMode, setColorMode] = useState<ColorMode>(ColorMode.light);
+  const insets = useSafeAreaInsets();
 
-  useEffect(() => {
-    NativeBindings.instance().getColorMode().then(setColorMode);
-    return NativeBindings.instance().listenColorMode(setColorMode).cancel;
-  }, []);
-
-  return <div>ColorMode: {colorMode}</div>;
+  return (
+    <div>
+      SafeAreaInsets: <p>{insets}</p>
+    </div>
+  );
 }
