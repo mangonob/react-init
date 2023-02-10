@@ -43,7 +43,7 @@ specifiers:
   react-router-dom: ^6.2.2
   react-use: ^17.4.0
   reactflow: ^11.2.0
-  runner-bridge: 0.0.1-beta.20
+  runner-bridge: 0.0.1-beta.22
   sass: ^1.49.9
   sass-loader: ^12.6.0
   style-loader: ^3.3.1
@@ -78,7 +78,7 @@ dependencies:
   react-router-dom: 6.3.0_sfoxds7t5ydpegc3knd667wn6m
   react-use: 17.4.0_sfoxds7t5ydpegc3knd667wn6m
   reactflow: 11.2.0_jxqt2z2xjqtbyx6x4el25gfxca
-  runner-bridge: 0.0.1-beta.20
+  runner-bridge: 0.0.1-beta.22
   vconsole: 3.15.0
   zustand: 4.1.4_immer@9.0.15+react@17.0.2
 
@@ -6357,8 +6357,8 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
-  /runner-bridge/0.0.1-beta.20:
-    resolution: {integrity: sha512-AunE4gRnsQ9clPFczpbCyeSNgO4IlH6J82iBEdHKeQo/3e5dLpVkvzRQcAZOwjtaO8RnK2xdDfz9CU4IIBCnFw==}
+  /runner-bridge/0.0.1-beta.22:
+    resolution: {integrity: sha512-23z/Wh+jHRSAKT2zuxEfwls2APXV/RRweAa9Vb17lyshZ/K5DP7QdFY/ePQGSUMh+0HA1skAt7u55IW3bjYjAA==}
     dev: false
 
   /safe-buffer/5.1.2:

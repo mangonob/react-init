@@ -6,7 +6,7 @@ export function SafeAreaInsetsDemo() {
 
   return (
     <div>
-      SafeAreaInsets: <p>{insets}</p>
+      SafeAreaInsets: <p>{JSON.stringify(insets)}</p>
     </div>
   );
 }

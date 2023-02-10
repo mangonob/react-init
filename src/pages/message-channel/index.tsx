@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { exit } from 'runner-bridge';
 
 export function MessageChannel() {
   useEffect(() => {
     const exitTask = setTimeout(() => {
-      exit(1);
+      console.info('nothing');
     }, 3000);
 
     return () => {
