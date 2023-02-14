@@ -13,6 +13,7 @@ const { Item } = Form;
 export function Navigate() {
   const [title, setTitle] = useState<string>();
   const [subtitle, setSubtitle] = useState<string>();
+  const [textColor, setTextColor] = useState<string>();
   const [backgroundColor, setBackgroundColor] = useState<string>();
   const [index, setIndex] = useState<string>();
 
@@ -29,12 +30,14 @@ export function Navigate() {
                   titleBar: {
                     title: 'Some Title',
                     subTitle: 'subtitle',
+                    titleColor: '#ff0000',
                     rightPosition: [
-                      { type: 'share' },
+                      { type: 'share', textColor: '#00ff00' },
                       {
                         type: 'jump',
                         text: '跳转',
                         url: 'http://www.example.com',
+                        textColor: '#0000ff',
                       },
                     ],
                   },
@@ -63,6 +66,12 @@ export function Navigate() {
           onChange={(e) => setSubtitle(e.target.value)}
         ></Input>
       </Item>
+      <Item label="Text Color">
+        <Input
+          value={textColor}
+          onChange={(e) => setTextColor(e.target.value)}
+        ></Input>
+      </Item>
       <Item label="Background Color">
         <Input
           value={backgroundColor}
@@ -76,6 +85,7 @@ export function Navigate() {
               title,
               subTitle: subtitle,
               background: backgroundColor,
+              titleColor: textColor,
             });
           }}
         >

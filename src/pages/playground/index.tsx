@@ -5,6 +5,7 @@ import { NativeBindings, SafeAreaInsets } from 'runner-bridge';
 import { AppCache } from './children/app-cache';
 import { Navigate } from './children/navigate';
 import { SafeAreaInsetsDemo } from './children/safe-area-insets';
+import { StatusBar } from './children/status-bar';
 
 const { Panel } = Collapse;
 
@@ -28,6 +29,9 @@ export default function Playground() {
         if (typeof k === 'string') setActive(k);
       }}
     >
+      <Panel header="StatusBar" key="status-bar">
+        <StatusBar />
+      </Panel>
       <Panel header="AppCache" key="app-cache">
         <AppCache />
       </Panel>
