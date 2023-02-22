@@ -31,15 +31,7 @@ export function Navigate() {
                     title: 'Some Title',
                     subTitle: 'subtitle',
                     titleColor: '#ff0000',
-                    rightPosition: [
-                      { type: 'share', textColor: '#00ff00' },
-                      {
-                        type: 'jump',
-                        text: '跳转',
-                        url: 'http://www.example.com',
-                        textColor: '#0000ff',
-                      },
-                    ],
+                    rightPosition: [{ icon: 'question', textColor: '#0000ff' }],
                   },
                 },
               });

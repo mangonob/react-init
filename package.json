@@ -20,7 +20,7 @@
     "react-router-dom": "^6.2.2",
     "react-use": "^17.4.0",
     "reactflow": "^11.2.0",
-    "runner-bridge": "0.0.1-beta.24",
+    "runner-bridge": "file:/Users/mangonob/Developer/runner-bridge",
     "vconsole": "^3.15.0",
     "zustand": "^4.1.4"
   },
