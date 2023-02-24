@@ -6,6 +6,7 @@ import { AppCache } from './children/app-cache';
 import { Navigate } from './children/navigate';
 import { SafeAreaInsetsDemo } from './children/safe-area-insets';
 import { StatusBar } from './children/status-bar';
+import { PDFPreview } from './children/pdf-preview';
 
 const { Panel } = Collapse;
 
@@ -14,6 +15,10 @@ export default function Playground() {
   const [active = 'navigate', setActive] = useLocalStorage<string>(
     'local:playground:active'
   );
+
+  setTimeout(() => {
+    console.info(left, right, top, bottom);
+  }, 1000);
 
   return (
     <Collapse
@@ -29,6 +34,9 @@ export default function Playground() {
         if (typeof k === 'string') setActive(k);
       }}
     >
+      <Panel header="PDFPreview" key="pdf-preview">
+        <PDFPreview />
+      </Panel>
       <Panel header="StatusBar" key="status-bar">
         <StatusBar />
       </Panel>
