@@ -28,6 +28,25 @@ export function Navigate() {
                 param: {
                   routerParams: '',
                   titleBar: {
+                    title: 'Pop Count',
+                    subTitle: 'subtitle',
+                    titleColor: '#ff0000',
+                    rightPosition: [{ icon: 'question', textColor: '#0000ff' }],
+                  },
+                  popCount: 1,
+                },
+              });
+            }}
+          >
+            With Pop
+          </Button>
+          <Button
+            onClick={() => {
+              navigationTo({
+                url: '/welcome',
+                param: {
+                  routerParams: '',
+                  titleBar: {
                     title: 'Some Title',
                     subTitle: 'subtitle',
                     titleColor: '#ff0000',
