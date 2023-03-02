@@ -60,7 +60,9 @@ export function Navigate() {
           </Button>
           <Button
             onClick={() => {
-              navigationBack();
+              navigationBack({
+                popCount: 2,
+              });
             }}
           >
             Navigate Back
