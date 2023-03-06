@@ -7,6 +7,7 @@ import { Navigate } from './children/navigate';
 import { SafeAreaInsetsDemo } from './children/safe-area-insets';
 import { StatusBar } from './children/status-bar';
 import { PDFPreview } from './children/pdf-preview';
+import { Loading } from './children/loading';
 
 const { Panel } = Collapse;
 
@@ -34,6 +35,9 @@ export default function Playground() {
         if (typeof k === 'string') setActive(k);
       }}
     >
+      <Panel header="Loading" key="pdf-preview">
+        <Loading />
+      </Panel>
       <Panel header="PDFPreview" key="pdf-preview">
         <PDFPreview />
       </Panel>
