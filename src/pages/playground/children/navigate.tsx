@@ -30,6 +30,7 @@ export function Navigate() {
                   titleBar: {
                     title: 'Pop Count',
                     subTitle: 'subtitle',
+                    subTitleColor: '#00FFFF',
                     titleColor: '#ff0000',
                     rightPosition: [{ icon: 'question', textColor: '#0000ff' }],
                   },
@@ -47,6 +48,7 @@ export function Navigate() {
                 param: {
                   routerParams: '',
                   titleBar: {
+                    showBorder: false,
                     title: 'Some Title',
                     subTitle: 'subtitle',
                     titleColor: '#ff0000',
@@ -99,6 +101,7 @@ export function Navigate() {
               subTitle: subtitle,
               background: backgroundColor,
               titleColor: textColor,
+              showBorder: true,
             });
           }}
         >
