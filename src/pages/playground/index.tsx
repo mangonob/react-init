@@ -35,7 +35,7 @@ export default function Playground() {
         if (typeof k === 'string') setActive(k);
       }}
     >
-      <Panel header="Loading" key="pdf-preview">
+      <Panel header="Loading" key="loading">
         <Loading />
       </Panel>
       <Panel header="PDFPreview" key="pdf-preview">

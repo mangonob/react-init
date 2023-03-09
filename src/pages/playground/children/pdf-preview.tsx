@@ -25,6 +25,9 @@ export function PDFPreview() {
             prewviewPDF({
               title,
               url,
+              showBottomBtn: true,
+              disableText: 'Disakljflksjdfaklsjdklfajslfjlkaskdlaslkdfjalsdj',
+              enableText: 'enable aklsdjklf',
             });
           }}
         >

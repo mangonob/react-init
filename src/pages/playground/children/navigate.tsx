@@ -4,6 +4,7 @@ import {
   navigationBack,
   navigationBackToRoot,
   navigationTo,
+  prewviewPDF,
   setHomeTabIndex,
   setTitleBar,
 } from 'runner-bridge';
