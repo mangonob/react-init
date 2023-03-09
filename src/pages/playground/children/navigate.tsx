@@ -49,6 +49,7 @@ export function Navigate() {
                   routerParams: '',
                   titleBar: {
                     showBorder: false,
+                    background: '#00FF00',
                     title: 'Some Title',
                     subTitle: 'subtitle',
                     titleColor: '#ff0000',
