@@ -11,6 +11,10 @@ module.exports = merge(
       static: './dist',
       hot: true,
       historyApiFallback: true,
+      port: 3000,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
     },
     output: {
       publicPath: '/',

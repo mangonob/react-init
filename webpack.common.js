@@ -3,6 +3,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const WebpackBar = require('webpackbar');
+const { name: packageName } = require('./package');
 
 const cssModule = {
   loader: 'css-loader',
@@ -80,5 +81,8 @@ module.exports = {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    library: `${packageName}-[name]`,
+    libraryTarget: 'umd',
+    chunkLoadingGlobal: `webpackJsonp_${packageName}`,
   },
 };

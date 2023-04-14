@@ -1,0 +1,4 @@
+[submodule "app-container"]
+	path = submodules/app-container
+	url = https://github.com/mangonob/app-container.git
+	branch = develop

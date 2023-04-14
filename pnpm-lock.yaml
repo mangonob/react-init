@@ -36,6 +36,7 @@ specifiers:
   immer: ^9.0.12
   less-loader: ^10.2.0
   lodash: ^4.17.21
+  qiankun: ^2.10.5
   react: ^17.0.2
   react-dom: ^17.0.2
   react-redux: ^7.2.6
@@ -69,6 +70,7 @@ dependencies:
   dayjs: 1.11.3
   immer: 9.0.15
   lodash: 4.17.21
+  qiankun: 2.10.5
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
   react-redux: 7.2.8_sfoxds7t5ydpegc3knd667wn6m
@@ -4306,6 +4308,12 @@ packages:
       resolve-from: 4.0.0
     dev: true
 
+  /import-html-entry/1.14.6:
+    resolution: {integrity: sha512-5MQkbwIr8n/bXOoE05M5/Nm0lnHO46vnb3D6svSvtVwpDqwhd/X14zjLcU31QWZ6gL8rUXNzj6vKHx4yOUL6gQ==}
+    dependencies:
+      '@babel/runtime': 7.20.1
+    dev: false
+
   /import-local/3.1.0:
     resolution: {integrity: sha512-ASB07uLtnDs1o6EHjKpX34BKYDSqnFerfTOJL2HvMqF70LnxpjkzDB8J44oT9pu4AMPkQwf8jl6szgvNd2tRIg==}
     engines: {node: '>=8'}
@@ -5424,6 +5432,15 @@ packages:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
     dev: true
+
+  /qiankun/2.10.5:
+    resolution: {integrity: sha512-mNbneqQzdKXpgB1K/mCO3MIXsdXwzcvxU07cUQCSljeyga3LWlI9L+clirmoaj7+UK6tylhhVQ55RyFJngh3ZQ==}
+    dependencies:
+      '@babel/runtime': 7.20.1
+      import-html-entry: 1.14.6
+      lodash: 4.17.21
+      single-spa: 5.9.4
+    dev: false
 
   /qs/6.10.3:
     resolution: {integrity: sha512-wr7M2E0OFRfIfJZjKGieI8lBKb7fRCH4Fv5KNPEs7gJ8jadvotdsS08PzOKR7opXhZ/Xkjtt3WF9g38drmyRqQ==}
@@ -6583,6 +6600,10 @@ packages:
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
     dev: true
+
+  /single-spa/5.9.4:
+    resolution: {integrity: sha512-QkEoh0AzGuU82qnbUUk0ydF78QbU5wMKqKKJn7uUQfBiOYlRQEfIOpLM4m23Sab+kTOLI1kbYhYeiQ7fX5KVVw==}
+    dev: false
 
   /sirv/1.0.19:
     resolution: {integrity: sha512-JuLThK3TnZG1TAKDwNIqNq6QA2afLOCcm+iE8D1Kj3GA40pSPsxQjjJl0J8X3tsR7T+CP1GavpzLwYkgVLWrZQ==}

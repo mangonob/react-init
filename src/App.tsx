@@ -1,40 +1,45 @@
 /* eslint-disable unicorn/filename-case */
 import loadable from '@loadable/component';
-import React from 'react';
-import { Route, Routes } from 'react-router';
-import { Scaffold } from './pages';
-import Playground from './pages/playground';
+import { ConfigProvider } from 'antd';
+import React, { ComponentClass, ComponentProps } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import store from './store';
 
 import './App.css';
+import { cast } from './components/flow-chart/utils';
 
-const UserList = loadable(() => import('./pages/user/user-list'));
-const PostList = loadable(() => import('./pages/posts/post-list'));
-const EditPost = loadable(() => import('./pages/posts/edit-post'));
-const NotificationList = loadable(() => import('./pages/notification'));
-const Animations = loadable(() => import('./pages/animations'));
-const UserDetail = loadable(() => import('./pages/user'), {
-  resolveComponent: ({ UserDetail }) => UserDetail,
-});
-const SinglePostPage = loadable(() => import('./pages/posts'), {
-  resolveComponent: ({ SinglePostPage }) => SinglePostPage,
-});
+export interface MicroAppProps {
+  container: Element;
+  name: string;
+}
+export interface AppProps<
+  Page extends ComponentClass<unknown> = ComponentClass<unknown>
+> extends Partial<MicroAppProps> {
+  page: string;
+  pageProps?: ComponentProps<Page>;
+}
 
-export default function App() {
+export default function App<Page extends ComponentClass<unknown>>(
+  props: AppProps<Page>
+) {
+  const { page, pageProps } = props;
+
+  const Comp = loadable<ComponentProps<Page>>(() =>
+    cast(import(`src/pages/${page}`))
+  );
+
   return (
-    <Routes>
-      <Route index element={<Playground />} />
-      <Route path="/" element={<Scaffold />}>
-        <Route path="posts" element={<PostList />}></Route>
-        <Route path="post/:postId" element={<SinglePostPage />}></Route>
-        <Route path="edit/:postId" element={<EditPost />}></Route>
-        <Route path="create" element={<EditPost />}></Route>
-        <Route path="users" element={<UserList />}></Route>
-        <Route path="user/:userId" element={<UserDetail />}></Route>
-        <Route path="notifications" element={<NotificationList />}></Route>
-        <Route path="animations" element={<Animations />}></Route>
-        <Route path="playground" element={<Playground />}></Route>
-      </Route>
-      <Route path="*" element={<h2>Page Not Found</h2>}></Route>
-    </Routes>
+    <BrowserRouter basename={window.__POWERED_BY_QIANKUN__ ? '/first' : '/'}>
+      <ConfigProvider
+        getPopupContainer={() => {
+          return document.querySelector('#root') || document.body;
+        }}
+      >
+        <Provider store={store}>
+          <Comp {...cast(pageProps)} />
+        </Provider>
+      </ConfigProvider>
+    </BrowserRouter>
   );
 }
