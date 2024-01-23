@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
 const WebpackBar = require('webpackbar');
@@ -30,17 +31,13 @@ module.exports = {
       /zh-cn|zh-hk|en/
     ),
     new WebpackBar(),
+    new ForkTsCheckerWebpackPlugin(),
   ],
   module: {
     rules: [
       {
         test: /\.(m?js|tsx?|jsx?)$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {
