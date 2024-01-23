@@ -97,7 +97,7 @@ export const messageSlice: StateCreator<MessageState> = (set) => {
   };
 };
 
-const useRootState = create<PostState & MessageState>((...args) => {
+export const useRootState = create<PostState & MessageState>((...args) => {
   return {
     ...postSlice(...args),
     ...messageSlice(...args),
