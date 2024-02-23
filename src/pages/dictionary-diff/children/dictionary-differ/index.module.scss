@@ -1,0 +1,30 @@
+.dictionary-diff {
+  .icon {
+    font-size: 30px;
+    color: #1677ff;
+  }
+
+  .transfer {
+    flex: 1;
+
+    &.left {
+      justify-content: flex-end;
+    }
+
+    &.right {
+      justify-content: flex-start;
+    }
+
+    &:global(.ant-transfer) {
+      :global(.ant-transfer-list) {
+        max-width: 300px;
+        height: 300px;
+        flex: 1;
+      }
+    }
+  }
+
+  .diff-button {
+    width: 100px;
+  }
+}
