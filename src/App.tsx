@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 import React, { useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Examples from './pages/examples';
+import { lazy } from '@loadable/component';
 
 import './App.css';
 
@@ -11,7 +11,7 @@ export default function App() {
       createBrowserRouter([
         {
           path: '/',
-          element: <Examples />,
+          element: lazy(() => import('./pages/examples')),
         },
       ]),
     []
