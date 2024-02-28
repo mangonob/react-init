@@ -1,8 +1,10 @@
 /* eslint-disable unicorn/filename-case */
 import React, { useMemo } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { lazy } from '@loadable/component';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
 
+import 'antd/es/style/reset.css';
 import './App.css';
 
 export default function App() {
@@ -11,7 +13,10 @@ export default function App() {
       createBrowserRouter([
         {
           path: '/',
-          element: lazy(() => import('./pages/examples')),
+          lazy: () =>
+            import('./pages/examples').then(({ default: Component }) => ({
+              Component,
+            })),
         },
       ]),
     []
@@ -19,7 +24,9 @@ export default function App() {
 
   return (
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <ConfigProvider locale={zhCN}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </React.StrictMode>
   );
 }
