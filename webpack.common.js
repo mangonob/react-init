@@ -1,10 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const webpack = require('webpack');
 const path = require('path');
 const WebpackBar = require('webpackbar');
-const { name: packageName } = require('./package');
 
 const cssModule = {
   loader: 'css-loader',
@@ -26,10 +24,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.ContextReplacementPlugin(
-      /moment[/\\]locale$/,
-      /zh-cn|zh-hk|en/
-    ),
     new WebpackBar(),
     new ForkTsCheckerWebpackPlugin(),
   ],
@@ -78,8 +72,5 @@ module.exports = {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
-    library: `${packageName}-[name]`,
-    libraryTarget: 'umd',
-    chunkLoadingGlobal: `webpackJsonp_${packageName}`,
   },
 };
