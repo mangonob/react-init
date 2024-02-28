@@ -1,11 +1,16 @@
 /* eslint-disable unicorn/filename-case */
-import React, { useMemo } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
+import React, { useMemo } from 'react';
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useLocation,
+} from 'react-router-dom';
 
 import 'antd/es/style/reset.css';
 import './App.css';
+import { Page } from './components/page';
 
 export default function App() {
   const router = useMemo(
@@ -14,9 +19,18 @@ export default function App() {
         {
           path: '/',
           lazy: () =>
-            import('./pages/examples').then(({ default: Component }) => ({
+            import('./pages/scaffold').then(({ default: Component }) => ({
               Component,
             })),
+          children: [
+            {
+              path: '*',
+              Component: () => {
+                const location = useLocation();
+                return <Page path={location.pathname} />;
+              },
+            },
+          ],
         },
       ]),
     []

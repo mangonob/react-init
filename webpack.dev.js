@@ -9,7 +9,7 @@ module.exports = merge(
     devtool: 'inline-source-map',
     devServer: {
       static: './dist',
-      // hot: true,
+      hot: true,
       historyApiFallback: true,
       port: 3000,
       headers: {
