@@ -3,6 +3,7 @@ import { Button, Space } from 'antd';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import { Outlet } from 'react-router';
+import TextDiff from 'src/components/text-diff';
 
 export default function Scaffold() {
   const [inOrder, setInOrder] = useState(false);
@@ -10,6 +11,7 @@ export default function Scaffold() {
   return (
     <>
       <Space direction="vertical">
+        <TextDiff source="klajslkdjflk" dest="mangonob" />
         <Button
           onClick={() => {
             setInOrder(!inOrder);
