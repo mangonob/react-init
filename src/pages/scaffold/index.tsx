@@ -1,38 +1,32 @@
-import { SwapOutlined } from '@ant-design/icons';
-import { Button, Space } from 'antd';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Form, Input, Space } from 'antd';
 import React, { useState } from 'react';
 import { Outlet } from 'react-router';
 import TextDiff from 'src/components/text-diff';
 
 export default function Scaffold() {
-  const [inOrder, setInOrder] = useState(false);
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
 
   return (
     <>
       <Space direction="vertical">
-        <TextDiff source="klajslkdjflk" dest="mangonob" />
-        <Button
-          onClick={() => {
-            setInOrder(!inOrder);
-          }}
-          type="primary"
-        >
-          交换方向
-        </Button>
-        <AnimatePresence>
-          <Space>
-            <motion.div layout key={inOrder ? 'aaa' : 'bbb'}>
-              {inOrder ? 'AAAAAAAAAA' : 'BBB'}
-            </motion.div>
-            <motion.div layout>
-              <SwapOutlined />
-            </motion.div>
-            <motion.div layout key={inOrder ? 'bbb' : 'aaa'}>
-              {inOrder ? 'BBB' : 'AAAAAAAAAA'}
-            </motion.div>
-          </Space>
-        </AnimatePresence>
+        <Form>
+          <Form.Item name="from" label="From">
+            <Input
+              value={from}
+              onChange={(t) => setFrom(t.target.value.trim())}
+              autoComplete="off"
+            />
+          </Form.Item>
+          <Form.Item name="to" label="To">
+            <Input
+              value={to}
+              onChange={(t) => setTo(t.target.value.trim())}
+              autoComplete="off"
+            />
+          </Form.Item>
+        </Form>
+        <TextDiff source={from} dest={to} />
       </Space>
       <Outlet />
     </>
