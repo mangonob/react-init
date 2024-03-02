@@ -12,14 +12,14 @@ export default function Scaffold() {
       <Space direction="vertical">
         <Form>
           <Form.Item name="from" label="From">
-            <Input
+            <Input.TextArea
               value={from}
               onChange={(t) => setFrom(t.target.value.trim())}
               autoComplete="off"
             />
           </Form.Item>
           <Form.Item name="to" label="To">
-            <Input
+            <Input.TextArea
               value={to}
               onChange={(t) => setTo(t.target.value.trim())}
               autoComplete="off"
