@@ -7,7 +7,6 @@ module.exports = merge(
   /** @type { import("webpack").Configuration } */
   {
     mode: 'production',
-    devtool: 'source-map',
     plugins: [
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
