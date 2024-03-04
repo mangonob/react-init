@@ -1,6 +1,7 @@
 /* eslint-disable unicorn/no-for-loop */
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
+import { longestCommonSubsequence } from 'src/foundation';
 
 import styles from './index.module.scss';
 
@@ -56,41 +57,8 @@ function generateDiffItem(source: string, dest: string): DiffItem<string>[] {
     ];
   }
 
-  const lens: [number[], number[]] = [
-    Array.from<number>({ length: source.length + 1 }).fill(0),
-    Array.from<number>({ length: source.length + 1 }).fill(0),
-  ];
+  const [fromLCS, toLCS] = longestCommonSubsequence(source, dest);
 
-  const fromIndexes: number[] = [];
-  const toIndexes: number[] = [];
-
-  for (let i = 0; i < dest.length; i++) {
-    const tch = dest[i];
-    const [prev, curr] = lens;
-
-    for (let j = 0; j < source.length; j++) {
-      const fch = source[j];
-      if (fch === tch) {
-        if (
-          (fromIndexes.length === 0 || j > fromIndexes[0]) &&
-          (toIndexes.length === 0 || i > toIndexes[0])
-        ) {
-          fromIndexes.unshift(j);
-          toIndexes.unshift(i);
-        }
-        curr[j + 1] = prev[j] + 1;
-      } else if (curr[j] > prev[j + 1]) {
-        curr[j + 1] = curr[j];
-      } else {
-        curr[j + 1] = prev[j + 1];
-      }
-    }
-    lens[0] = curr;
-    lens[1] = prev;
-  }
-
-  const fromLCS = fromIndexes.reverse();
-  const toLCS = toIndexes.reverse();
   const items: DiffItem<string>[] = [];
   let fromIndex = 0;
   let toIndex = 0;
