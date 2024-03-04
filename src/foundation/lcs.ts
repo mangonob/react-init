@@ -10,11 +10,6 @@ enum LCSDirection {
   LeftUp = 3,
 }
 
-interface ArrayLike<T> {
-  [key: number]: T;
-  length: number;
-}
-
 export function longestCommonSubsequence<T>(
   lhs: ArrayLike<T>,
   rhs: ArrayLike<T>,
