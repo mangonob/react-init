@@ -1,5 +1,6 @@
 import { MenuOutlined } from '@ant-design/icons';
 import { Avatar, Drawer, Layout, Space } from 'antd';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { Theme, useTheme } from 'src/hooks/theme';
@@ -15,6 +16,7 @@ const iconMaps: Record<Theme, string> = {
 const { Content, Header } = Layout;
 
 import styles from './index.module.scss';
+import classNames from 'classnames';
 
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
@@ -47,11 +49,23 @@ export default function Scaffold() {
             <MenuOutlined />
           </div>
           <Space>
-            <img
-              className={styles.themeSwitcher}
-              src={iconMaps[theme]}
-              onClick={toggleTheme}
-            />
+            <div className={styles.themeSwitcher}>
+              <AnimatePresence>
+                <motion.div
+                  key={theme}
+                  className={styles.themeSwitcher}
+                  initial={{ opacity: 0, y: '100%' }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: '-100%', height: 0 }}
+                >
+                  <img
+                    className={styles.icon}
+                    src={iconMaps[theme]}
+                    onClick={toggleTheme}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
             <Avatar
               size="large"
               style={{ backgroundColor: '#f56a00' }}
@@ -65,7 +79,7 @@ export default function Scaffold() {
           <Outlet />
         </Content>
         <Drawer
-          className={styles.systemDrawer}
+          className={classNames(styles.drawer, styles.systemDrawer)}
           placement="left"
           width={320}
           open={!isLeftDrawerHidden}
@@ -74,7 +88,7 @@ export default function Scaffold() {
           <h1>Left</h1>
         </Drawer>
         <Drawer
-          className={styles.userDrawer}
+          className={classNames(styles.drawer, styles.userDrawer)}
           placement="right"
           width={320}
           open={!isRightDrawerHidden}

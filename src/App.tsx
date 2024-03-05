@@ -9,6 +9,8 @@ import {
 } from 'react-router-dom';
 
 import 'antd/es/style/reset.css';
+import 'src/themes/light.scss';
+import 'src/themes/dark.scss';
 import './App.css';
 import { Page } from './components/page';
 
