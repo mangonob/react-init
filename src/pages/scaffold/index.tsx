@@ -1,5 +1,5 @@
 import { MenuOutlined } from '@ant-design/icons';
-import { Avatar, Drawer, Layout } from 'antd';
+import { Avatar, Drawer, Layout, Space, Image } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { useTheme } from 'src/hooks/theme';
@@ -37,13 +37,16 @@ export default function Scaffold() {
           >
             <MenuOutlined />
           </div>
-          <Avatar
-            size="large"
-            style={{ backgroundColor: '#f56a00' }}
-            onClick={() => setIsRightDrawerHidden(false)}
-          >
-            U
-          </Avatar>
+          <Space>
+            <Image src="./assets/icons/theme-dark" />
+            <Avatar
+              size="large"
+              style={{ backgroundColor: '#f56a00' }}
+              onClick={() => setIsRightDrawerHidden(false)}
+            >
+              U
+            </Avatar>
+          </Space>
         </Header>
         <Content className={styles.content}>
           <Outlet />
