@@ -18,7 +18,7 @@
     "react-router": "^6.21.3",
     "react-router-dom": "^6.21.3",
     "react-use": "^17.4.0",
-    "zustand": "^4.1.4"
+    "zustand": "^4.5.2"
   },
   "scripts": {
     "build": "webpack --config webpack.prod.js",

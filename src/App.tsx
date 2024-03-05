@@ -24,11 +24,21 @@ export default function App() {
             })),
           children: [
             {
+              index: true,
+              lazy: () =>
+                import('./components/redirect').then(
+                  ({ default: Component }) => ({
+                    element: <Component path="/differ" />,
+                  })
+                ),
+            },
+            {
               path: '*',
               Component: () => {
                 const location = useLocation();
                 return <Page path={location.pathname} />;
               },
+              errorElement: <h1>Page not found</h1>,
             },
           ],
         },

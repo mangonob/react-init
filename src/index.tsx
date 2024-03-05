@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App';
 
-createRoot(document.querySelector('#root') as Element).render(<App />);
+const App = lazy(() => import('./App'));
+
+createRoot(document.querySelector('#root') as Element).render(
+  <Suspense>
+    <App />
+  </Suspense>
+);
