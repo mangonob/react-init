@@ -3,7 +3,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import React, { useMemo } from 'react';
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
   useLocation,
 } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { Page } from './components/page';
 export default function App() {
   const router = useMemo(
     () =>
-      createBrowserRouter([
+      createHashRouter([
         {
           path: '/',
           lazy: () =>

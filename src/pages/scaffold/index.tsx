@@ -1,8 +1,16 @@
 import { MenuOutlined } from '@ant-design/icons';
-import { Avatar, Drawer, Layout, Space, Image } from 'antd';
+import { Avatar, Drawer, Layout, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
-import { useTheme } from 'src/hooks/theme';
+import { Theme, useTheme } from 'src/hooks/theme';
+
+import darkIcon from 'src/assets/icons/theme-dark.svg';
+import lightIcon from 'src/assets/icons/theme-light.svg';
+
+const iconMaps: Record<Theme, string> = {
+  light: lightIcon,
+  dark: darkIcon,
+};
 
 const { Content, Header } = Layout;
 
@@ -10,6 +18,7 @@ import styles from './index.module.scss';
 
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
+  const toggleTheme = useTheme((s) => s.toggleTheme);
   const [isLeftDrawerHidden, setIsLeftDrawerHidden] = useState(true);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
 
@@ -38,7 +47,11 @@ export default function Scaffold() {
             <MenuOutlined />
           </div>
           <Space>
-            <Image src="./assets/icons/theme-dark" />
+            <img
+              className={styles.themeSwitcher}
+              src={iconMaps[theme]}
+              onClick={toggleTheme}
+            />
             <Avatar
               size="large"
               style={{ backgroundColor: '#f56a00' }}
