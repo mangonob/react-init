@@ -15,6 +15,12 @@ import 'src/themes/dark.scss';
 import './App.scss';
 import { Page } from './components/page';
 
+import('antd/es/message').then((e) => {
+  e.default.config({
+    maxCount: 3,
+  });
+});
+
 export default function App() {
   const router = useMemo(
     () =>

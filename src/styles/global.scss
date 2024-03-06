@@ -1,17 +1,16 @@
 @import './antd.scss';
 
-* {
-  color: var(--text-color-primary);
-}
-
 h1,
 h2,
-h5,
+h3,
 h4,
 h5,
-h6 {
+h6,
+p,
+span {
   line-height: 1.5;
   font-weight: 400;
+  color: var(--text-color-primary);
 }
 
 h1 {
@@ -49,4 +48,67 @@ span {
 
 .remark {
   font-size: 12px;
+}
+
+// antd.message
+.ant-message .ant-message-notice-wrapper {
+  .ant-message-success > .anticon {
+    color: var(--success-color-normal);
+  }
+
+  .ant-message-info > .anticon {
+    color: var(--blue-color-default);
+  }
+
+  .ant-message-error > .anticon {
+    color: var(--danger-color-normal);
+  }
+
+  .ant-message-warning > .anticon {
+    color: var(--warning-color-normal);
+  }
+}
+
+.ant-message .ant-message-notice-wrapper .ant-message-notice-content {
+  background: var(--auxiliary-background-color);
+  color: var(--text-color-primary);
+}
+
+// antd.Tabs
+.ant-tabs-top > .ant-tabs-nav::before,
+.ant-tabs-bottom > .ant-tabs-nav::before,
+.ant-tabs-top > div > .ant-tabs-nav::before,
+.ant-tabs-bottom > div > .ant-tabs-nav::before {
+  border-color: var(--border-color-primary);
+}
+
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
+.ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab {
+  border-color: var(--border-color-primary);
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--text-color-primary);
+  transition: none;
+}
+
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
+.ant-tabs-card > div > .ant-tabs-nav .ant-tabs-tab-active {
+  color: var(--text-color-primary);
+  background-color: var(--system-background-color);
+}
+
+.ant-tabs .ant-tabs-tab {
+  color: var(--text-color-secondary);
+  transition-duration: 0ms;
+}
+
+.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active {
+  border-bottom-color: transparent;
+  transition: none;
+}
+
+.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab,
+.ant-tabs .ant-tabs-tab-btn {
+  transition: none;
 }

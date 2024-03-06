@@ -1,6 +1,7 @@
+import { message } from 'antd';
 import classNames from 'classnames';
 import color from 'color';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useCSSVarGetter } from 'src/hooks/css-var';
 
 import styles from './index.module.scss';
@@ -39,11 +40,21 @@ export function ColorPalette(props: ColorPaletteProps) {
     [getHexString]
   );
 
+  const onCopy = useCallback((text: string) => {
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        message.success(`${text} 拷贝成功`);
+      })
+      .catch(() => void 0);
+  }, []);
+
   return (
     <div className={styles.colorPalette}>
       <div
         className={classNames(styles.defaultItem, getAppearence(defaultIndex))}
         style={{ backgroundColor: `var(${getColorVar(defaultIndex)})` }}
+        onClick={() => onCopy(getHexString(defaultIndex))}
       >
         <span>{label}</span>
         <div className={styles.palette}>
@@ -54,16 +65,18 @@ export function ColorPalette(props: ColorPaletteProps) {
         </div>
       </div>
       {Array.from({ length: to - from + 1 }).map((_, i) => {
+        const hexString = getHexString(i + 1);
         return (
           <div
             key={i}
             className={classNames(styles.paletteItem, getAppearence(i + 1))}
             style={{ backgroundColor: `var(${getColorVar(i + 1)})` }}
+            onClick={() => onCopy(hexString)}
           >
             <span>
               {colorName}-{i + from}
             </span>
-            <span>{getHexString(i + 1)}</span>
+            <span>{hexString}</span>
           </div>
         );
       })}
