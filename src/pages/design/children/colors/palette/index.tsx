@@ -1,8 +1,9 @@
-import React from 'react';
+import classNames from 'classnames';
 import color from 'color';
+import React, { useCallback, useEffect } from 'react';
+import { useCSSVarGetter } from 'src/hooks/css-var';
 
 import styles from './index.module.scss';
-import classNames from 'classnames';
 
 export interface ColorPaletteProps {
   label: string;
@@ -15,17 +16,28 @@ export interface ColorPaletteProps {
 export function ColorPalette(props: ColorPaletteProps) {
   const { defaultIndex = 6, from = 1, to = 10, label, colorName } = props;
 
-  const getColorVar = (index: number) => {
-    return `--${colorName}-color-level-${index}`;
-  };
+  const getColorVar = useCallback(
+    (index: number) => {
+      return `--${colorName}-color-level-${index}`;
+    },
+    [colorName]
+  );
 
-  const getHexString = (index: number) => {
-    return getComputedStyle(document.body).getPropertyValue(getColorVar(index));
-  };
+  const getCSSVarValue = useCSSVarGetter();
 
-  const getAppearence = (index: number): string => {
-    return color(getHexString(index)).gray() > 50 ? styles.light : styles.dark;
-  };
+  const getHexString = useCallback(
+    (index: number) => getCSSVarValue(getColorVar(index)),
+    [getCSSVarValue, getColorVar]
+  );
+
+  const getAppearence = useCallback(
+    (index: number): string => {
+      return color(getHexString(index)).gray() > 50
+        ? styles.light
+        : styles.dark;
+    },
+    [getHexString]
+  );
 
   return (
     <div className={styles.colorPalette}>
