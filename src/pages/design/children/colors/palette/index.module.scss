@@ -1,0 +1,33 @@
+.color-palette {
+  .default-item {
+    padding: 8px 16px;
+
+    .palette {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .palette-item {
+    padding: 0 16px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .light {
+    span {
+      color: black;
+    }
+  }
+
+  .dark {
+    span {
+      color: white;
+    }
+  }
+}

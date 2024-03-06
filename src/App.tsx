@@ -9,9 +9,10 @@ import {
 } from 'react-router-dom';
 
 import 'antd/es/style/reset.css';
+import 'src/styles/global.scss';
 import 'src/themes/light.scss';
 import 'src/themes/dark.scss';
-import './App.css';
+import './App.scss';
 import { Page } from './components/page';
 
 export default function App() {

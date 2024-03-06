@@ -1,9 +1,9 @@
 .text-differ {
   .insert {
-    background-color: rgba(0, 255, 0, 0.2);
+    background-color: var(--green-color-level-3);
   }
 
   .delete {
-    background-color: rgba(255, 0, 0, 0.2);
+    background-color: var(--red-color-level-3);
   }
 }

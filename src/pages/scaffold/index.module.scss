@@ -2,11 +2,6 @@
   overflow: hidden;
   height: 100vh;
 
-  &,
-  :global(.ant-form-item-label) > label {
-    color: var(--primary-text-color);
-  }
-
   .nav-header {
     color: lightgray;
     padding: 0 20px;

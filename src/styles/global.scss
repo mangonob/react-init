@@ -1,0 +1,52 @@
+@import './antd.scss';
+
+* {
+  color: var(--text-color-primary);
+}
+
+h1,
+h2,
+h5,
+h4,
+h5,
+h6 {
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 52px;
+}
+
+h2 {
+  font-size: 40px;
+}
+
+h3 {
+  font-size: 32px;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+h5 {
+  font-size: 20px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+p,
+span {
+  font-size: 14px;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.remark {
+  font-size: 12px;
+}

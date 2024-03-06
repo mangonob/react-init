@@ -1,0 +1,18 @@
+.ant-form-item .ant-form-item-label > label {
+  color: var(--text-color-primary);
+}
+
+.ant-input {
+  &,
+  &:hover,
+  &:focus,
+  &:focus-within {
+    color: var(--text-color-primary);
+    background-color: transparent;
+    border-color: var(--border-color-primary);
+  }
+}
+
+.ant-drawer .ant-drawer-mask {
+  background-color: rgba(0, 0, 0, 0.6);
+}

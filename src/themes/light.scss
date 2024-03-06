@@ -1,6 +1,138 @@
 .theme-light {
+  --main-color: #006fff;
+
+  --nav-background-color: #14437b;
+  --menu-background-color: #f7f8fa;
   --system-background-color: #ffffff;
-  --nav-background-color: #ffffff;
-  --menu-background-color: #f8fafb;
-  --primary-text-color: #000000;
+  --auxiliary-background-color: #f2f3f5;
+
+  --border-color-primary: #c9cdd4;
+  --border-color-secondary: #e5e6eb;
+  --border-color-tertiary: #f2f3f5;
+
+  --text-color-primary: #000000cc;
+  --text-color-secondary: #000000a6;
+  --text-color-tertiary: #00000073;
+
+  --success-color-normal: #20b44a;
+  --success-color-hover: #3fc360;
+  --success-color-focus: #159a3f;
+
+  --warnning-color-normal: #fa8f1b;
+  --warnning-color-hover: #fba843;
+  --warnning-color-focus: #cf6d11;
+
+  --danger-color-normal: #f5424d;
+  --danger-color-hover: #f76267;
+  --danger-color-focus: #cb2939;
+
+  --blue-color-default: #006fff;
+  --blue-color-level-1: #e8f6ff;
+  --blue-color-level-2: #bae1ff;
+  --blue-color-level-3: #8bc9ff;
+  --blue-color-level-4: #5daeff;
+  --blue-color-level-5: #2e90ff;
+  --blue-color-level-6: #006fff;
+  --blue-color-level-7: #0054d2;
+  --blue-color-level-8: #003da6;
+  --blue-color-level-9: #002879;
+  --blue-color-level-10: #00174d;
+
+  --gray-color-default: #6d7480;
+  --gray-color-level-0: #ffffff;
+  --gray-color-level-1: #f7f8fa;
+  --gray-color-level-2: #f2f3f5;
+  --gray-color-level-3: #e5e6eb;
+  --gray-color-level-4: #c9cdd4;
+  --gray-color-level-5: #a9aeb8;
+  --gray-color-level-6: #86909c;
+  --gray-color-level-7: #6b7785;
+  --gray-color-level-8: #4e5969;
+  --gray-color-level-9: #272e3b;
+  --gray-color-level-10: #1d2129;
+  --gray-color-level-11: #000000;
+
+  --green-color-default: #20b44a;
+  --green-color-level-1: #e8ffeb;
+  --green-color-level-2: #b7f0c0;
+  --green-color-level-3: #8be19b;
+  --green-color-level-4: #63d27b;
+  --green-color-level-5: #3fc360;
+  --green-color-level-6: #20b44a;
+  --green-color-level-7: #159a3f;
+  --green-color-level-8: #0b8034;
+  --green-color-level-9: #05662a;
+  --green-color-level-10: #004d20;
+
+  --orange-color-default: #fb972f;
+  --orange-color-level-1: #fff8e8;
+  --orange-color-level-2: #fee8be;
+  --orange-color-level-3: #fdd595;
+  --orange-color-level-4: #fcc06c;
+  --orange-color-level-5: #fba843;
+  --orange-color-level-6: #fa8f1b;
+  --orange-color-level-7: #cf6d11;
+  --orange-color-level-8: #a34e09;
+  --orange-color-level-9: #783403;
+  --orange-color-level-10: #4d1d00;
+
+  --red-color-default: #f5424d;
+  --red-color-level-1: #ffeae8;
+  --red-color-level-2: #fdc9c6;
+  --red-color-level-3: #fba7a4;
+  --red-color-level-4: #f98383;
+  --red-color-level-5: #f76267;
+  --red-color-level-6: #f5424d;
+  --red-color-level-7: #cb2939;
+  --red-color-level-8: #a11628;
+  --red-color-level-9: #77081a;
+  --red-color-level-10: #4d000f;
+
+  --cyan-color-default: #00a3fa;
+  --cyan-color-level-1: #e8fbff;
+  --cyan-color-level-2: #b9effe;
+  --cyan-color-level-3: #8ae0fd;
+  --cyan-color-level-4: #5ccffc;
+  --cyan-color-level-5: #2ebafb;
+  --cyan-color-level-6: #00a3fa;
+  --cyan-color-level-7: #007fcf;
+  --cyan-color-level-8: #005fa3;
+  --cyan-color-level-9: #004278;
+  --cyan-color-level-10: #00284d;
+
+  --purple-color-default: #722ed1;
+  --purple-color-level-1: #f5e8ff;
+  --purple-color-level-2: #ddbef6;
+  --purple-color-level-3: #c396ed;
+  --purple-color-level-4: #a871e3;
+  --purple-color-level-5: #8d4eda;
+  --purple-color-level-6: #722ed1;
+  --purple-color-level-7: #551db0;
+  --purple-color-level-8: #3c108f;
+  --purple-color-level-9: #27066e;
+  --purple-color-level-10: #16004d;
+
+  --yellow-color-default: #f7ba1e;
+  --yellow-color-level-1: #fffce8;
+  --yellow-color-level-2: #fdf4bf;
+  --yellow-color-level-3: #fce996;
+  --yellow-color-level-4: #fadc6d;
+  --yellow-color-level-5: #f9cc45;
+  --yellow-color-level-6: #f7ba1e;
+  --yellow-color-level-7: #cc9213;
+  --yellow-color-level-8: #a26d0a;
+  --yellow-color-level-9: #774b04;
+  --yellow-color-level-10: #4d2d00;
+
+  --magenta-color-default: #d91ad9;
+  --magenta-color-level-1: #ffe8fb;
+  --magenta-color-level-2: #f7baef;
+  --magenta-color-level-3: #f08ee6;
+  --magenta-color-level-4: #e865df;
+  --magenta-color-level-5: #e13edb;
+  --magenta-color-level-6: #d91ad9;
+  --magenta-color-level-7: #b010b6;
+  --magenta-color-level-8: #810993;
+  --magenta-color-level-9: #650370;
+  --magenta-color-level-10: #42004d;
 }
