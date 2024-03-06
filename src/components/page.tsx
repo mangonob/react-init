@@ -1,5 +1,6 @@
+import { Button, Result } from 'antd';
 import React, { ComponentType, Suspense } from 'react';
-import { useRouteError } from 'react-router';
+import { useNavigate, useRouteError } from 'react-router';
 
 export interface PageProps<P> {
   path: string;
@@ -37,6 +38,20 @@ export class PageLoadError extends Error {
 
 export function PageLoadErrorBoundary() {
   const error = useRouteError();
+  const navigate = useNavigate();
 
-  return <p>Page not found</p>;
+  return error instanceof PageLoadError ? (
+    <Result
+      status="404"
+      title="404"
+      subTitle="Sorry, the page you visited does not exist."
+      extra={
+        <Button type="primary" onClick={() => navigate('/')}>
+          回首页
+        </Button>
+      }
+    />
+  ) : (
+    <p>{`Error: ${(error as Error).message}`}</p>
+  );
 }
