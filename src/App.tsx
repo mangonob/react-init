@@ -13,7 +13,7 @@ import 'src/styles/global.scss';
 import 'src/themes/light.scss';
 import 'src/themes/dark.scss';
 import './App.scss';
-import { Page } from './components/page';
+import { Page, PageLoadErrorBoundary } from './components/page';
 
 import('antd/es/message').then((e) => {
   e.default.config({
@@ -47,7 +47,7 @@ export default function App() {
                 const location = useLocation();
                 return <Page path={location.pathname} />;
               },
-              errorElement: <h1>Page not found</h1>,
+              ErrorBoundary: PageLoadErrorBoundary,
             },
           ],
         },
