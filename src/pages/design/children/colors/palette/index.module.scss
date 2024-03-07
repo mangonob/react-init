@@ -17,6 +17,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    transition: width 0.25s ease-out;
+
+    &:hover {
+      width: calc(100% + 20px);
+    }
   }
 
   .light {

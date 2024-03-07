@@ -17,7 +17,7 @@ export function Colors() {
 
   return (
     <>
-      <Row gutter={[16, 20]}>
+      <Row gutter={[24, 20]}>
         {colors.map(([label, colorName], j) => {
           return (
             <Col key={j} xs={24} sm={12} md={8} lg={6} xl={6} xxl={4}>
