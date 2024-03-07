@@ -1,0 +1,118 @@
+@use 'sass:math';
+@import 'src/styles/chess-board';
+
+.color-pad {
+  .colors {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .color-item {
+      height: 24px;
+      width: 24px;
+      box-sizing: border-box;
+
+      &.color-item-active {
+        border: 1px solid white;
+      }
+    }
+  }
+
+  $slider-height: 14px;
+  $anchor-height: 18px;
+  $anchor-offset: math.div($slider-height - $anchor-height, 2);
+
+  .alpha-slider {
+    flex: 1;
+    height: $slider-height;
+
+    :global {
+      .ant-slider-rail {
+        height: 100%;
+        background-color: transparent;
+        top: 0;
+
+        $grid-size: math.div($slider-height, 2);
+        $grid-color-1: var(--gray-color-level-6);
+        $grid-color-2: white;
+
+        &::before,
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: math.div(-$slider-height, 2);
+          right: math.div(-$slider-height, 2);
+          border-radius: math.div($slider-height, 2);
+        }
+
+        &::before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: math.div(-$slider-height, 2);
+          right: math.div(-$slider-height, 2);
+          border-radius: math.div($slider-height, 2);
+          @include chess-board($grid-color-1, $grid-color-2, $grid-size);
+        }
+
+        &::after {
+          border: 1px solid var(--border-color-primary);
+          background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 100%)
+          );
+        }
+      }
+
+      .ant-slider-track,
+      .ant-slider-step {
+        display: none;
+      }
+
+      .ant-slider-handle {
+        &,
+        &::after,
+        &::before {
+          width: $anchor-height;
+          height: $anchor-height;
+        }
+
+        &::after {
+          box-shadow: none;
+        }
+
+        &:hover::after,
+        &:hover::before,
+        &::before,
+        &::after {
+          inset-inline-start: 0;
+          inset-block-start: 0;
+        }
+
+        &::after {
+          border: 4px solid white;
+          background-color: transparent;
+          box-shadow:
+            0 0 1px 1px rgba(0, 0, 0, 0.5),
+            0 0 1px 1px rgba(0, 0, 0, 0.5) inset;
+        }
+
+        inset-block-start: 0;
+        top: $anchor-offset;
+        left: $anchor-offset;
+      }
+    }
+  }
+
+  .alpha-number {
+    width: 30px;
+    text-align: right;
+  }
+}

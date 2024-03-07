@@ -1,0 +1,27 @@
+@mixin chess-board($color1, $color2, $size) {
+  background-image: _chess-board-gradients($color1),
+    _chess-board-gradients($color2);
+  background-position:
+    0 0,
+    $size $size,
+    0 $size,
+    $size 0;
+  background-size: ($size * 2) ($size * 2);
+}
+
+@function _chess-board-gradients($grid-color) {
+  @return linear-gradient(
+      45deg,
+      $grid-color 25%,
+      transparent 0,
+      transparent 75%,
+      $grid-color 0
+    ),
+    linear-gradient(
+      45deg,
+      $grid-color 25%,
+      transparent 0,
+      transparent 75%,
+      $grid-color 0
+    );
+}

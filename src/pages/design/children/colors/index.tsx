@@ -1,5 +1,6 @@
-import { Col, Row } from 'antd';
+import { Col, Flex, Row, Space, ColorPicker as IColorPicker } from 'antd';
 import React from 'react';
+import { ColorPicker } from 'src/components';
 import { ColorPalette } from './palette';
 
 export function Colors() {
@@ -16,7 +17,11 @@ export function Colors() {
   ];
 
   return (
-    <>
+    <Flex vertical gap={20}>
+      <Space direction="horizontal">
+        <ColorPicker />
+        <IColorPicker />
+      </Space>
       <Row gutter={[24, 20]}>
         {colors.map(([label, colorName], j) => {
           return (
@@ -26,6 +31,6 @@ export function Colors() {
           );
         })}
       </Row>
-    </>
+    </Flex>
   );
 }

@@ -112,3 +112,16 @@ span {
 .ant-tabs .ant-tabs-tab-btn {
   transition: none;
 }
+
+// antd.Popover
+.ant-popover .ant-popover-inner {
+  background-color: var(--system-background-color);
+  box-shadow:
+    0 6px 16px 0 rgba(var(--popover-shadow-color), 0.08),
+    0 3px 6px -4px rgba(var(--popover-shadow-color), 0.12),
+    0 9px 28px 8px rgba(var(--popover-shadow-color), 0.05);
+}
+
+.ant-popover .ant-popover-arrow:before {
+  background-color: var(--system-background-color);
+}

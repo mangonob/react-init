@@ -1,0 +1,13 @@
+@import 'src/styles/chess-board';
+
+.example {
+  .chess {
+    @include chess-board(
+      var(--blue-color-level-6),
+      var(--green-color-level-6),
+      20px
+    );
+    width: 320px;
+    height: 320px;
+  }
+}

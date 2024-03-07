@@ -7,13 +7,14 @@ import {
   RouterProvider,
   useLocation,
 } from 'react-router-dom';
+import { Page, PageLoadErrorBoundary } from './components/page';
+import { useKeyboardShortcut } from './hooks';
 
 import 'antd/es/style/reset.css';
 import 'src/styles/global.scss';
-import 'src/themes/light.scss';
 import 'src/themes/dark.scss';
+import 'src/themes/light.scss';
 import './App.scss';
-import { Page, PageLoadErrorBoundary } from './components/page';
 
 import('antd/es/message').then((e) => {
   e.default.config({
@@ -22,6 +23,11 @@ import('antd/es/message').then((e) => {
 });
 
 export default function App() {
+  useKeyboardShortcut('Shift+Alt+D', () => {
+    // eslint-disable-next-line no-debugger
+    debugger;
+  });
+
   const router = useMemo(
     () =>
       createHashRouter([
