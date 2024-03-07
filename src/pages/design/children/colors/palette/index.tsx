@@ -12,10 +12,18 @@ export interface ColorPaletteProps {
   defaultIndex?: number;
   from?: number;
   to?: number;
+  onChanged?: (color?: string) => void;
 }
 
 export function ColorPalette(props: ColorPaletteProps) {
-  const { defaultIndex = 6, from = 1, to = 10, label, colorName } = props;
+  const {
+    defaultIndex = 6,
+    from = 1,
+    to = 10,
+    label,
+    colorName,
+    onChanged,
+  } = props;
 
   const getColorVar = useCallback(
     (index: number) => {
@@ -55,6 +63,8 @@ export function ColorPalette(props: ColorPaletteProps) {
         className={classNames(styles.defaultItem, getAppearence(defaultIndex))}
         style={{ backgroundColor: `var(${getColorVar(defaultIndex)})` }}
         onClick={() => onCopy(getHexString(defaultIndex))}
+        onMouseEnter={() => onChanged?.(getColorVar(defaultIndex))}
+        onMouseLeave={() => onChanged?.(void 0)}
       >
         <span>{label}</span>
         <div className={styles.palette}>
@@ -65,13 +75,16 @@ export function ColorPalette(props: ColorPaletteProps) {
         </div>
       </div>
       {Array.from({ length: to - from + 1 }).map((_, i) => {
+        const colorVar = getColorVar(i + 1);
         const hexString = getHexString(i + 1);
         return (
           <div
             key={i}
             className={classNames(styles.paletteItem, getAppearence(i + 1))}
-            style={{ backgroundColor: `var(${getColorVar(i + 1)})` }}
+            style={{ backgroundColor: `var(${colorVar})` }}
             onClick={() => onCopy(hexString)}
+            onMouseEnter={() => onChanged?.(colorVar)}
+            onMouseLeave={() => onChanged?.(void 0)}
           >
             <span>
               {colorName}-{i + from}
