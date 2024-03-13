@@ -1,6 +1,6 @@
 import { Popover } from 'antd';
 import classNames from 'classnames';
-import { isNil } from 'lodash';
+import { isNil } from 'lodash-es';
 import React, { CSSProperties, useEffect, useState } from 'react';
 import { ColorPad } from './color-pad';
 

@@ -7,7 +7,15 @@
       var(--green-color-level-6),
       20px
     );
-    width: 320px;
+    width: 50%;
     height: 320px;
+  }
+
+  .chess2 {
+    @include chess-board(
+      var(--blue-color-level-6),
+      var(--yellow-color-level-6),
+      30px
+    );
   }
 }

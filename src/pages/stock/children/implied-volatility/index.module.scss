@@ -1,0 +1,16 @@
+.implied-volatility {
+  span {
+    font-size: 16px;
+  }
+
+  .asset-search {
+    width: 200px;
+  }
+
+  .transfer {
+    :global(.ant-transfer-list) {
+      height: 400px;
+      width: 250px;
+    }
+  }
+}

@@ -14,6 +14,17 @@ module.exports = merge(
       port: 3000,
       headers: {
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Credentials': true,
+      },
+      proxy: {
+        '/api': {
+          target: 'https://hk.warrants.com',
+          changeOrigin: true,
+          pathRewrite: { '^/api': '' },
+          headers: {
+            referer: 'https://hk.warrants.com',
+          },
+        },
       },
     },
     output: {

@@ -5,3 +5,4 @@ export * from './element-size';
 export * from './keydown';
 export * from './request';
 export * from './theme';
+export * from './debounce-value';
