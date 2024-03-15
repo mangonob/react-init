@@ -1,14 +1,18 @@
 import request from 'src/request';
-import { FetchWarrantParams, parseWarrantTableString } from './models';
+import {
+  FetchWarrantParams,
+  WarrantModel,
+  parseWarrantTableString,
+} from './models';
 
 export async function fetchWarrant(
   params: FetchWarrantParams
-): Promise<unknown[]> {
+): Promise<WarrantModel[]> {
   const response = await request.get<string>('/tc/ajax/warrant-search-result', {
     params: {
       action: '',
       page: 1,
-      num: 20,
+      num: 1024,
       sort: '',
       order: '',
       visible: '',
@@ -35,5 +39,9 @@ export async function fetchWarrant(
     } as FetchWarrantParams,
   });
 
-  return parseWarrantTableString(response.data) ?? [];
+  try {
+    return parseWarrantTableString(response.data) ?? [];
+  } catch {
+    return [];
+  }
 }

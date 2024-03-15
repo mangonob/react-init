@@ -1,5 +1,5 @@
 import { Button, Result } from 'antd';
-import React, { ComponentType, Suspense } from 'react';
+import React, { Attributes, ComponentType, Suspense } from 'react';
 import { useNavigate, useRouteError } from 'react-router';
 
 export interface PageProps<P> {
@@ -7,7 +7,7 @@ export interface PageProps<P> {
   props?: P;
 }
 
-export function Page<P>(props: PageProps<P>) {
+export function Page<P extends Attributes>(props: PageProps<P>) {
   const { path: _path, props: _props } = props;
   const path = _path.startsWith('/') ? _path : '/' + _path;
 
@@ -22,7 +22,7 @@ export function Page<P>(props: PageProps<P>) {
 
   return (
     <Suspense fallback={<></>}>
-      <Lazy {...(_props as any)} />
+      <Lazy {...(_props as P)} />
     </Suspense>
   );
 }

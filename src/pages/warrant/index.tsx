@@ -1,11 +1,17 @@
 import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib';
 import React, { lazy, Suspense, useState } from 'react';
+import { useLocalStorage } from 'react-use';
 
 const ImpliedVolatility = lazy(() => import('./children/implied-volatility'));
 const WarrantFind = lazy(() => import('./children/warrant-find'));
 
-export default function Stock() {
+export default function Warrant() {
+  const [activeKey, setActiveKey] = useLocalStorage(
+    'WARRANT_ACTIVE_KEY_STORAGE_KEY',
+    'warrant-find'
+  );
+
   const [items] = useState<TabsProps['items']>([
     {
       key: 'warrant-find',
@@ -21,11 +27,18 @@ export default function Stock() {
       label: '引申波幅',
       children: (
         <Suspense>
-          <ImpliedVolatility />{' '}
+          <ImpliedVolatility />
         </Suspense>
       ),
     },
   ]);
 
-  return <Tabs type="card" items={items}></Tabs>;
+  return (
+    <Tabs
+      type="card"
+      items={items}
+      activeKey={activeKey}
+      onChange={setActiveKey}
+    ></Tabs>
+  );
 }

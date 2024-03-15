@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/filename-case */
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   createHashRouter,
   RouterProvider,
@@ -16,17 +16,19 @@ import 'src/themes/dark.scss';
 import 'src/themes/light.scss';
 import './App.scss';
 
-import('antd/es/message').then((e) => {
-  e.default.config({
-    maxCount: 3,
-  });
-});
-
 export default function App() {
   useKeyboardShortcut('Shift+Alt+D', () => {
     // eslint-disable-next-line no-debugger
     debugger;
   });
+
+  useEffect(() => {
+    import('antd/es/message').then((e) => {
+      e.default.config({
+        maxCount: 3,
+      });
+    });
+  }, []);
 
   const router = useMemo(
     () =>

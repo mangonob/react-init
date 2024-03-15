@@ -9,15 +9,17 @@ export function useSuggestion(query?: string): AutoCompleteProps['options'] {
 
   useEffect(() => {
     if (_query) {
-      fetchQuerySuggestion(_query).then((s) => {
-        const options: AutoCompleteProps<unknown>['options'] = s.map(
-          ({ name, value }) => ({
-            label: value + ' | ' + name,
-            value: value + '|' + name,
-          })
-        );
-        setOptions(options);
-      });
+      fetchQuerySuggestion(_query)
+        .then((s) => {
+          const options: AutoCompleteProps<unknown>['options'] = s.map(
+            ({ name, value }) => ({
+              label: value + ' | ' + name,
+              value: value + '|' + name,
+            })
+          );
+          setOptions(options);
+        })
+        .catch(() => void 0);
     }
   }, [_query]);
 

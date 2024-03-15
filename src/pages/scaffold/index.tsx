@@ -31,6 +31,7 @@ export default function Scaffold() {
     const className = `${prefix}${theme}`;
     themed
       .filter((c) => c !== className)
+      // eslint-disable-next-line unicorn/no-array-for-each
       .forEach((c) => document.body.classList.remove(c));
     if (!document.body.classList.contains(className)) {
       document.body.classList.add(className);

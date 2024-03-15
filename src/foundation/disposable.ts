@@ -18,6 +18,7 @@ export function createDisposeBag(): DisposeBag {
 
   return {
     dispose() {
+      // eslint-disable-next-line unicorn/no-array-for-each
       disposes.forEach((d) => d.dispose());
       disposes.length = 0;
     },
@@ -32,6 +33,7 @@ export function createDisposeBag(): DisposeBag {
       });
     },
     disposedBlocks(...fns: (() => void)[]) {
+      // eslint-disable-next-line unicorn/no-array-for-each
       fns.forEach((fn) => {
         disposes.push({
           dispose() {

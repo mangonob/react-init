@@ -1,6 +1,6 @@
 import { Button, Input, Space } from 'antd';
 import React from 'react';
-import create, { StateCreator } from 'zustand';
+import { create, StateCreator } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
@@ -81,7 +81,7 @@ interface PostState {
   posts: Post[];
 }
 
-export const postSlice: StateCreator<PostState> = (set) => {
+export const postSlice: StateCreator<PostState> = () => {
   return {
     posts: [],
   };
@@ -91,7 +91,7 @@ interface MessageState {
   messages: string[];
 }
 
-export const messageSlice: StateCreator<MessageState> = (set) => {
+export const messageSlice: StateCreator<MessageState> = () => {
   return {
     messages: [],
   };

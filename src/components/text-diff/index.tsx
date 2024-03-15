@@ -104,16 +104,15 @@ function generateDiffItem(source: string, dest: string): DiffItem<string>[] {
     });
   }
 
-  // eslint-disable-next-line unicorn/no-array-reduce
   const uniformItems = items.reduce((items: DiffItem<string>[], next) => {
-    if (items.length <= 0) {
-      return [next];
-    } else {
-      const prev = items.slice(-1)[0];
+    const prev = items.at(-1);
+    if (prev) {
       const tail = items.slice(0, -1);
       return prev.type === next.type
         ? [...tail, { type: prev.type, value: prev.value + next.value }]
         : [...items, next];
+    } else {
+      return [next];
     }
   }, []);
 

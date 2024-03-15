@@ -1,17 +1,42 @@
 import { useEffect, useState } from 'react';
 
-export function useElementSize(element?: HTMLElement): [number, number] {
-  const [size, setSize] = useState<[number, number]>([0, 0]);
+export interface UseElementSizeOptions {
+  width?: boolean;
+  height?: boolean;
+}
+
+export function useElementSize(
+  element?: string | HTMLElement,
+  options?: UseElementSizeOptions
+): [number, number] {
+  const { width = true, height = true } = options || {};
+  const [w, setW] = useState(0);
+  const [h, setH] = useState(0);
 
   useEffect(() => {
-    if (element) {
-      const getSize = () =>
-        setSize([element.clientWidth, element.clientHeight]);
-      getSize();
-      element.addEventListener('resize', getSize);
-      return () => element.removeEventListener('resize', getSize);
-    }
-  }, [element]);
+    if (width || height) {
+      const el =
+        typeof element === 'string' ? document.querySelector(element) : element;
 
-  return size;
+      if (el instanceof HTMLElement) {
+        setW(el.clientWidth);
+        setH(el.clientHeight);
+
+        const observer = new ResizeObserver((entries) => {
+          const [entry] = entries;
+          if (width) {
+            setW(entry.contentRect.width);
+          }
+          if (height) {
+            setH(entry.contentRect.height);
+          }
+        });
+
+        observer.observe(el);
+        return () => observer.unobserve(el);
+      }
+    }
+  }, [element, height, width]);
+
+  return [w, h];
 }

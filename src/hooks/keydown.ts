@@ -39,7 +39,7 @@ export function useKeyboardShortcut(
 
       const keys = shortcut.split('+');
       const decorators = keys.slice(0, -1);
-      const key = keys.slice(-1)[0];
+      const key = keys.at(-1)!;
       const decoratedCode = codeMap[key.toUpperCase()];
       if (
         decoratedCode &&

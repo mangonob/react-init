@@ -1,15 +1,15 @@
 import { ReactNode, useCallback, useEffect, useState } from 'react';
 
-export type Responsive = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export type ResponsiveType = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 export interface ResponsiveBuilderProps {
-  children: (_: Responsive) => ReactNode;
+  children: (_: ResponsiveType) => ReactNode;
 }
 
 export function ResponsiveBuilder(props: ResponsiveBuilderProps) {
   const { children } = props;
 
-  const getResponsive = useCallback((width: number): Responsive => {
+  const getResponsive = useCallback((width: number): ResponsiveType => {
     if (width < 576) {
       return 'xs';
     } else if (width < 768) {

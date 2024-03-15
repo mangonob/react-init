@@ -24,8 +24,10 @@ export function longestCommonSubsequence<T>(
     })
   );
 
+  // eslint-disable-next-line unicorn/no-for-loop
   for (let i = 0; i < rhs.length; ++i) {
     const r = rhs[i];
+    // eslint-disable-next-line unicorn/no-for-loop
     for (let j = 0; j < lhs.length; ++j) {
       const l = lhs[j];
       if (_compare(r, l)) {
