@@ -1,4 +1,3 @@
-import { SearchOutlined } from '@ant-design/icons';
 import { Button, Col, Flex, Form, Row, Space } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { Store } from 'antd/es/form/interface';
@@ -18,7 +17,7 @@ export default function Searcher<D = unknown>(props: SearcherProps<D>) {
   const [form] = useForm();
 
   const column = 3;
-  const rows: typeof items[] = [];
+  const rows: (typeof items)[] = [];
   const items = Children.toArray(children);
   while (items.length > 0) {
     rows.push(items.slice(0, column));
@@ -58,7 +57,7 @@ export default function Searcher<D = unknown>(props: SearcherProps<D>) {
           </Button>
           <Button
             type="primary"
-            icon={<SearchOutlined />}
+            icon={'Q'}
             onClick={async () => {
               const formData: unknown = await form.validateFields();
               onSearch?.(

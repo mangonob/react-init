@@ -16,8 +16,9 @@ module.exports = merge(
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
       },
-      proxy: {
-        '/api': {
+      proxy: [
+        {
+          context: ['/api'],
           target: 'https://hk.warrants.com',
           changeOrigin: true,
           pathRewrite: { '^/api': '' },
@@ -25,7 +26,7 @@ module.exports = merge(
             referer: 'https://hk.warrants.com',
           },
         },
-      },
+      ],
     },
     output: {
       publicPath: '/',

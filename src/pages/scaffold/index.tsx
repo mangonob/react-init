@@ -1,4 +1,3 @@
-import { MenuOutlined } from '@ant-design/icons';
 import { Avatar, Drawer, Layout, Space } from 'antd';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
@@ -46,7 +45,7 @@ export default function Scaffold() {
             className={styles.leftDrawerMenu}
             onClick={() => setIsLeftDrawerHidden(false)}
           >
-            <MenuOutlined />
+            =
           </div>
           <Space>
             <div className={styles.themeSwitcher}>

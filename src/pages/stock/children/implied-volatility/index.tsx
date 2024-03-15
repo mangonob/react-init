@@ -8,7 +8,7 @@ export default function ImpliedVolatility() {
   return (
     <Flex vertical className={styles.impliedVolatility} gap={20}>
       <Space size={16}>
-        <span>搜索资产</span>
+        <span className={styles.title}>搜索资产</span>
         <AssetSearch className={styles.assetSearch} />
         <Button type="primary">添加</Button>
       </Space>

@@ -1,4 +1,3 @@
-import { PauseCircleOutlined, PlayCircleOutlined } from '@ant-design/icons';
 import anime, { AnimeInstance } from 'animejs';
 import { Button, Slider } from 'antd';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -73,10 +72,7 @@ export default function Animations() {
 
   return (
     <div className={styles.animations}>
-      <Button
-        onClick={onClick}
-        icon={isPlayed ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
-      ></Button>
+      <Button onClick={onClick} icon={isPlayed ? '||' : '>'}></Button>
       <Slider
         value={progress}
         onChange={(value) => {
