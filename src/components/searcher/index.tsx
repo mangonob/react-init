@@ -1,10 +1,11 @@
 import { Button, Col, Flex, Form, Row, Space } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { Store } from 'antd/es/form/interface';
-import React, { Children } from 'react';
-import { PropsWithChildren } from 'react';
+import React, { Children, PropsWithChildren } from 'react';
 
+import { ColProps } from 'antd/lib';
 import styles from './index.module.scss';
+import { ResponsiveBuilder } from '../responsive-builder';
 
 export type SearcherProps<D> = PropsWithChildren<{
   onSearch?: (formData: D) => void;
@@ -16,13 +17,51 @@ export default function Searcher<D = unknown>(props: SearcherProps<D>) {
 
   const [form] = useForm();
 
-  const column = 3;
-  const rows: (typeof items)[] = [];
   const items = Children.toArray(children);
-  while (items.length > 0) {
-    rows.push(items.slice(0, column));
-    items.splice(0, column);
-  }
+  const extra: Partial<ColProps> = {
+    xs: 24,
+    sm: 12,
+    md: 8,
+    lg: 8,
+    xl: 8,
+    xxl: 8,
+  };
+  const renderFlex = (vertical: boolean) => (
+    <Flex align="start" gap={vertical ? void 0 : 20} vertical={vertical}>
+      <div className={styles.formItems}>
+        <Row gutter={20}>
+          {items.map((col, index) => {
+            return (
+              <Col key={`col-${index}`} {...extra}>
+                {col}
+              </Col>
+            );
+          })}
+        </Row>
+      </div>
+      <Space>
+        <Button
+          type="dashed"
+          onClick={() => {
+            form.resetFields();
+          }}
+        >
+          重置
+        </Button>
+        <Button
+          type="primary"
+          icon={'Q'}
+          onClick={async () => {
+            const formData: unknown = await form.validateFields();
+            onSearch?.(shakeFormData(formData as Record<string, unknown>) as D);
+          }}
+        >
+          查询
+        </Button>
+      </Space>
+    </Flex>
+  );
+
   return (
     <Form
       className={styles.searcher}
@@ -30,45 +69,17 @@ export default function Searcher<D = unknown>(props: SearcherProps<D>) {
       form={form}
       autoComplete="off"
     >
-      <Flex align="start" gap={20}>
-        <div className={styles.formItems}>
-          {rows.map((cols, index) => {
-            return (
-              <Row key={`row-${index}`} gutter={20}>
-                {cols.map((col, index) => {
-                  return (
-                    <Col key={`col-${index}`} span={8}>
-                      {col}
-                    </Col>
-                  );
-                })}
-              </Row>
-            );
-          })}
-        </div>
-        <Space>
-          <Button
-            type="dashed"
-            onClick={() => {
-              form.resetFields();
-            }}
-          >
-            重置
-          </Button>
-          <Button
-            type="primary"
-            icon={'Q'}
-            onClick={async () => {
-              const formData: unknown = await form.validateFields();
-              onSearch?.(
-                shakeFormData(formData as Record<string, unknown>) as D
-              );
-            }}
-          >
-            查询
-          </Button>
-        </Space>
-      </Flex>
+      <ResponsiveBuilder>
+        {(r) => {
+          switch (r) {
+            case 'xs':
+            case 'sm':
+              return renderFlex(true);
+            default:
+              return renderFlex(false);
+          }
+        }}
+      </ResponsiveBuilder>
     </Form>
   );
 }

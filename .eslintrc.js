@@ -29,6 +29,7 @@ module.exports = {
     // unicorn custom rules
     'unicorn/prevent-abbreviations': 'off',
     'unicorn/prefer-spread': 'off',
+    'unicorn/switch-case-braces': 'off',
     'unicorn/no-array-for-each': 'warn',
     'unicorn/consistent-function-scoping': 'off',
     'unicorn/no-for-loop': 'warn',
@@ -38,6 +39,7 @@ module.exports = {
     // @typescript-eslint custom rules
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
   settings: {
     react: {

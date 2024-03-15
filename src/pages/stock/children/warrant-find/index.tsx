@@ -20,10 +20,10 @@ export default function WarrantFind() {
           console.info(q);
         }}
       >
-        <Form.Item name="stock" label="追踪正股" required>
+        <Form.Item name="stock" label="追踪正股">
           <Select showSearch options={stockOptions} />
         </Form.Item>
-        <Form.Item name="saler" label="发行人" required>
+        <Form.Item name="saler" label="发行人">
           <Select options={salesOptions} />
         </Form.Item>
         <Form.Item name="type" label="沽 / 购">
