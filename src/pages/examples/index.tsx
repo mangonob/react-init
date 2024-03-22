@@ -12,12 +12,14 @@ export interface ExampleState {
   logs: string[];
 }
 
-export type Action =
+export type CountAction =
   | {
       type: 'increment';
       payload: number;
     }
-  | { type: 'decrement' }
+  | { type: 'decrement' };
+
+export type LogAction =
   | {
       type: 'log';
       payload: string;
@@ -30,17 +32,24 @@ export type Action =
       type: 'clearLogs';
     };
 
-const reducer: Reducer<ExampleState, Action> = (state, action) => {
+const countReducer: Reducer<ExampleState, CountAction> = (state, action) => {
   return produce(state, (s) => {
     switch (action.type) {
-      case 'clearLogs':
-        s.logs = [];
-        break;
       case 'increment':
         s.count += action.payload;
         break;
       case 'decrement':
         s.count -= 1;
+        break;
+    }
+  });
+};
+
+const logReducer: Reducer<ExampleState, LogAction> = (state, action) => {
+  return produce(state, (s) => {
+    switch (action.type) {
+      case 'clearLogs':
+        s.logs = [];
         break;
       case 'log':
         s.logs.push(action.payload);
@@ -53,7 +62,7 @@ const reducer: Reducer<ExampleState, Action> = (state, action) => {
 };
 
 export const useExampleState = create(
-  redux(reducer, {
+  redux(combineReducer(countReducer, logReducer), {
     count: 0,
     logs: [],
   })
@@ -89,7 +98,7 @@ export default function Examples() {
 
 export type Reducer<S, Action> = (s: S, action: Action) => S;
 
-export function comobineReducer<S, Action1, Action2>(
+export function combineReducer<S, Action1, Action2>(
   reducer1: Reducer<S, Action1>,
   reducer2: Reducer<S, Action2>
 ): Reducer<S, Action1 | Action2> {
