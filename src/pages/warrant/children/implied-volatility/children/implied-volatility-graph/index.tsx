@@ -1,6 +1,7 @@
 import { Chart } from '@antv/g2';
 import React, {
   HTMLAttributes,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -8,16 +9,18 @@ import React, {
 } from 'react';
 import { fetchImpliedVolatilityData } from './api';
 import { ImpliedVolatilityFetchResult } from './models';
-import { Spin } from 'antd';
+import { Button, Flex, Space, Spin } from 'antd';
 import { useElementSize } from 'src/hooks';
 import dayjs from 'dayjs';
 import { standardDeviation } from 'src/utils/statistics';
+import { useWatchlist } from 'src/pages/warrant/hooks';
 
 export interface ImpliedVolatilityGraphProps
   extends HTMLAttributes<HTMLDivElement> {
   assetId: string;
   name?: string;
   standardDeviationCount?: number;
+  onRemove?: () => void;
 }
 
 interface TableData {
@@ -26,11 +29,23 @@ interface TableData {
 }
 
 export function ImpliedVolatilityGraph(props: ImpliedVolatilityGraphProps) {
-  const { assetId, style, name, standardDeviationCount = 10, ...extra } = props;
+  const {
+    assetId,
+    style,
+    name,
+    standardDeviationCount = 10,
+    onRemove,
+    ...extra
+  } = props;
 
   const [isLoading, setIsLoading] = useState(false);
   const [impliedVolatility, setImpliedVolatility] =
     useState<ImpliedVolatilityFetchResult>();
+  const removeWatchlist = useWatchlist((s) => s.removeWatchlist);
+
+  const onRemoveWatchlist = useCallback(() => {
+    removeWatchlist([assetId]);
+  }, [assetId, removeWatchlist]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -118,11 +133,21 @@ export function ImpliedVolatilityGraph(props: ImpliedVolatilityGraphProps) {
 
   return (
     <Spin spinning={isLoading}>
-      <div
-        style={{ height: 350, ...style }}
-        {...extra}
-        ref={setElemenetRef}
-      ></div>
+      <Flex vertical align="center" gap={10}>
+        <div
+          style={{ height: 350, width: '100%', ...style }}
+          {...extra}
+          ref={setElemenetRef}
+        ></div>
+        <Space>
+          <Button type="dashed" onClick={onRemove}>
+            -
+          </Button>
+          <Button type="dashed" danger onClick={onRemoveWatchlist}>
+            Remove
+          </Button>
+        </Space>
+      </Flex>
     </Spin>
   );
 }

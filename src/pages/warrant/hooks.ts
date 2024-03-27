@@ -60,14 +60,19 @@ export function useStockOptions(): NonNullable<SelectProps['options']> {
   );
 
   useEffect(() => {
-    fetchPublisherOptions().then((opts) => {
-      const options = opts.map(({ id, name }) => ({ value: id, label: name }));
-      options.unshift({
-        value: 'ALL',
-        label: '全部',
-      });
-      setOptions(options);
-    });
+    fetchPublisherOptions()
+      .then((opts) => {
+        const options = opts.map(({ id, name }) => ({
+          value: id,
+          label: name,
+        }));
+        options.unshift({
+          value: 'ALL',
+          label: '全部',
+        });
+        setOptions(options);
+      })
+      .catch(() => void 0);
   }, []);
 
   return options;

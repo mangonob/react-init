@@ -7,7 +7,7 @@ import { useWatchlist } from 'src/pages/warrant/hooks';
 import styles from './index.module.scss';
 
 export function WatchlistTransfer(props: TransferProps) {
-  const { className, ...extra } = props;
+  const { className, targetKeys, ...extra } = props;
 
   const watchlist = useWatchlist((s) => s.watchlist);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -28,6 +28,10 @@ export function WatchlistTransfer(props: TransferProps) {
     });
   }, [watchlist]);
 
+  const _targetKeys = useMemo(() => {
+    return targetKeys?.filter((k) => dataSource.map((d) => d.key).includes(k));
+  }, [dataSource, targetKeys]);
+
   return (
     <Transfer<TransferItem>
       className={classNames(styles.watchlistTransfer, className)}
@@ -35,6 +39,7 @@ export function WatchlistTransfer(props: TransferProps) {
       render={(r) => r.title ?? ''}
       selectedKeys={selectedKeys}
       onSelectChange={onSelectChange}
+      targetKeys={_targetKeys}
       {...extra}
     ></Transfer>
   );

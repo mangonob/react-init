@@ -97,6 +97,7 @@ export default function WarrantFind() {
 
         setWarrantList(validated);
       })
+      .catch(() => void 0)
       .finally(() => setIsLoading(false));
   }, []);
 
