@@ -18,8 +18,8 @@ import {
   useRemoveWatchlist,
   useSalesOptions,
   useStockOptions,
-  useWatchlist,
 } from '../../hooks';
+import { useWatchlist } from '../implied-volatility/children/watchlist-manage/hooks';
 import NumberRange, { NumberRangeValue } from '../number-range';
 import { fetchWarrant } from './api';
 import { ColumnsSelectDropdown } from './columns-select-dropdown';

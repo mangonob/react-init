@@ -2,7 +2,7 @@ import { Transfer, TransferProps } from 'antd';
 import { TransferItem } from 'antd/es/transfer';
 import classNames from 'classnames';
 import React, { useCallback, useMemo, useState } from 'react';
-import { useWatchlist } from 'src/pages/warrant/hooks';
+import { useWatchlist } from '../watchlist-manage/hooks';
 
 import styles from './index.module.scss';
 

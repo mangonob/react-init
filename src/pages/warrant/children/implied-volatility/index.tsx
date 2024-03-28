@@ -1,8 +1,8 @@
 import { Button, Col, Flex, Radio, Row, Slider, Space } from 'antd';
-import React, { useState } from 'react';
-import { useWatchlist } from '../../hooks';
+import React, { useMemo, useState } from 'react';
 import AssetSearch from '../asset-search';
 import { ImpliedVolatilityGraph } from './children/implied-volatility-graph';
+import { useWatchlist } from './children/watchlist-manage/hooks';
 import { WatchlistTransfer } from './children/watchlist-transfer';
 
 import styles from './index.module.scss';
@@ -11,8 +11,10 @@ export default function ImpliedVolatility() {
   const [targets, setTargets] = useState<string[]>([]);
   const [standardDeviationCount, setStandardDeviationCount] = useState(10);
   const [asset, setAsset] = useState<string>();
-
   const { watchlist, addWatchlist } = useWatchlist();
+  const _targets = useMemo(() => {
+    return targets.filter((t) => watchlist.map((w) => w.assetId).includes(t));
+  }, [targets, watchlist]);
 
   return (
     <Flex vertical className={styles.impliedVolatility} gap={20}>
@@ -37,7 +39,7 @@ export default function ImpliedVolatility() {
           添加
         </Button>
       </Space>
-      <WatchlistTransfer targetKeys={targets} onChange={setTargets} />
+      <WatchlistTransfer targetKeys={_targets} onChange={setTargets} />
       <Space>
         <span>标准差天数:</span>
         <Radio.Group
@@ -65,7 +67,7 @@ export default function ImpliedVolatility() {
         <span>{standardDeviationCount}</span>
       </Space>
       <Row gutter={[20, 20]}>
-        {targets.map((id) => {
+        {_targets.map((id) => {
           const found = watchlist.find((w) => w.assetId === id);
           return (
             <Col key={id} xs={24} sm={12} md={12} lg={8} xl={8} xxl={6}>
@@ -73,6 +75,7 @@ export default function ImpliedVolatility() {
                 assetId={id}
                 name={found?.name}
                 standardDeviationCount={standardDeviationCount}
+                onRemove={() => setTargets(targets.filter((t) => t !== id))}
               />
             </Col>
           );

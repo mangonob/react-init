@@ -1,4 +1,6 @@
 import { Chart } from '@antv/g2';
+import { Button, Flex, Space, Spin } from 'antd';
+import dayjs from 'dayjs';
 import React, {
   HTMLAttributes,
   useCallback,
@@ -7,13 +9,11 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useElementSize } from 'src/hooks';
+import { standardDeviation } from 'src/utils/statistics';
+import { useWatchlist } from '../watchlist-manage/hooks';
 import { fetchImpliedVolatilityData } from './api';
 import { ImpliedVolatilityFetchResult } from './models';
-import { Button, Flex, Space, Spin } from 'antd';
-import { useElementSize } from 'src/hooks';
-import dayjs from 'dayjs';
-import { standardDeviation } from 'src/utils/statistics';
-import { useWatchlist } from 'src/pages/warrant/hooks';
 
 export interface ImpliedVolatilityGraphProps
   extends HTMLAttributes<HTMLDivElement> {
