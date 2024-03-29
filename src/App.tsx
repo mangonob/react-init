@@ -1,10 +1,11 @@
 /* eslint-disable unicorn/filename-case */
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import React, { useEffect, useMemo } from 'react';
 import {
-  createHashRouter,
   RouterProvider,
+  createHashRouter,
   useLocation,
 } from 'react-router-dom';
 import { Page, PageLoadErrorBoundary } from './components/page';
@@ -15,6 +16,8 @@ import 'src/styles/global.scss';
 import 'src/themes/dark.scss';
 import 'src/themes/light.scss';
 import './App.scss';
+
+const defaultQueryClient = new QueryClient();
 
 export default function App() {
   useKeyboardShortcut('Shift+Alt+D', () => {
@@ -65,9 +68,11 @@ export default function App() {
 
   return (
     <React.StrictMode>
-      <ConfigProvider locale={zhCN}>
-        <RouterProvider router={router} />
-      </ConfigProvider>
+      <QueryClientProvider client={defaultQueryClient}>
+        <ConfigProvider locale={zhCN}>
+          <RouterProvider router={router} />
+        </ConfigProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   );
 }

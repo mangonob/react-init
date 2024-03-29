@@ -1,9 +1,16 @@
+import {
+  QueryFunction,
+  QueryKey,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { Button, Flex } from 'antd';
 import { produce } from 'immer';
 import React from 'react';
 import { SizeWith } from 'src/components/size-with';
 import { create } from 'zustand';
 import { redux } from 'zustand/middleware';
+import { fetchImpliedVolatilityData } from '../warrant/children/implied-volatility/children/implied-volatility-graph/api';
 
 import styles from './index.module.scss';
 
@@ -71,6 +78,30 @@ export const useExampleState = create(
 export default function Examples() {
   const { dispatch, count, logs } = useExampleState();
 
+  const queryClient = useQueryClient();
+
+  useQuery({
+    queryKey: generateQueryKey(['iv'], '22758'),
+    queryFn: generateQueryFn(fetchImpliedVolatilityData),
+  });
+
+  useQuery({
+    queryKey: ['demo', count],
+    queryFn: ({ signal }) => {
+      return new Promise((resolve) => {
+        const t = setTimeout(() => {
+          console.info('Resolved');
+          resolve(count);
+        }, 500);
+
+        signal.addEventListener('abort', () => {
+          clearTimeout(t);
+          console.info('Abort');
+        });
+      });
+    },
+  });
+
   return (
     <div className={styles.example}>
       <Flex gap={20} vertical>
@@ -80,6 +111,13 @@ export default function Examples() {
         </Button>
         <Button onClick={() => dispatch({ type: 'decrement' })}>
           Decrement
+        </Button>
+        <Button
+          onClick={() =>
+            queryClient.invalidateQueries({ queryKey: ['demo', count] })
+          }
+        >
+          Reload IV
         </Button>
         <ul>
           {logs.map((log, i) => (
@@ -103,4 +141,34 @@ export function combineReducer<S, Action1, Action2>(
   reducer2: Reducer<S, Action2>
 ): Reducer<S, Action1 | Action2> {
   return (s, a) => reducer2(reducer1(s, a as Action1), a as Action2);
+}
+
+export function generateQueryKey<
+  TQueryKey extends QueryKey = QueryKey,
+  P = unknown,
+>(queryKey: TQueryKey, p: P): Prefixed<TQueryKey, P> {
+  return [p, ...queryKey];
+}
+
+export type Prefixed<
+  E extends ReadonlyArray<unknown> = ReadonlyArray<unknown>,
+  T = unknown,
+> = [T, ...E];
+
+export type Postfixed<
+  E extends ReadonlyArray<unknown> = ReadonlyArray<unknown>,
+  T = unknown,
+> = [...E, T];
+
+export type Concatenate<
+  E1 extends ReadonlyArray<unknown> = ReadonlyArray<unknown>,
+  E2 extends ReadonlyArray<unknown> = ReadonlyArray<unknown>,
+> = [...E1, ...E2];
+
+export type sstypes = Concatenate<[string, number], [symbol, undefined]>;
+
+function generateQueryFn<P = unknown, D = unknown>(
+  fn: (_: P) => Promise<D>
+): QueryFunction<D, Prefixed<QueryKey, P>> {
+  return ({ queryKey: [parameters] }) => fn(parameters);
 }
