@@ -1,9 +1,11 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Button, Flex } from 'antd';
 import { produce } from 'immer';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SizeWith } from 'src/components/size-with';
 import { create } from 'zustand';
 import { redux } from 'zustand/middleware';
+import { fetchImpliedVolatilityData } from '../warrant/children/implied-volatility/children/implied-volatility-graph/api';
 
 import styles from './index.module.scss';
 
@@ -71,6 +73,44 @@ export const useExampleState = create(
 export default function Examples() {
   const { dispatch, count, logs } = useExampleState();
 
+  const queryClient = useQueryClient();
+
+  useQuery({
+    queryKey: ['iv'],
+    queryFn: () => fetchImpliedVolatilityData('22758'),
+  });
+
+  const { data: demo } = useQuery(
+    {
+      queryKey: ['demo', count],
+      queryFn: ({ signal }) => {
+        return new Promise((resolve) => {
+          const t = setTimeout(() => {
+            console.info('Resolved');
+            resolve(count);
+          }, 500);
+
+          signal.addEventListener('abort', () => {
+            clearTimeout(t);
+            console.info('Abort');
+          });
+        });
+      },
+    },
+    queryClient
+  );
+
+  useEffect(() => {
+    console.info('Demo', demo);
+  }, [demo]);
+
+  const mutation = useMutation({
+    mutationFn: () => Promise.resolve(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['demo', count] });
+    },
+  });
+
   return (
     <div className={styles.example}>
       <Flex gap={20} vertical>
@@ -81,6 +121,7 @@ export default function Examples() {
         <Button onClick={() => dispatch({ type: 'decrement' })}>
           Decrement
         </Button>
+        <Button onClick={() => mutation.mutate()}>Reload IV</Button>
         <ul>
           {logs.map((log, i) => (
             <li key={i}>{log}</li>
