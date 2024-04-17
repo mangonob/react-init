@@ -16,6 +16,9 @@ module.exports = merge(
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true,
       },
+      client: {
+        overlay: false,
+      },
       proxy: [
         {
           context: ['/api'],

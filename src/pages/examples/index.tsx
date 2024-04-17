@@ -3,10 +3,13 @@ import {
   QueryKey,
   useQuery,
   useQueryClient,
+  useQueryErrorResetBoundary,
+  useSuspenseQuery,
 } from '@tanstack/react-query';
 import { Button, Flex } from 'antd';
 import { produce } from 'immer';
-import React from 'react';
+import React, { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { SizeWith } from 'src/components/size-with';
 import { create } from 'zustand';
 import { redux } from 'zustand/middleware';
@@ -77,7 +80,7 @@ export const useExampleState = create(
 
 export default function Examples() {
   const { dispatch, count, logs } = useExampleState();
-
+  const { reset } = useQueryErrorResetBoundary();
   const queryClient = useQueryClient();
 
   useQuery({
@@ -85,52 +88,45 @@ export default function Examples() {
     queryFn: generateQueryFn(fetchImpliedVolatilityData),
   });
 
-  useQuery({
-    queryKey: ['demo', count],
-    queryFn: ({ signal }) => {
-      return new Promise((resolve) => {
-        const t = setTimeout(() => {
-          console.info('Resolved');
-          resolve(count);
-        }, 500);
-
-        signal.addEventListener('abort', () => {
-          clearTimeout(t);
-          console.info('Abort');
-        });
-      });
-    },
-  });
-
   return (
-    <div className={styles.example}>
-      <Flex gap={20} vertical>
-        <span>Count: {count}</span>
-        <Button onClick={() => dispatch({ type: 'increment', payload: 42 })}>
-          Increment
-        </Button>
-        <Button onClick={() => dispatch({ type: 'decrement' })}>
-          Decrement
-        </Button>
-        <Button
-          onClick={() =>
-            queryClient.invalidateQueries({ queryKey: ['demo', count] })
-          }
-        >
-          Reload IV
-        </Button>
-        <ul>
-          {logs.map((log, i) => (
-            <li key={i}>{log}</li>
-          ))}
-        </ul>
-        <div className={styles.chess}></div>
-        <SizeWith
-          element={`.${styles.chess}`}
-          className={styles.chess2}
-        ></SizeWith>
-      </Flex>
-    </div>
+    <ErrorBoundary
+      onReset={reset}
+      fallbackRender={({ resetErrorBoundary }) => {
+        return <Button onClick={resetErrorBoundary}>Reset</Button>;
+      }}
+    >
+      <div className={styles.example}>
+        <Suspense fallback={<h1>Loading ...</h1>}>
+          <MyComponents />
+        </Suspense>
+        <Flex gap={20} vertical>
+          <span>Count: {count}</span>
+          <Button onClick={() => dispatch({ type: 'increment', payload: 42 })}>
+            Increment
+          </Button>
+          <Button onClick={() => dispatch({ type: 'decrement' })}>
+            Decrement
+          </Button>
+          <Button
+            onClick={() =>
+              queryClient.invalidateQueries({ queryKey: ['demo', count] })
+            }
+          >
+            Reload IV
+          </Button>
+          <ul>
+            {logs.map((log, i) => (
+              <li key={i}>{log}</li>
+            ))}
+          </ul>
+          <div className={styles.chess}></div>
+          <SizeWith
+            element={`.${styles.chess}`}
+            className={styles.chess2}
+          ></SizeWith>
+        </Flex>
+      </div>
+    </ErrorBoundary>
   );
 }
 
@@ -171,4 +167,25 @@ function generateQueryFn<P = unknown, D = unknown>(
   fn: (_: P) => Promise<D>
 ): QueryFunction<D, Prefixed<QueryKey, P>> {
   return ({ queryKey: [parameters] }) => fn(parameters);
+}
+
+function MyComponents() {
+  const { data } = useSuspenseQuery({
+    queryKey: ['demo'],
+    queryFn: ({ signal }) => {
+      return new Promise<number>((resolve, reject) => {
+        const t = setTimeout(() => {
+          reject(new Error('42'));
+        }, 1500);
+
+        signal.addEventListener('abort', () => {
+          clearTimeout(t);
+        });
+      });
+    },
+    networkMode: 'always',
+    retry: false,
+  });
+
+  return <h1>Loaded count: {data}</h1>;
 }

@@ -17,7 +17,14 @@ import 'src/themes/dark.scss';
 import 'src/themes/light.scss';
 import './App.scss';
 
-const defaultQueryClient = new QueryClient();
+const defaultQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      networkMode: 'always',
+    },
+  },
+});
 
 export default function App() {
   useKeyboardShortcut('Shift+Alt+D', () => {
