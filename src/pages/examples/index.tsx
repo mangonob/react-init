@@ -3,39 +3,42 @@ import {
   useQueryErrorResetBoundary,
   useSuspenseQuery,
 } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Button, Flex, Spin } from 'antd';
 import React, { Suspense, memo, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Prefixed } from 'src/foundation/array';
 
 import styles from './index.module.scss';
-import { nanoid } from 'nanoid';
 
 export default function Examples() {
   const { reset } = useQueryErrorResetBoundary();
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={styles.example}>
-      <Flex vertical align="start" gap={16}>
-        <ErrorBoundary
-          onReset={reset}
-          fallbackRender={({ resetErrorBoundary }) => {
-            return <Button onClick={resetErrorBoundary}>Reset</Button>;
-          }}
-        >
-          <Suspense fallback={<Spin />}>
-            <MyComponents />
-          </Suspense>
-        </ErrorBoundary>
-        <Button onClick={() => setOpen(!open)}>
-          {open ? 'Opened' : 'Closed'}{' '}
-        </Button>
-        {Array.from({ length: 100 }).map((_, i) => {
-          return <_Foo key={`foo-${i}`} label={i.toString()} />;
-        })}
-      </Flex>
-    </div>
+    <>
+      <div className={styles.example}>
+        <Flex vertical align="start" gap={16}>
+          <ErrorBoundary
+            onReset={reset}
+            fallbackRender={({ resetErrorBoundary }) => {
+              return <Button onClick={resetErrorBoundary}>Reset</Button>;
+            }}
+          >
+            <Suspense fallback={<Spin />}>
+              <MyComponents />
+            </Suspense>
+          </ErrorBoundary>
+          <Button onClick={() => setOpen(!open)}>
+            {open ? 'Opened' : 'Closed'}{' '}
+          </Button>
+          {Array.from({ length: 100 }).map((_, i) => {
+            return <_Foo key={`foo-${i}`} label={i.toString()} />;
+          })}
+        </Flex>
+      </div>
+      <ReactQueryDevtools />
+    </>
   );
 }
 
@@ -78,7 +81,6 @@ function MyComponents() {
 
 const Foo: React.FC<{ label: string }> = (props) => {
   const { label } = props;
-  console.info('Rerender foo', nanoid());
   return <span>Foo: {label}</span>;
 };
 
