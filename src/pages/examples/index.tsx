@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Button, Flex, Spin } from 'antd';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import styles from './index.module.scss';
@@ -13,6 +13,17 @@ import styles from './index.module.scss';
 export default function Examples() {
   const { reset } = useQueryErrorResetBoundary();
   const queryClient = useQueryClient();
+  const [showItems, setShowItems] = useState(false);
+
+  const renderItems = () => {
+    return (
+      <Flex wrap="wrap">
+        {Array.from({ length: 10_000 }).map((_, i) => {
+          return <span key={i}>Item {i}</span>;
+        })}
+      </Flex>
+    );
+  };
 
   return (
     <>
@@ -35,6 +46,10 @@ export default function Examples() {
           >
             Invalid
           </Button>
+          <Button onClick={() => setShowItems(!showItems)}>
+            {showItems ? 'Hide items' : 'Show items'}
+          </Button>
+          {showItems && renderItems()}
         </Flex>
       </div>
       <ReactQueryDevtools />
