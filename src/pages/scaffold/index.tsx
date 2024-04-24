@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import { Theme, useTheme } from 'src/hooks/theme';
 
-import darkIcon from 'src/assets/icons/theme-dark.svg';
-import lightIcon from 'src/assets/icons/theme-light.svg';
+import darkIcon from './assets/theme-dark.svg';
+import lightIcon from './assets/theme-light.svg';
 
 const iconMaps: Record<Theme, string> = {
   light: lightIcon,
