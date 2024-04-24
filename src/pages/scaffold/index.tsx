@@ -1,27 +1,25 @@
 import { Avatar, Drawer, Layout, Space } from 'antd';
+import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
-import { Theme, useTheme } from 'src/hooks/theme';
-
-import darkIcon from './assets/theme-dark.svg';
-import lightIcon from './assets/theme-light.svg';
-
-const iconMaps: Record<Theme, string> = {
-  light: lightIcon,
-  dark: darkIcon,
-};
-
-const { Content, Header } = Layout;
-
+import { useAsync } from 'react-use';
+import { useTheme } from 'src/hooks/theme';
 import styles from './index.module.scss';
-import classNames from 'classnames';
 
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
   const toggleTheme = useTheme((s) => s.toggleTheme);
   const [isLeftDrawerHidden, setIsLeftDrawerHidden] = useState(true);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
+
+  const { value: themeIconSrc } = useAsync(
+    (): Promise<string> =>
+      import(`./assets/theme-${theme}.svg`).then(
+        (e: { default: string }) => e.default
+      ),
+    [theme]
+  );
 
   useEffect(() => {
     const prefix = 'theme-';
@@ -41,7 +39,7 @@ export default function Scaffold() {
   return (
     <Layout className={styles.scaffold}>
       <Layout>
-        <Header className={styles.navHeader}>
+        <Layout.Header className={styles.navHeader}>
           <div
             className={styles.leftDrawerMenu}
             onClick={() => setIsLeftDrawerHidden(false)}
@@ -58,9 +56,10 @@ export default function Scaffold() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0, y: '-100%', height: 0 }}
                 >
+                  {}
                   <img
                     className={styles.icon}
-                    src={iconMaps[theme]}
+                    src={themeIconSrc}
                     onClick={toggleTheme}
                   />
                 </motion.div>
@@ -74,10 +73,10 @@ export default function Scaffold() {
               U
             </Avatar>
           </Space>
-        </Header>
-        <Content className={styles.content}>
+        </Layout.Header>
+        <Layout.Content className={styles.content}>
           <Outlet />
-        </Content>
+        </Layout.Content>
         <Drawer
           className={classNames(styles.drawer, styles.systemDrawer)}
           placement="left"

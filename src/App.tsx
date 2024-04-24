@@ -12,7 +12,7 @@ import { Page, PageLoadErrorBoundary } from './components/page';
 import { useKeyboardShortcut } from './hooks';
 
 import 'antd/es/style/reset.css';
-import 'src/styles/global.scss';
+import 'src/styles/index.scss';
 import 'src/themes/dark.scss';
 import 'src/themes/light.scss';
 import './App.scss';
