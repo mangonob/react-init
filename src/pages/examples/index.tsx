@@ -5,10 +5,11 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Button, Flex, Spin } from 'antd';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useId, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import styles from './index.module.scss';
+import { nanoid } from 'nanoid';
 
 export default function Examples() {
   const { reset } = useQueryErrorResetBoundary();
@@ -35,21 +36,34 @@ export default function Examples() {
               return <Button onClick={resetErrorBoundary}>Reset</Button>;
             }}
           >
-            <Suspense fallback={<Spin />}>
-              <MyComponents />
-            </Suspense>
+            {showItems && (
+              <Suspense fallback={<Spin />}>
+                <MyComponents id={0} />
+                <Suspense fallback={<Spin />}>
+                  <MyComponents id={1} />
+                  <Suspense fallback={<Spin />}>
+                    <MyComponents id={2} />
+                    <Suspense fallback={<Spin />}>
+                      <MyComponents id={3} />
+                      <Suspense fallback={<Spin />}>
+                        <MyComponents id={4} />
+                        <Suspense fallback={<Spin />}>
+                          <MyComponents id={5} />
+                        </Suspense>
+                      </Suspense>
+                    </Suspense>
+                  </Suspense>
+                </Suspense>
+              </Suspense>
+            )}
           </ErrorBoundary>
-          <Button
-            onClick={() =>
-              queryClient.invalidateQueries({ queryKey: ['demo'] })
-            }
-          >
+          <Button onClick={() => queryClient.invalidateQueries()}>
             Invalid
           </Button>
           <Button onClick={() => setShowItems(!showItems)}>
             {showItems ? 'Hide items' : 'Show items'}
           </Button>
-          {showItems && renderItems()}
+          {/* {showItems && renderItems()} */}
         </Flex>
       </div>
       <ReactQueryDevtools />
@@ -57,14 +71,16 @@ export default function Examples() {
   );
 }
 
-function MyComponents() {
+function MyComponents(props: { id: number }) {
+  const { id } = props;
+
   const { data } = useSuspenseQuery({
-    queryKey: ['demo'],
+    queryKey: ['demo', id],
     queryFn: ({ signal }) => {
-      return new Promise<number>((resolve, reject) => {
+      return new Promise<number>((resolve) => {
         const t = setTimeout(() => {
-          reject(42);
-        }, 300);
+          resolve(42);
+        }, 1000);
 
         signal.addEventListener('abort', () => {
           clearTimeout(t);
