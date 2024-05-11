@@ -5,11 +5,10 @@ import {
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Button, Flex, Spin } from 'antd';
-import React, { Suspense, useId, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import styles from './index.module.scss';
-import { nanoid } from 'nanoid';
 
 export default function Examples() {
   const { reset } = useQueryErrorResetBoundary();
@@ -36,26 +35,9 @@ export default function Examples() {
               return <Button onClick={resetErrorBoundary}>Reset</Button>;
             }}
           >
-            {showItems && (
-              <Suspense fallback={<Spin />}>
-                <MyComponents id={0} />
-                <Suspense fallback={<Spin />}>
-                  <MyComponents id={1} />
-                  <Suspense fallback={<Spin />}>
-                    <MyComponents id={2} />
-                    <Suspense fallback={<Spin />}>
-                      <MyComponents id={3} />
-                      <Suspense fallback={<Spin />}>
-                        <MyComponents id={4} />
-                        <Suspense fallback={<Spin />}>
-                          <MyComponents id={5} />
-                        </Suspense>
-                      </Suspense>
-                    </Suspense>
-                  </Suspense>
-                </Suspense>
-              </Suspense>
-            )}
+            <Suspense fallback={<Spin />}>
+              <MyComponents id={0} />
+            </Suspense>
           </ErrorBoundary>
           <Button onClick={() => queryClient.invalidateQueries()}>
             Invalid
@@ -63,7 +45,7 @@ export default function Examples() {
           <Button onClick={() => setShowItems(!showItems)}>
             {showItems ? 'Hide items' : 'Show items'}
           </Button>
-          {/* {showItems && renderItems()} */}
+          {showItems && renderItems()}
         </Flex>
       </div>
       <ReactQueryDevtools />
@@ -91,5 +73,5 @@ function MyComponents(props: { id: number }) {
     retry: false,
   });
 
-  return <h1>Loaded count: {data}</h1>;
+  return <h5>Loaded count: {data}</h5>;
 }

@@ -32,13 +32,7 @@ export default function App() {
     debugger;
   });
 
-  useEffect(() => {
-    import('antd/es/message').then((e) => {
-      e.default.config({
-        maxCount: 3,
-      });
-    });
-  }, []);
+  useEffect(appSetup, []);
 
   const router = useMemo(
     () =>
@@ -82,4 +76,12 @@ export default function App() {
       </QueryClientProvider>
     </React.StrictMode>
   );
+}
+
+function appSetup(): (() => void) | void {
+  import('antd/es/message').then((e) => {
+    e.default.config({
+      maxCount: 3,
+    });
+  });
 }
