@@ -79,8 +79,8 @@ export default function App() {
 }
 
 function appSetup(): (() => void) | void {
-  import('antd/es/message').then((e) => {
-    e.default.config({
+  import('antd/es/message').then((m) => {
+    m.default.config({
       maxCount: 3,
     });
   });
