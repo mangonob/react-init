@@ -1,0 +1,27 @@
+.input-bar {
+  border-top: 1px solid #dddddd;
+
+  .inputs {
+    height: 165px;
+    padding: 0 32px;
+
+    .input-box {
+      flex: 1;
+      height: 120px;
+      border-radius: 12px;
+      background-color: #ffffff;
+    }
+  }
+
+  .safe-area {
+    height: 105px;
+    padding-bottom: 24px;
+
+    .home-indicator {
+      width: 420px;
+      height: 15px;
+      border-radius: 8px;
+      background-color: #000000;
+    }
+  }
+}

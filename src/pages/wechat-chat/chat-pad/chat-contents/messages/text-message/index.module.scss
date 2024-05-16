@@ -1,0 +1,35 @@
+.text-message {
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #95ec69;
+  line-height: 1.5;
+  display: inline-block;
+  max-width: 800px;
+  word-wrap: break-word;
+  word-break: break-all;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 42px;
+    border-radius: 2px;
+    transform: rotate(45deg);
+    width: 30px;
+    height: 30px;
+    background-color: #95ec69;
+  }
+
+  &.left {
+    &::after {
+      left: -10px;
+    }
+  }
+
+  &.right {
+    &::after {
+      right: -10px;
+    }
+  }
+}

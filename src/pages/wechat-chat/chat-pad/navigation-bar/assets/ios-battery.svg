@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="82px" height="39px" viewBox="0 0 82 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>形状结合</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M62,0 C69.1797017,0 75,5.82029825 75,13 L75,26 C75,33.1797017 69.1797017,39 62,39 L13,39 C5.82029825,39 0,33.1797017 0,26 L0,13 C0,5.82029825 5.82029825,0 13,0 L62,0 Z M62,3 L13,3 C7.4771525,3 3,7.4771525 3,13 L3,26 C3,31.5228475 7.4771525,36 13,36 L62,36 C67.5228475,36 72,31.5228475 72,26 L72,13 C72,7.4771525 67.5228475,3 62,3 Z" id="矩形" fill="#767676" fill-rule="nonzero"></path>
+        <path d="M77.9991366,12.9998618 C80.2486818,13.3597136 81.9982434,16.1147578 81.9982434,19.4600482 C81.9982434,22.8053387 80.2486818,25.5603828 77.9991366,25.9202347 Z" id="形状结合" fill="#767676"></path>
+    </g>
+</svg>

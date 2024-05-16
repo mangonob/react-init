@@ -1,0 +1,24 @@
+.chat-pad {
+  width: 393px;
+  height: 852px;
+  background-color: #ededed;
+  overflow: hidden;
+
+  .wrapper {
+    width: 300%;
+    height: 300%;
+    transform: scale(0.33333333);
+    transform-origin: 0 0;
+
+    &,
+    & span {
+      font-size: 48px;
+    }
+
+    .chat-contents {
+      flex: 1;
+      overflow-x: hidden;
+      overflow-y: scroll;
+    }
+  }
+}
