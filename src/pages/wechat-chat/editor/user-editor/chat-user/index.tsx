@@ -1,7 +1,9 @@
-import { Input, Upload } from 'antd';
+import { Flex, Input, Upload } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { ChatUserModel } from '../models';
 import styles from './index.module.scss';
+import { CloudUploadOutlined, UploadOutlined } from '@ant-design/icons';
+import { whenOr } from 'src/utils';
 
 type Value = Omit<ChatUserModel, 'userId'>;
 export interface ChatUserProps {
@@ -21,7 +23,7 @@ export default function ChatUser(props: ChatUserProps) {
   }, [value]);
 
   return (
-    <div className={styles.chatUser}>
+    <Flex className={styles.chatUser} gap={10} vertical>
       <Upload
         multiple={false}
         beforeUpload={(file) => {
@@ -39,26 +41,17 @@ export default function ChatUser(props: ChatUserProps) {
           return false;
         }}
         itemRender={() => void 0}
-        onChange={({ file }) => {
-          switch (file.status) {
-            case 'done':
-              console.info('Done');
-              break;
-            case 'error':
-              console.info('Error');
-              break;
-            case 'removed':
-              console.info('Removed');
-              break;
-            case 'uploading':
-              console.info('Uploading');
-              break;
-          }
-        }}
       >
-        <div className={styles.uploader}>{avator && <img src={avator} />}</div>
+        <div className={styles.uploader}>
+          {whenOr(
+            avator,
+            <img src={avator} />,
+            <CloudUploadOutlined className={styles.uploadIcon} />
+          )}
+        </div>
       </Upload>
       <Input
+        className={styles.nameInput}
         value={name}
         onChange={(e) => {
           const newUser = {
@@ -69,6 +62,6 @@ export default function ChatUser(props: ChatUserProps) {
           onChange?.(newUser);
         }}
       />
-    </div>
+    </Flex>
   );
 }

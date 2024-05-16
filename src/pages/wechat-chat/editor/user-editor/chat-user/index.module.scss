@@ -5,6 +5,10 @@
     border: 1px dashed #ccc;
     border-radius: 10px;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: border-color 0.25s ease-out;
 
     & > img {
       width: calc(100% - 4px);
@@ -12,5 +16,24 @@
       margin: 2px;
       border-radius: 9px;
     }
+
+    .upload-icon {
+      font-size: 20px;
+      color: var(--text-color-primary);
+      transition: color 0.25s ease-out;
+    }
+
+    &:hover {
+      border-color: var(--main-color);
+
+      & .upload-icon {
+        color: var(--main-color);
+      }
+    }
+  }
+
+  .name-input {
+    width: 80px;
+    padding: 4px;
   }
 }

@@ -1,10 +1,10 @@
 import { Flex } from 'antd';
 import React, { Ref } from 'react';
+import { ChatMessage } from '../models';
 import ChatContents from './chat-contents';
 import styles from './index.module.scss';
 import InputBar from './input-bar';
 import NavigationBar from './navigation-bar';
-import { ChatMessage } from '../models';
 
 export interface ChatPadProps {
   title?: string;
