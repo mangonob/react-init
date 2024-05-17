@@ -6,6 +6,7 @@ import { ChatUserModel } from '../models';
 import styles from './index.module.scss';
 
 type Value = Omit<ChatUserModel, 'userId'>;
+
 export interface ChatUserProps {
   value?: Value;
   onChange?: (_: Value) => void;
