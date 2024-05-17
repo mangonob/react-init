@@ -1,6 +1,8 @@
 .chat-pad {
   width: 393px;
   height: 852px;
+  min-width: 393px;
+  min-height: 852px;
   background-color: #ededed;
   overflow: hidden;
 

@@ -1,9 +1,9 @@
+import { CloudUploadOutlined } from '@ant-design/icons';
 import { Flex, Input, Upload } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { whenOr } from 'src/utils';
 import { ChatUserModel } from '../models';
 import styles from './index.module.scss';
-import { CloudUploadOutlined, UploadOutlined } from '@ant-design/icons';
-import { whenOr } from 'src/utils';
 
 type Value = Omit<ChatUserModel, 'userId'>;
 export interface ChatUserProps {
