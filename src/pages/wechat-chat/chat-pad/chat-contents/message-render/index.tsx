@@ -43,9 +43,9 @@ export default function MessageRender(props: MessageRenderProps) {
     s.users.filter((u) => u.userId === message?.sender)
   );
 
-  const avator = useMemo(() => {
+  const avatar = useMemo(() => {
     if (user) {
-      return user.avator;
+      return user.avatar;
     }
   }, [user]);
 
@@ -57,8 +57,8 @@ export default function MessageRender(props: MessageRenderProps) {
       {...extra}
     >
       <Reversed reversed={direction === 'right'}>
-        <div className={styles.avator}>
-          <img src={avator}></img>
+        <div className={styles.avatar}>
+          <img src={avatar}></img>
         </div>
         <MessageContext.Provider value={{ direction }}>
           {renderMessage()}

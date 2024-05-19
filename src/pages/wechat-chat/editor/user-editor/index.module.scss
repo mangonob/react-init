@@ -5,9 +5,12 @@
     margin-bottom: 0;
   }
 
-  .add-icon {
-    font-size: 24px;
-    color: var(--main-color);
-    padding: 20px;
+  .add-operation {
+    width: 80px;
+
+    .add-icon {
+      font-size: 24px;
+      color: var(--main-color);
+    }
   }
 }

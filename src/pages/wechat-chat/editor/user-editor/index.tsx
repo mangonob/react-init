@@ -1,4 +1,4 @@
-import { Flex, Form } from 'antd';
+import { Flex, Form, Space } from 'antd';
 import React from 'react';
 import ChatUser from './chat-user';
 import { useChatUsers } from './hooks';
@@ -35,15 +35,18 @@ export default function UserEditor() {
                   </Form.Item>
                 );
               })}
-              <UserAddOutlined
-                className={styles.addIcon}
+              <Space
+                direction="vertical"
                 onClick={() =>
                   add({
                     userId: `user-${fields.length}`,
                     name: `用户${fields.length}`,
                   })
                 }
-              />
+              >
+                <UserAddOutlined className={styles.addIcon} />
+                <span>添加用户</span>
+              </Space>
             </Flex>
           );
         }}

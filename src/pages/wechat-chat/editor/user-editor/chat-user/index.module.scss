@@ -9,12 +9,23 @@
     justify-content: center;
     align-items: center;
     transition: border-color 0.25s ease-out;
+    position: relative;
 
     & > img {
       width: calc(100% - 4px);
       height: calc(100% - 4px);
       margin: 2px;
       border-radius: 9px;
+    }
+
+    .operations {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #00000088;
+      transition: opacity 0.25s ease-out;
+      padding: 6px;
     }
 
     .upload-icon {
@@ -26,8 +37,12 @@
     &:hover {
       border-color: var(--main-color);
 
-      & .upload-icon {
+      .upload-icon {
         color: var(--main-color);
+      }
+
+      .operations {
+        opacity: 1;
       }
     }
   }

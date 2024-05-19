@@ -1,9 +1,10 @@
 import { CloudUploadOutlined } from '@ant-design/icons';
-import { Flex, Input, Upload } from 'antd';
+import { Button, Flex, Input, Space, Upload } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { whenOr } from 'src/utils';
 import { ChatUserModel } from '../models';
 import styles from './index.module.scss';
+import classNames from 'classnames';
 
 type Value = Omit<ChatUserModel, 'userId'>;
 
@@ -15,7 +16,7 @@ export interface ChatUserProps {
 export default function ChatUser(props: ChatUserProps) {
   const { value, onChange } = props;
   const [user, setUser] = useState<Value>();
-  const { name, avator } = user || {};
+  const { name, avatar } = user || {};
 
   useEffect(() => {
     if (value) {
@@ -34,7 +35,7 @@ export default function ChatUser(props: ChatUserProps) {
             const base64 = reader.result as string;
             const newUser = {
               ...user,
-              avator: base64,
+              avatar: base64,
             };
             setUser(newUser);
             onChange?.(newUser);
@@ -43,12 +44,22 @@ export default function ChatUser(props: ChatUserProps) {
         }}
         itemRender={() => void 0}
       >
-        <div className={styles.uploader}>
+        <div className={classNames(styles.uploader)}>
           {whenOr(
-            avator,
-            <img src={avator} />,
+            avatar,
+            <img src={avatar} />,
             <CloudUploadOutlined className={styles.uploadIcon} />
           )}
+          <Flex
+            vertical
+            className={styles.operations}
+            justify="center"
+            align="stretch"
+            gap={4}
+          >
+            <Button>更换头像</Button>
+            <Button>删除用户</Button>
+          </Flex>
         </div>
       </Upload>
       <Input
