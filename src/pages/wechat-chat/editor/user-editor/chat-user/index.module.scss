@@ -25,7 +25,20 @@
       height: 100%;
       background-color: #00000088;
       transition: opacity 0.25s ease-out;
-      padding: 6px;
+      padding: 8px;
+
+      .operation {
+        padding: 2px;
+        font-size: unset;
+        height: unset;
+        line-height: 1;
+        border-radius: 2px;
+
+        & > span {
+          font-size: 12px;
+          color: #fff;
+        }
+      }
     }
 
     .upload-icon {

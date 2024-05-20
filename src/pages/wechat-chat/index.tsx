@@ -1,72 +1,71 @@
-import { Button, Flex } from 'antd';
-import React, { useRef } from 'react';
-import ChatPad from './chat-pad';
-import styles from './index.module.scss';
-import html2canvas from 'html2canvas';
-import { download } from 'src/utils/download';
-import { nanoid } from 'nanoid';
-import { SELF_USER_ID } from './editor/user-editor/models';
+import { DownloadOutlined } from '@ant-design/icons';
+import { Alert, Flex } from 'antd';
+import React, { useMemo, useRef } from 'react';
+import { useLocalStorage } from 'react-use';
+import ChatPad, { ChatPadInstance } from './chat-pad';
 import WechatChatEditor from './editor';
+import { useGeneralSettings } from './editor/general-editor/hooks';
+import { useMessages } from './editor/message-editor/hooks';
+import { useChatUsers } from './editor/user-editor/hooks';
+import { SELF_USER_ID } from './editor/user-editor/models';
+import styles from './index.module.scss';
 
 export default function WechatChat() {
-  const ref = useRef<HTMLDivElement>(null);
+  const chatPad = useRef<ChatPadInstance>(null);
+  const messages = useMessages((s) => s.messages);
+  const [isReadedHelp, setReadedHelp] = useLocalStorage(
+    'WECHAT_CHAT_IS_READED_HELP',
+    false
+  );
+  const [isReadedWarn, setReadedWarn] = useLocalStorage(
+    'WECHAT_CHAT_IS_READ_WARN',
+    false
+  );
+  const first = useChatUsers((s) =>
+    s.users.find((u) => u.userId !== SELF_USER_ID)
+  );
+  const { mode, groupName, unreadCount } = useGeneralSettings();
+  const title = useMemo(() => {
+    return mode === 'group' ? groupName : first?.name;
+  }, [first?.name, groupName, mode]);
 
   return (
-    <Flex className={styles.wechatChat} gap={20}>
-      <Flex vertical gap={20}>
-        <Button
-          onClick={() => {
-            if (ref.current) {
-              html2canvas(ref.current, {
-                scale: 3,
-              }).then((canvas) => {
-                download(canvas.toDataURL(), `${nanoid(6)}.png`);
-              });
-            }
-          }}
-        >
-          Export
-        </Button>
-        <WechatChatEditor />
+    <Flex className={styles.wechatChat} gap={20} justify="flex-start">
+      <WechatChatEditor className={styles.editor} />
+      <Flex vertical gap={10}>
+        <div className={styles.padContainer}>
+          <ChatPad
+            title={title}
+            unreadCount={unreadCount}
+            messages={messages}
+            ref={chatPad}
+          />
+          <Flex align="center" className={styles.operations} justify="center">
+            <DownloadOutlined
+              className={styles.operation}
+              onClick={() => chatPad.current?.export()}
+            />
+          </Flex>
+        </div>
+        {!isReadedHelp && (
+          <Alert
+            className={styles.tips}
+            message="点击图片操作进行导出、录制"
+            type="info"
+            closeIcon={<span>知道了</span>}
+            afterClose={() => setReadedHelp(true)}
+          />
+        )}
+        {!isReadedWarn && (
+          <Alert
+            className={styles.tips}
+            message="所生成图片仅供娱乐，请勿用于非法用途"
+            closeIcon={<span>知道了</span>}
+            type="warning"
+            afterClose={() => setReadedWarn(true)}
+          />
+        )}
       </Flex>
-      <ChatPad
-        title="普京"
-        unreadCount={42}
-        padRef={ref}
-        messages={[
-          {
-            type: 'text',
-            content: 'akjskfajkslfjlaksdjlkfajlks',
-            sender: SELF_USER_ID,
-          },
-          {
-            type: 'text',
-            content:
-              'aakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlksakjskfajkslfjlaksdjlkfajlkskjskfajkslfjlaksdjlkfajlks',
-            sender: 'kajslfdlk',
-          },
-          {
-            type: 'image',
-            url: 'https://img0.baidu.com/it/u=1824799915,136110678&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500',
-            sender: SELF_USER_ID,
-          },
-          {
-            type: 'image',
-            url: 'https://img0.baidu.com/it/u=1824799915,136110678&fm=253&fmt=auto&app=120&f=JPEG?w=889&h=500',
-            sender: 'kaslkdjfl',
-          },
-          {
-            type: 'image',
-            url: 'http://img0.baidu.com/it/u=3100773165,2148857770&fm=253&app=138&f=JPEG?w=800&h=1600',
-            sender: SELF_USER_ID,
-          },
-          {
-            type: 'image',
-            url: 'http://img0.baidu.com/it/u=3100773165,2148857770&fm=253&app=138&f=JPEG?w=800&h=1600',
-            sender: 'kaslkdjfl',
-          },
-        ]}
-      />
     </Flex>
   );
 }

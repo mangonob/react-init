@@ -1,13 +1,16 @@
 .text-message {
-  padding: 20px;
+  padding: 24px 38px;
   border-radius: 12px;
   background-color: #95ec69;
   line-height: 1.5;
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   max-width: 800px;
   word-wrap: break-word;
   word-break: break-all;
   position: relative;
+  min-height: 120px;
 
   &::after {
     content: '';
@@ -16,14 +19,18 @@
     top: 42px;
     border-radius: 2px;
     transform: rotate(45deg);
+    z-index: -1;
     width: 30px;
     height: 30px;
     background-color: #95ec69;
   }
 
   &.left {
+    background-color: white;
+
     &::after {
       left: -10px;
+      background-color: white;
     }
   }
 

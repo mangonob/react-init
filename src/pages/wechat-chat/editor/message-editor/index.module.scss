@@ -1,0 +1,12 @@
+.message-editor {
+  :global(.ant-steps-item-title) {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .add-message {
+    &:hover > span {
+      color: var(--main-color);
+    }
+  }
+}

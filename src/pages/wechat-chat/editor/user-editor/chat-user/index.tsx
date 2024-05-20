@@ -1,28 +1,22 @@
 import { CloudUploadOutlined } from '@ant-design/icons';
-import { Button, Flex, Input, Space, Upload } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { whenOr } from 'src/utils';
-import { ChatUserModel } from '../models';
-import styles from './index.module.scss';
+import { Button, Flex, Input, Upload } from 'antd';
 import classNames from 'classnames';
+import React from 'react';
+import { whenOr } from 'src/utils';
+import { ChatUserModel, SELF_USER_ID } from '../models';
+import styles from './index.module.scss';
 
-type Value = Omit<ChatUserModel, 'userId'>;
+type Value = ChatUserModel;
 
 export interface ChatUserProps {
   value?: Value;
   onChange?: (_: Value) => void;
+  onRemove?: () => void;
 }
 
 export default function ChatUser(props: ChatUserProps) {
-  const { value, onChange } = props;
-  const [user, setUser] = useState<Value>();
-  const { name, avatar } = user || {};
-
-  useEffect(() => {
-    if (value) {
-      setUser(value);
-    }
-  }, [value]);
+  const { value, onChange, onRemove } = props;
+  const { name, avatar, userId } = value || {};
 
   return (
     <Flex className={styles.chatUser} gap={10} vertical>
@@ -34,10 +28,9 @@ export default function ChatUser(props: ChatUserProps) {
           reader.addEventListener('load', () => {
             const base64 = reader.result as string;
             const newUser = {
-              ...user,
+              ...value,
               avatar: base64,
-            };
-            setUser(newUser);
+            } as Value;
             onChange?.(newUser);
           });
           return false;
@@ -57,20 +50,34 @@ export default function ChatUser(props: ChatUserProps) {
             align="stretch"
             gap={4}
           >
-            <Button>更换头像</Button>
-            <Button>删除用户</Button>
+            {userId !== SELF_USER_ID && (
+              <Button
+                className={styles.operation}
+                type="primary"
+                danger
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove?.();
+                }}
+              >
+                删除用户
+              </Button>
+            )}
+            <Button className={styles.operation} type="primary">
+              更换头像
+            </Button>
           </Flex>
         </div>
       </Upload>
       <Input
         className={styles.nameInput}
         value={name}
+        placeholder="用户名"
         onChange={(e) => {
           const newUser = {
-            ...user,
+            ...value,
             name: e.target.value,
-          };
-          setUser(newUser);
+          } as Value;
           onChange?.(newUser);
         }}
       />

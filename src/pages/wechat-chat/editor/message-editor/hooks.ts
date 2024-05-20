@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 import { ChatMessage } from '../../models';
+import { SELF_USER_ID } from '../user-editor/models';
+import { nanoid } from 'nanoid';
 
 export interface MessageState {
   messages: ChatMessage[];
@@ -10,9 +12,15 @@ export interface MessageState {
 
 export const useMessages = create<MessageState>((set, get) => {
   return {
-    messages: [],
+    messages: [
+      {
+        id: nanoid(),
+        type: 'text',
+        sender: SELF_USER_ID,
+      },
+    ],
     update: (index, message) => {
-      const messages = get().messages;
+      const messages = get().messages.slice();
       messages[index] = message;
       set({ messages });
     },

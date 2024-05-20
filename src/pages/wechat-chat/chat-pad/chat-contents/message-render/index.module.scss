@@ -1,6 +1,11 @@
 .message-render {
   cursor: pointer;
 
+  .username.username {
+    font-size: 34px;
+    color: #808080;
+  }
+
   .avatar {
     overflow: hidden;
     background-color: #ffffff;

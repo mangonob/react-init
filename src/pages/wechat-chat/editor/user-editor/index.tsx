@@ -1,46 +1,62 @@
+import { UserAddOutlined } from '@ant-design/icons';
 import { Flex, Form, Space } from 'antd';
-import React from 'react';
+import classNames from 'classnames';
+import { nanoid } from 'nanoid';
+import React, { memo } from 'react';
 import ChatUser from './chat-user';
 import { useChatUsers } from './hooks';
-import { ChatUserModel } from './models';
-import { UserAddOutlined } from '@ant-design/icons';
 import styles from './index.module.scss';
+import { ChatUserModel } from './models';
 
-export default function UserEditor() {
+export interface UserEditorProps {
+  className?: string;
+}
+
+export default function UserEditor(props: UserEditorProps) {
+  const { className } = props;
+
   const { users, setUsers } = useChatUsers();
-
   const [form] = Form.useForm();
 
   return (
     <Form
-      className={styles.userEditor}
+      className={classNames(styles.userEditor, className)}
       form={form}
       initialValues={{ users }}
-      onValuesChange={(values: { users: ChatUserModel[] }) => {
-        setUsers(values.users);
+      onValuesChange={() => {
+        const { users } = form.getFieldsValue() as { users: ChatUserModel[] };
+        setUsers(users);
       }}
     >
       <Form.List name="users">
         {(fields, { add, remove }) => {
           return (
             <Flex wrap="wrap" align="center" gap={20}>
-              {fields.map((field) => {
+              {fields.map((field, index) => {
+                const { userId } = form.getFieldValue([
+                  'users',
+                  index,
+                ]) as ChatUserModel;
+
                 return (
                   <Form.Item
                     className={styles.formItem}
                     name={field.name}
-                    key={field.key}
+                    key={userId}
                   >
-                    <ChatUser />
+                    <_ChatUser onRemove={() => remove(index)} />
                   </Form.Item>
                 );
               })}
               <Space
+                className={styles.addOperation}
+                align="center"
                 direction="vertical"
+                size={2}
                 onClick={() =>
                   add({
-                    userId: `user-${fields.length}`,
-                    name: `用户${fields.length}`,
+                    userId: `user${nanoid(8)}`,
+                    name: `用户${nanoid(4)}`,
                   })
                 }
               >
@@ -54,3 +70,5 @@ export default function UserEditor() {
     </Form>
   );
 }
+
+const _ChatUser = memo(ChatUser, (lhs, rhs) => lhs.value === rhs.value);

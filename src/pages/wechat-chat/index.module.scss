@@ -1,4 +1,67 @@
+@use 'sass:math';
+
 .wechat-chat {
-  font-family: 'SF Pro SC', 'SF Pro Text', 'SF Pro Icons', 'PingFang SC',
-    'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  max-width: 1400px;
+
+  .editor {
+    flex: 1;
+  }
+
+  .pad-container {
+    position: relative;
+    align-self: flex-start;
+
+    .operations {
+      opacity: 0;
+      background-color: #00000066;
+      color: var(--system-background-color);
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: opacity 0.25s ease-out;
+
+      $operation-radius: 80px;
+
+      .operation {
+        background-color: var(--main-color);
+        width: $operation-radius;
+        height: $operation-radius;
+        border-radius: math.div($operation-radius, 2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 30px;
+        opacity: 0.8;
+        transition: opacity 0.25s ease-out;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .tips {
+    color: var(--text-color-secondary);
+
+    &,
+    span {
+      font-size: 12px;
+    }
+
+    span {
+      color: var(--text-color-tertiary);
+
+      &:hover {
+        color: var(--text-color-primary);
+        text-decoration: underline;
+      }
+    }
+  }
 }

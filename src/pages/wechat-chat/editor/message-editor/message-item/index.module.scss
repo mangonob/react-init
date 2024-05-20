@@ -1,0 +1,35 @@
+.message-item {
+  .form {
+    flex: 1;
+
+    .text {
+      .text-area {
+        min-height: 80px;
+        max-height: 200px;
+      }
+    }
+
+    .image {
+      display: block;
+    }
+
+    .time-picker {
+      width: 100%;
+    }
+  }
+
+  .remove-icon {
+    opacity: 0;
+    font-size: 24px;
+    height: 31px;
+    color: var(--danger-color-normal);
+    cursor: pointer;
+    transition: opacity 0.25s ease-out;
+  }
+
+  &:hover {
+    .remove-icon {
+      opacity: 1;
+    }
+  }
+}

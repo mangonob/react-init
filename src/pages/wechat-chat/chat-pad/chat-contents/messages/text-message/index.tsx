@@ -6,6 +6,7 @@ import styles from './index.module.scss';
 export interface TextMessageProps {
   content?: string;
 }
+
 export default function TextMessage(props: TextMessageProps) {
   const { content = '' } = props;
   const { direction } = useContext(MessageContext);

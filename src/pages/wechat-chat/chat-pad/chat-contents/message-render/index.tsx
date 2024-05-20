@@ -1,12 +1,14 @@
 import { Flex } from 'antd';
-import React, { HTMLAttributes, createContext, useMemo } from 'react';
-import Reversed from 'src/components/reversed';
-import { ChatMessage } from 'src/pages/wechat-chat/models';
-import styles from './index.module.scss';
 import classNames from 'classnames';
-import TextMessage from '../messages/text-message';
-import ImageMessage from '../messages/image-message';
+import React, { HTMLAttributes, createContext } from 'react';
+import Reversed from 'src/components/reversed';
+import { useGeneralSettings } from 'src/pages/wechat-chat/editor/general-editor/hooks';
 import { useChatUsers } from 'src/pages/wechat-chat/editor/user-editor/hooks';
+import { SELF_USER_ID } from 'src/pages/wechat-chat/editor/user-editor/models';
+import { ChatMessage } from 'src/pages/wechat-chat/models';
+import ImageMessage from '../messages/image-message';
+import TextMessage from '../messages/text-message';
+import styles from './index.module.scss';
 
 export interface MessageContextValue {
   direction: 'left' | 'right';
@@ -22,9 +24,11 @@ export interface MessageRenderProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function MessageRender(props: MessageRenderProps) {
   const { message, className, ...extra } = props;
+  const isInGroup = useGeneralSettings((s) => s.mode === 'group');
+  const shouldShowName = message?.sender !== SELF_USER_ID && isInGroup;
 
   const direction: 'left' | 'right' =
-    message?.sender === '__SELF__' ? 'right' : 'left';
+    message?.sender === SELF_USER_ID ? 'right' : 'left';
 
   const renderMessage = () => {
     if (message) {
@@ -39,15 +43,10 @@ export default function MessageRender(props: MessageRenderProps) {
     }
   };
 
-  const [user] = useChatUsers((s) =>
-    s.users.filter((u) => u.userId === message?.sender)
+  const user = useChatUsers((s) =>
+    s.users.find((u) => u.userId === message?.sender)
   );
-
-  const avatar = useMemo(() => {
-    if (user) {
-      return user.avatar;
-    }
-  }, [user]);
+  const { name: userName, avatar } = user || {};
 
   return (
     <Flex
@@ -61,7 +60,16 @@ export default function MessageRender(props: MessageRenderProps) {
           <img src={avatar}></img>
         </div>
         <MessageContext.Provider value={{ direction }}>
-          {renderMessage()}
+          <Flex
+            vertical
+            align={direction === 'left' ? 'flex-start' : 'flex-end'}
+            gap={10}
+          >
+            {shouldShowName && userName && (
+              <span className={styles.username}>{userName}</span>
+            )}
+            {renderMessage()}
+          </Flex>
         </MessageContext.Provider>
       </Reversed>
     </Flex>
