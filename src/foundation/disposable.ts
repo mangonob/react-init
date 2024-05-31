@@ -11,6 +11,7 @@ export interface DisposeBag extends Disposable {
   disposed: (d: Disposable) => void;
   disposedBlock: (fn: () => void) => void;
   disposedBlocks: (...fns: (() => void)[]) => void;
+  isDisposed: () => boolean;
 }
 
 export function createDisposeBag(): DisposeBag {
@@ -27,20 +28,17 @@ export function createDisposeBag(): DisposeBag {
     },
     disposedBlock(fn: () => void) {
       disposes.push({
-        dispose() {
-          fn();
-        },
+        dispose: fn,
       });
     },
     disposedBlocks(...fns: (() => void)[]) {
       // eslint-disable-next-line unicorn/no-array-for-each
       fns.forEach((fn) => {
         disposes.push({
-          dispose() {
-            fn();
-          },
+          dispose: fn,
         });
       });
     },
+    isDisposed: () => disposes.length === 0,
   };
 }
