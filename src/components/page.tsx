@@ -9,11 +9,11 @@ export interface PageProps<P> {
 
 export function Page<P extends Attributes>(props: PageProps<P>) {
   const { path: _path, props: _props } = props;
-  const path = _path.startsWith('/') ? _path : '/' + _path;
+  const path = _path.startsWith('/') ? _path.slice(1) : _path;
 
   const Lazy = React.lazy(
     () =>
-      import(/* @vite-ignore */ `../pages${path}`).catch((error: Error) => {
+      import(`../pages/${path}/index.tsx`).catch((error: Error) => {
         throw new PageLoadError(error);
       }) as Promise<{
         default: ComponentType<P | undefined>;
