@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: {
     browser: true,
     es2021: true,
@@ -19,9 +20,14 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json',
   },
-  plugins: ['react', '@typescript-eslint', 'react-hooks', 'unicorn'],
+  plugins: [
+    'react',
+    '@typescript-eslint',
+    'react-hooks',
+    'unicorn',
+    'react-refresh',
+  ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
@@ -42,6 +48,11 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
+
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
   },
   settings: {
     react: {

@@ -7,13 +7,13 @@ export function useRequest<T>(
   const [isLoading, setIsLoading] = useState(false);
 
   useLayoutEffect(() => {
-    const i = setImmediate(() => {
+    const i = setInterval(() => {
       setIsLoading(true);
       fetch()
         .then((d) => setData(d))
         .finally(() => setIsLoading(false));
-    });
-    return () => clearImmediate(i);
+    }, 0);
+    return () => clearInterval(i);
   }, [fetch]);
 
   return [data, isLoading];

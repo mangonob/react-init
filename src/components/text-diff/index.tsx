@@ -105,7 +105,7 @@ function generateDiffItem(source: string, dest: string): DiffItem<string>[] {
   }
 
   const uniformItems = items.reduce((items: DiffItem<string>[], next) => {
-    const prev = items.at(-1);
+    const prev = items.slice(-1)[0];
     if (prev) {
       const tail = items.slice(0, -1);
       return prev.type === next.type

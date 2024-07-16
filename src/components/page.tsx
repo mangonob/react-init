@@ -13,7 +13,7 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
 
   const Lazy = React.lazy(
     () =>
-      import(`../pages${path}`).catch((error: Error) => {
+      import(/* @vite-ignore */ `../pages${path}`).catch((error: Error) => {
         throw new PageLoadError(error);
       }) as Promise<{
         default: ComponentType<P | undefined>;
