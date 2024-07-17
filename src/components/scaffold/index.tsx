@@ -1,10 +1,11 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { useDrag } from '@use-gesture/react';
 import { Avatar, Drawer, Layout, Space } from 'antd';
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router';
-import { useAsync } from 'react-use';
+import { useAsync, useLocalStorage } from 'react-use';
 import { useTheme } from 'src/hooks/theme';
 import styles from './index.module.scss';
 import SystemMenu from './system-menu';
@@ -14,6 +15,27 @@ export default function Scaffold() {
   const toggleTheme = useTheme((s) => s.toggleTheme);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
   const [isSiderCollapsed, setSiderCollapsed] = useState(false);
+  const originalWidth = useRef(0);
+  const [silderWidth = NaN, setSilderWidth] = useLocalStorage(
+    'silderWidth',
+    300
+  );
+
+  const bind = useDrag(
+    (e) => {
+      if (e.first) {
+        originalWidth.current = silderWidth;
+      } else if (e.last) {
+        originalWidth.current = 0;
+      } else {
+        const w = originalWidth.current + e.movement[0];
+        setSilderWidth(Math.min(Math.max(w, 100), 500));
+      }
+    },
+    {
+      axis: 'x',
+    }
+  );
 
   const { value: themeIconSrc } = useAsync(
     (): Promise<string> =>
@@ -78,10 +100,12 @@ export default function Scaffold() {
         </Layout.Header>
         <Layout>
           <Layout.Sider
-            width={280}
+            className={styles.slider}
+            width={silderWidth}
             collapsed={isSiderCollapsed}
             collapsedWidth={0}
           >
+            <div className={styles.resizeHandler} {...bind()}></div>
             <SystemMenu />
           </Layout.Sider>
           <Layout.Content className={styles.content}>
