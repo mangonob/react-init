@@ -1,3 +1,4 @@
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Avatar, Drawer, Layout, Space } from 'antd';
 import classNames from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -10,8 +11,8 @@ import styles from './index.module.scss';
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
   const toggleTheme = useTheme((s) => s.toggleTheme);
-  const [isLeftDrawerHidden, setIsLeftDrawerHidden] = useState(true);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
+  const [isSiderCollapsed, setSiderCollapsed] = useState(false);
 
   const { value: themeIconSrc } = useAsync(
     (): Promise<string> =>
@@ -42,9 +43,9 @@ export default function Scaffold() {
         <Layout.Header className={styles.navHeader}>
           <div
             className={styles.leftDrawerMenu}
-            onClick={() => setIsLeftDrawerHidden(false)}
+            onClick={() => setSiderCollapsed(!isSiderCollapsed)}
           >
-            =
+            {isSiderCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           </div>
           <Space>
             <div className={styles.themeSwitcher}>
@@ -74,18 +75,16 @@ export default function Scaffold() {
             </Avatar>
           </Space>
         </Layout.Header>
-        <Layout.Content className={styles.content}>
-          <Outlet />
-        </Layout.Content>
-        <Drawer
-          className={classNames(styles.drawer, styles.systemDrawer)}
-          placement="left"
-          width={320}
-          open={!isLeftDrawerHidden}
-          onClose={() => setIsLeftDrawerHidden(true)}
-        >
-          <h1>Left</h1>
-        </Drawer>
+        <Layout>
+          <Layout.Sider
+            width={280}
+            collapsed={isSiderCollapsed}
+            collapsedWidth={0}
+          ></Layout.Sider>
+          <Layout.Content className={styles.content}>
+            <Outlet />
+          </Layout.Content>
+        </Layout>
         <Drawer
           className={classNames(styles.drawer, styles.userDrawer)}
           placement="right"

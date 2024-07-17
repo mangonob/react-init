@@ -40,7 +40,7 @@ export default function App() {
         {
           path: '/',
           lazy: () =>
-            import('./pages/scaffold').then(({ default: Component }) => ({
+            import('./components/scaffold').then(({ default: Component }) => ({
               Component,
             })),
           children: [
