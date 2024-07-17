@@ -11,25 +11,22 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
   const { path, props: _props } = props;
 
   const Lazy = React.lazy(() => {
-    const moduleName = path.startsWith('/') ? path.slice(1) : path;
-    const [module, submodule] = moduleName.split('/');
-    // 结合 @rollurollupp/plugin-dynamic-import-vars 插件实现“动态”导入
-    if (module && submodule) {
-      return import(`../pages/${module}/${submodule}/index.tsx`).catch(
-        (error: Error) => {
-          throw new PageLoadError(error);
-        }
-      ) as Promise<{
-        default: ComponentType<P | undefined>;
-      }>;
-    } else if (module) {
-      return import(`../pages/${module}/index.tsx`).catch((error: Error) => {
+    const modules = import.meta.glob('./../pages/**/index.tsx');
+
+    const [, loader] =
+      Object.entries(modules).find(([key]) => {
+        const moduleName = key.replace(/(.*)pages\/(.*)\/index\.tsx/i, '$2');
+        const relative = path.replace(/^\/*/i, '').replace(/\/*$/i, '');
+        return relative === moduleName;
+      }) ?? [];
+
+    if (loader && typeof loader === 'function') {
+      const _loader = loader as () => Promise<{ default: ComponentType<any> }>;
+      return _loader().catch((error) => {
         throw new PageLoadError(error);
-      }) as Promise<{
-        default: ComponentType<P | undefined>;
-      }>;
+      });
     } else {
-      throw new PageLoadError(new Error(`bad path ${path}`));
+      throw new PageLoadError(new Error(`bad page at path "${path}"`));
     }
   });
 

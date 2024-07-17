@@ -73,9 +73,6 @@ dependencies:
     version: 4.5.2(@types/react@18.2.66)(immer@10.0.4)(react@18.2.0)
 
 devDependencies:
-  '@rollup/plugin-dynamic-import-vars':
-    specifier: ^2.1.2
-    version: 2.1.2
   '@types/animejs':
     specifier: ^3.1.12
     version: 3.1.12
@@ -1160,36 +1157,6 @@ packages:
     engines: {node: '>=14.0.0'}
     dev: false
 
-  /@rollup/plugin-dynamic-import-vars@2.1.2:
-    resolution: {integrity: sha512-4lr2oXxs9hcxtGGaK8s0i9evfjzDrAs7ngw28TqruWKTEm0+U4Eljb+F6HXGYdFv8xRojQlrQwV7M/yxeh3yzQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      '@rollup/pluginutils': 5.1.0
-      astring: 1.8.6
-      estree-walker: 2.0.2
-      fast-glob: 3.3.2
-      magic-string: 0.30.10
-    dev: true
-
-  /@rollup/pluginutils@5.1.0:
-    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      '@types/estree': 1.0.5
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
-    dev: true
-
   /@rollup/rollup-android-arm-eabi@4.18.0:
     resolution: {integrity: sha512-Tya6xypR10giZV1XzxmH5wr25VcZSncG0pZIjfePT0OVBvqNEurzValetGNarVrGiq66EBVAFn15iYX4w6FKgQ==}
     cpu: [arm]
@@ -1862,11 +1829,6 @@ packages:
 
   /ast-types-flow@0.0.8:
     resolution: {integrity: sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==}
-    dev: true
-
-  /astring@1.8.6:
-    resolution: {integrity: sha512-ISvCdHdlTDlH5IpxQJIex7BWBywFWgjJSVdwst+/iQCoEYnyOaQ95+X1JGshuBjGp6nxKUy1jMgE3zPqN7fQdg==}
-    hasBin: true
     dev: true
 
   /async-validator@4.2.5:
@@ -2779,10 +2741,6 @@ packages:
     engines: {node: '>=4.0'}
     dev: true
 
-  /estree-walker@2.0.2:
-    resolution: {integrity: sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w==}
-    dev: true
-
   /esutils@2.0.3:
     resolution: {integrity: sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==}
     engines: {node: '>=0.10.0'}
@@ -3617,12 +3575,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       yallist: 4.0.0
-    dev: true
-
-  /magic-string@0.30.10:
-    resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
   /make-dir@2.1.0:
