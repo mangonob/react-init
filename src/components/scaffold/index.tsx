@@ -21,21 +21,16 @@ export default function Scaffold() {
     300
   );
 
-  const bind = useDrag(
-    (e) => {
-      if (e.first) {
-        originalWidth.current = silderWidth;
-      } else if (e.last) {
-        originalWidth.current = 0;
-      } else {
-        const w = originalWidth.current + e.movement[0];
-        setSilderWidth(Math.min(Math.max(w, 100), 500));
-      }
-    },
-    {
-      axis: 'x',
+  const bind = useDrag((e) => {
+    if (e.first) {
+      originalWidth.current = silderWidth;
+    } else if (e.last) {
+      originalWidth.current = 0;
+    } else {
+      const w = originalWidth.current + e.movement[0];
+      setSilderWidth(Math.min(Math.max(w, 100), 500));
     }
-  );
+  });
 
   const { value: themeIconSrc } = useAsync(
     (): Promise<string> =>
@@ -100,7 +95,7 @@ export default function Scaffold() {
         </Layout.Header>
         <Layout>
           <Layout.Sider
-            className={styles.slider}
+            className={styles.silder}
             width={silderWidth}
             collapsed={isSiderCollapsed}
             collapsedWidth={0}
