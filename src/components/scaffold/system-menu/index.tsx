@@ -1,7 +1,7 @@
 import { Menu, MenuProps } from 'antd';
 import { isArray } from 'lodash-es';
 import React, { useMemo } from 'react';
-import menus from 'src/routes/menus.yml';
+import menus from 'src/routes/menus.yaml';
 
 interface SystemMenuProps extends MenuProps {}
 

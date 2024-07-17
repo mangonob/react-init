@@ -9,11 +9,13 @@ import { useAsync, useLocalStorage } from 'react-use';
 import { useTheme } from 'src/hooks/theme';
 import styles from './index.module.scss';
 import SystemMenu from './system-menu';
+import { createPortal } from 'react-dom';
 
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
   const toggleTheme = useTheme((s) => s.toggleTheme);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
+  const menuMount = useRef<HTMLDivElement>(null);
   const [isSiderCollapsed, setSiderCollapsed] = useState(false);
   const originalWidth = useRef(0);
   const [isDarging, setDraging] = useState(false);
@@ -96,6 +98,7 @@ export default function Scaffold() {
             </Avatar>
           </Space>
         </Layout.Header>
+        {menuMount.current && createPortal(<SystemMenu />, menuMount.current)}
         <Layout>
           <Layout.Sider
             className={classNames(styles.silder, {
@@ -105,8 +108,12 @@ export default function Scaffold() {
             collapsed={isSiderCollapsed}
             collapsedWidth={0}
           >
+            <div
+              ref={menuMount}
+              style={{ width: silderWidth }}
+              className={styles.menuContainer}
+            ></div>
             <div className={styles.resizeHandler} {...bind()}></div>
-            <SystemMenu />
           </Layout.Sider>
           <Layout.Content className={styles.content}>
             <Outlet />

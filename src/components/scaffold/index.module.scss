@@ -41,6 +41,19 @@
       touch-action: none;
       cursor: col-resize;
     }
+
+    .menu-container {
+      overflow-y: scroll;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   .content {
