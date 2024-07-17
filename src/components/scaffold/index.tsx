@@ -16,6 +16,7 @@ export default function Scaffold() {
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
   const [isSiderCollapsed, setSiderCollapsed] = useState(false);
   const originalWidth = useRef(0);
+  const [isDarging, setDraging] = useState(false);
   const [silderWidth = NaN, setSilderWidth] = useLocalStorage(
     'silderWidth',
     300
@@ -24,8 +25,10 @@ export default function Scaffold() {
   const bind = useDrag((e) => {
     if (e.first) {
       originalWidth.current = silderWidth;
+      setDraging(true);
     } else if (e.last) {
       originalWidth.current = 0;
+      setDraging(false);
     } else {
       const w = originalWidth.current + e.movement[0];
       setSilderWidth(Math.min(Math.max(w, 100), 500));
@@ -95,7 +98,9 @@ export default function Scaffold() {
         </Layout.Header>
         <Layout>
           <Layout.Sider
-            className={styles.silder}
+            className={classNames(styles.silder, {
+              [styles.draging]: isDarging,
+            })}
             width={silderWidth}
             collapsed={isSiderCollapsed}
             collapsedWidth={0}
