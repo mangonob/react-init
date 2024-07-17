@@ -31,7 +31,8 @@
           "classnameTransform": "camelCaseOnly"
         }
       }
-    ]
+    ],
+    "types": ["@modyfi/vite-plugin-yaml/modules"]
   },
   "include": ["src"]
 }

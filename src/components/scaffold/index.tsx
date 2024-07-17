@@ -7,6 +7,7 @@ import { Outlet } from 'react-router';
 import { useAsync } from 'react-use';
 import { useTheme } from 'src/hooks/theme';
 import styles from './index.module.scss';
+import SystemMenu from './system-menu';
 
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
@@ -80,7 +81,9 @@ export default function Scaffold() {
             width={280}
             collapsed={isSiderCollapsed}
             collapsedWidth={0}
-          ></Layout.Sider>
+          >
+            <SystemMenu />
+          </Layout.Sider>
           <Layout.Content className={styles.content}>
             <Outlet />
           </Layout.Content>

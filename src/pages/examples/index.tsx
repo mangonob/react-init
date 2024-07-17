@@ -14,3 +14,7 @@ export default function Examples() {
     </Form>
   );
 }
+
+Examples['meta'] = {
+  title: '演示程序',
+};

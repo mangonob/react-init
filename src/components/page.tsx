@@ -11,7 +11,7 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
   const { path, props: _props } = props;
 
   const Lazy = React.lazy(() => {
-    const modules = import.meta.glob('./../pages/**/index.tsx');
+    const modules = import.meta.glob('/src/pages/**/index.tsx');
 
     const [, loader] =
       Object.entries(modules).find(([key]) => {
