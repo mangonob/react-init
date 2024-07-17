@@ -1,21 +1,13 @@
-@import 'src/styles/chess-board';
+.examples {
+  position: relative;
 
-.example {
-  .chess {
-    @include chess-board(
-      var(--blue-color-level-6),
-      var(--green-color-level-6),
-      3px
-    );
-    width: 50%;
-    height: 320px;
-  }
-
-  .chess2 {
-    @include chess-board(
-      var(--blue-color-level-6),
-      var(--yellow-color-level-6),
-      80px
-    );
+  .block {
+    touch-action: none;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-color: red;
+    top: 0;
+    left: 0;
   }
 }
