@@ -23,10 +23,6 @@
   }
 
   .silder {
-    &.draging {
-      transition-duration: 0s;
-    }
-
     background-color: var(--system-background-color);
     border-right: 1px solid var(--border-color-primary);
     position: relative;
@@ -53,6 +49,10 @@
       &::-webkit-scrollbar {
         display: none;
       }
+    }
+
+    &.draging {
+      transition-duration: 0s;
     }
   }
 
