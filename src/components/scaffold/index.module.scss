@@ -10,6 +10,10 @@
     align-items: center;
     justify-content: space-between;
     background-color: var(--nav-background-color);
+
+    &.hyper {
+      background-color: var(--purple-color-level-8);
+    }
   }
 
   .left-drawer-menu {

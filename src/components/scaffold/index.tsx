@@ -10,9 +10,11 @@ import { useTheme } from 'src/hooks/theme';
 import styles from './index.module.scss';
 import SystemMenu from './system-menu';
 import { createPortal } from 'react-dom';
+import useHyperMode from 'src/hooks/hyper';
 
 export default function Scaffold() {
   const theme = useTheme((s) => s.theme);
+  const isHyperMode = useHyperMode((s) => s.isHyperMode);
   const toggleTheme = useTheme((s) => s.toggleTheme);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
   const menuMount = useRef<HTMLDivElement>(null);
@@ -63,7 +65,11 @@ export default function Scaffold() {
   return (
     <Layout className={styles.scaffold}>
       <Layout>
-        <Layout.Header className={styles.navHeader}>
+        <Layout.Header
+          className={classNames(styles.navHeader, {
+            [styles.hyper]: isHyperMode,
+          })}
+        >
           <div
             className={styles.leftDrawerMenu}
             onClick={() => setSiderCollapsed(!isSiderCollapsed)}
