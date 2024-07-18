@@ -19,10 +19,7 @@ export default function Scaffold() {
   const [isSiderCollapsed, setSiderCollapsed] = useState(false);
   const originalWidth = useRef(0);
   const [isDarging, setDraging] = useState(false);
-  const [silderWidth = NaN, setSilderWidth] = useLocalStorage(
-    'silderWidth',
-    300
-  );
+  const [silderWidth = 0, setSilderWidth] = useLocalStorage('silderWidth', 300);
 
   const bind = useDrag((e) => {
     if (e.first) {
