@@ -1,6 +1,13 @@
+import {
+  BgColorsOutlined,
+  DiffOutlined,
+  ExperimentOutlined,
+  ProductOutlined,
+  WechatOutlined,
+} from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { isArray } from 'lodash-es';
-import React, { useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import menus from 'src/routes/menus.yaml';
 
@@ -8,6 +15,8 @@ interface SystemMenuProps extends MenuProps {}
 
 type MenuItem = {
   title: string;
+  iconName?: string;
+  key?: string;
 } & (
   | {
       /** 子菜单 */
@@ -23,13 +32,24 @@ export default function SystemMenu(props: SystemMenuProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const _menus = menus as MenuItem[];
+
   const items = useMemo((): NonNullable<MenuProps['items']> => {
-    const _menus = menus as MenuItem[];
     return isArray(_menus)
       ? _menus.map((m, i) => {
+          const { title, iconName } = m;
+          const icons: Record<string, ReactNode> = {
+            example: <ExperimentOutlined />,
+            design: <BgColorsOutlined />,
+            differ: <DiffOutlined />,
+            wechat: <WechatOutlined />,
+            default: <ProductOutlined />,
+          };
+
           return {
-            key: i,
-            label: m.title,
+            key: itemKey(m, i),
+            label: title,
+            icon: icons[iconName ?? 'default'],
             onClick: () => {
               if ('target' in m) {
                 const { target } = m;
@@ -41,7 +61,28 @@ export default function SystemMenu(props: SystemMenuProps) {
           } as NonNullable<MenuProps['items']>[number];
         })
       : [];
-  }, [pathname, navigate]);
+  }, [_menus, pathname, navigate]);
 
-  return <Menu items={items} {...props}></Menu>;
+  const selectedByRoute = _menus.findIndex((m) => {
+    if ('target' in m) {
+      return m.target === pathname;
+    }
+  });
+
+  const key =
+    selectedByRoute >= 0
+      ? itemKey(_menus[selectedByRoute], selectedByRoute)
+      : void 0;
+
+  return (
+    <Menu
+      items={items}
+      {...props}
+      defaultSelectedKeys={key ? [key] : void 0}
+    ></Menu>
+  );
+}
+
+function itemKey(item: MenuItem, index: number): string {
+  return item.key ?? `item-${index}`;
 }

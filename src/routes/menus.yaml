@@ -1,8 +1,12 @@
-- title: 功能演示
+- title: Playground
   target: /examples
-- title: 设计规范
-  target: /design
-- title: Differ
-  target: /differ
+  iconName: example
 - title: 微信对话模拟器
   target: /wechat-chat
+  iconName: wechat
+- title: 设计规范
+  target: /design
+  iconName: design
+- title: Differ
+  target: /differ
+  iconName: differ
