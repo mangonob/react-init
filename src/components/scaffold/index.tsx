@@ -16,7 +16,10 @@ export default function Scaffold() {
   const toggleTheme = useTheme((s) => s.toggleTheme);
   const [isRightDrawerHidden, setIsRightDrawerHidden] = useState(true);
   const menuMount = useRef<HTMLDivElement>(null);
-  const [isSiderCollapsed, setSiderCollapsed] = useState(false);
+  const [isSiderCollapsed, setSiderCollapsed] = useLocalStorage(
+    'isSiderCollapsed',
+    false
+  );
   const originalWidth = useRef(0);
   const [isDarging, setDraging] = useState(false);
   const [silderWidth = 0, setSilderWidth] = useLocalStorage('silderWidth', 300);
@@ -30,7 +33,7 @@ export default function Scaffold() {
       setDraging(false);
     } else {
       const w = originalWidth.current + e.movement[0];
-      setSilderWidth(Math.min(Math.max(w, 100), 500));
+      setSilderWidth(Math.min(Math.max(w, 160), 500));
     }
   });
 

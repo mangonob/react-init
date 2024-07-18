@@ -21,14 +21,12 @@ type MenuItem = {
 export default function SystemMenu(props: SystemMenuProps) {
   const items = useMemo((): NonNullable<MenuProps['items']> => {
     const _menus = menus as MenuItem[];
-    if (isArray(_menus)) {
-      return _menus.map((m) => {
-        return { label: m.title } as NonNullable<MenuProps['items']>[number];
-      });
-    } else {
-      return [];
-    }
-  }, [menus]);
+    return isArray(_menus)
+      ? _menus.map((m) => {
+          return { label: m.title } as NonNullable<MenuProps['items']>[number];
+        })
+      : [];
+  }, []);
 
   return <Menu items={items} {...props}></Menu>;
 }

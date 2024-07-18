@@ -13,6 +13,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:unicorn/recommended',
   ],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.app.json',
