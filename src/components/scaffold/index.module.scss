@@ -2,30 +2,6 @@
   overflow: hidden;
   height: 100vh;
 
-  .nav-header {
-    color: lightgray;
-    padding: 0 20px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--nav-background-color);
-
-    &.hyper {
-      background-color: var(--purple-color-level-8);
-    }
-  }
-
-  .left-drawer-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    :global(.anticon) {
-      font-size: 20px;
-    }
-  }
-
   .silder {
     background-color: var(--menu-background-color);
     border-right: 1px solid var(--border-color-secondary);

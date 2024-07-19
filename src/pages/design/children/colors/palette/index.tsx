@@ -54,7 +54,7 @@ interface ColorItemProps {
 
 function ColorItem(props: ColorItemProps) {
   const { colorName, index, label, onChanged } = props;
-  const varName = `--${colorName}-color-level-${index}`;
+  const varName = `--${colorName}-color-level-${String(index).padStart(2, '0')}`;
   const value = useCSSVar(varName);
   const isDark = color(value).gray() < 50;
 

@@ -1,0 +1,42 @@
+.nav-header {
+  color: lightgray;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--nav-background-color);
+
+  &.hyper {
+    background-color: var(--purple-color-level-08);
+  }
+
+  .left-drawer-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    :global(.anticon) {
+      font-size: 20px;
+    }
+  }
+
+  .avatar {
+    background-color: var(--orange-color-level-05);
+    span {
+      color: white;
+    }
+  }
+
+  .theme-switcher {
+    :global {
+      .ant-switch-inner {
+        .ant-switch-inner-checked,
+        .ant-switch-inner-unchecked {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
