@@ -2,7 +2,7 @@ import { message } from 'antd';
 import classNames from 'classnames';
 import color from 'color';
 import React, { useCallback } from 'react';
-import { useCSSVarGetter } from 'src/hooks/css-var';
+import { useCSSVar } from 'src/hooks/css-var';
 
 import styles from './index.module.scss';
 
@@ -25,74 +25,71 @@ export function ColorPalette(props: ColorPaletteProps) {
     onChanged,
   } = props;
 
-  const getColorVar = useCallback(
-    (index: number) => {
-      return `--${colorName}-color-level-${index}`;
-    },
-    [colorName]
+  return (
+    <div className={styles.colorPalette}>
+      <ColorItem
+        colorName={colorName}
+        index={defaultIndex}
+        label={label}
+        onChanged={onChanged}
+      />
+      {Array.from({ length: to - from + 1 }).map((_, i) => (
+        <ColorItem
+          key={`${colorName}-${i}`}
+          colorName={colorName}
+          index={i + 1}
+          onChanged={onChanged}
+        />
+      ))}
+    </div>
   );
+}
 
-  const getCSSVarValue = useCSSVarGetter();
+interface ColorItemProps {
+  colorName: string;
+  index: number;
+  label?: string;
+  onChanged?: (color?: string) => void;
+}
 
-  const getHexString = useCallback(
-    (index: number) => getCSSVarValue(getColorVar(index)),
-    [getCSSVarValue, getColorVar]
-  );
+function ColorItem(props: ColorItemProps) {
+  const { colorName, index, label, onChanged } = props;
+  const varName = `--${colorName}-color-level-${index}`;
+  const value = useCSSVar(varName);
+  const isDark = color(value).gray() < 50;
 
-  const getAppearence = useCallback(
-    (index: number): string => {
-      return color(getHexString(index)).gray() > 50
-        ? styles.light
-        : styles.dark;
-    },
-    [getHexString]
-  );
-
-  const onCopy = useCallback((text: string) => {
-    navigator.clipboard
-      .writeText(text)
-      .then(() => {
-        message.success(`${text} 拷贝成功`);
-      })
-      .catch(() => void 0);
+  const onCopy = useCallback((text?: string) => {
+    if (text) {
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          message.success(`${text} 拷贝成功`);
+        })
+        .catch(() => void 0);
+    }
   }, []);
 
   return (
-    <div className={styles.colorPalette}>
-      <div
-        className={classNames(styles.defaultItem, getAppearence(defaultIndex))}
-        style={{ backgroundColor: `var(${getColorVar(defaultIndex)})` }}
-        onClick={() => onCopy(getHexString(defaultIndex))}
-        onMouseEnter={() => onChanged?.(getColorVar(defaultIndex))}
-        onMouseLeave={() => onChanged?.(void 0)}
-      >
-        <span>{label}</span>
-        <div className={styles.palette}>
-          <span>
-            {colorName}-{defaultIndex}
-          </span>
-          <span>{getHexString(defaultIndex)}</span>
-        </div>
+    <div
+      className={classNames(
+        styles.paletteItem,
+        isDark ? styles.dark : styles.light,
+        {
+          [styles.hasTitle]: label,
+        }
+      )}
+      style={{ backgroundColor: `var(${varName})` }}
+      onClick={() => onCopy(value)}
+      onMouseEnter={() => onChanged?.(value)}
+      onMouseLeave={() => onChanged?.(void 0)}
+    >
+      {label && <span>{label}</span>}
+      <div className={styles.palette}>
+        <span>
+          {colorName}-{index}
+        </span>
+        <span>{value}</span>
       </div>
-      {Array.from({ length: to - from + 1 }).map((_, i) => {
-        const colorVar = getColorVar(i + 1);
-        const hexString = getHexString(i + 1);
-        return (
-          <div
-            key={i}
-            className={classNames(styles.paletteItem, getAppearence(i + 1))}
-            style={{ backgroundColor: `var(${colorVar})` }}
-            onClick={() => onCopy(hexString)}
-            onMouseEnter={() => onChanged?.(colorVar)}
-            onMouseLeave={() => onChanged?.(void 0)}
-          >
-            <span>
-              {colorName}-{i + from}
-            </span>
-            <span>{hexString}</span>
-          </div>
-        );
-      })}
     </div>
   );
 }

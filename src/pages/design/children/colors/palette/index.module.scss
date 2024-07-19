@@ -1,27 +1,21 @@
 .color-palette {
-  .default-item {
-    padding: 8px 16px;
-
-    .palette {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-
   .palette-item {
-    padding: 0 16px;
-    height: 40px;
+    padding: 8px 16px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
     transition: width 0.25s ease-out;
 
-    &:hover {
+    &:not(.has-title):hover {
       width: calc(100% + 20px);
+    }
+
+    .palette {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 
