@@ -28,7 +28,8 @@
 
   .silder {
     background-color: var(--menu-background-color);
-    border-right: 1px solid var(--border-color-primary);
+    border-right: 1px solid var(--border-color-secondary);
+    transition: border-color 0s;
     position: relative;
 
     .resize-handler {
