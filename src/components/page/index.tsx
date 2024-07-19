@@ -1,6 +1,7 @@
-import { Button, Result } from 'antd';
+import { Button, Result, Spin } from 'antd';
 import React, { Attributes, ComponentType, Suspense } from 'react';
 import { useNavigate, useRouteError } from 'react-router';
+import styles from './index.module.scss';
 
 export interface PageProps<P> {
   path: string;
@@ -33,7 +34,7 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
   });
 
   return (
-    <Suspense fallback={<></>}>
+    <Suspense fallback={<Spin className={styles.spin}></Spin>}>
       <Lazy {...(_props as P)} />
     </Suspense>
   );
