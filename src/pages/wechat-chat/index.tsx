@@ -1,7 +1,6 @@
 import { DownloadOutlined } from '@ant-design/icons';
-import { Alert, Flex } from 'antd';
+import { Flex } from 'antd';
 import React, { useMemo, useRef } from 'react';
-import { useLocalStorage } from 'react-use';
 import ChatPad, { ChatPadInstance } from './chat-pad';
 import WechatChatEditor from './editor';
 import { useGeneralSettings } from './editor/general-editor/hooks';
@@ -13,14 +12,6 @@ import styles from './index.module.scss';
 export default function WechatChat() {
   const chatPad = useRef<ChatPadInstance>(null);
   const messages = useMessages((s) => s.messages);
-  const [isReadedHelp, setReadedHelp] = useLocalStorage(
-    'WECHAT_CHAT_IS_READED_HELP',
-    false
-  );
-  const [isReadedWarn, setReadedWarn] = useLocalStorage(
-    'WECHAT_CHAT_IS_READ_WARN',
-    false
-  );
   const first = useChatUsers((s) =>
     s.users.find((u) => u.userId !== SELF_USER_ID)
   );
@@ -47,24 +38,6 @@ export default function WechatChat() {
             />
           </Flex>
         </div>
-        {!isReadedHelp && (
-          <Alert
-            className={styles.tips}
-            message="点击图片操作进行导出、录制"
-            type="info"
-            closeIcon={<span>知道了</span>}
-            afterClose={() => setReadedHelp(true)}
-          />
-        )}
-        {!isReadedWarn && (
-          <Alert
-            className={styles.tips}
-            message="所生成图片仅供娱乐，请勿用于非法用途"
-            closeIcon={<span>知道了</span>}
-            type="warning"
-            afterClose={() => setReadedWarn(true)}
-          />
-        )}
       </Flex>
     </Flex>
   );
