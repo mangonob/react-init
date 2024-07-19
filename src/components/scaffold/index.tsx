@@ -24,7 +24,7 @@ export default function Scaffold() {
   );
   const originalWidth = useRef(0);
   const [isDarging, setDraging] = useState(false);
-  const [silderWidth = 0, setSilderWidth] = useLocalStorage('silderWidth', 300);
+  const [silderWidth = 0, setSilderWidth] = useLocalStorage('silderWidth', 260);
 
   const bind = useDrag((e) => {
     if (e.first) {

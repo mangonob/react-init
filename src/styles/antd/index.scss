@@ -1,3 +1,5 @@
+@import './menu.scss';
+
 .ant-form-item .ant-form-item-label > label {
   color: var(--text-color-primary);
 }
@@ -90,4 +92,8 @@
 
 .ant-popover .ant-popover-arrow:before {
   background-color: var(--system-background-color);
+}
+
+.ant-layout-content {
+  color: var(--text-color-primary);
 }

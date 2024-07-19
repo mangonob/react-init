@@ -34,9 +34,7 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
   });
 
   return (
-    <Suspense
-      fallback={<Spin className={styles.spin} delay={33} tip="Loading"></Spin>}
-    >
+    <Suspense fallback={<Spin className={styles.spin} delay={33}></Spin>}>
       <Lazy {...(_props as P)} />
     </Suspense>
   );

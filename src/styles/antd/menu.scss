@@ -1,0 +1,25 @@
+.ant-menu {
+  background-color: var(--menu-background-color);
+  &.ant-menu-light.ant-menu-root.ant-menu-vertical {
+    border-inline-end: none;
+  }
+
+  .ant-menu-item {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+
+    span,
+    .ant-menu-item-icon {
+      color: var(--text-color-primary);
+    }
+
+    &.ant-menu-item-selected {
+      background-color: rgba(from var(--main-color) r g b / 0.2);
+
+      span {
+        color: var(--main-color);
+      }
+    }
+  }
+}
