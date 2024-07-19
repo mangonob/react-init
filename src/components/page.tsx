@@ -21,9 +21,11 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
       }) ?? [];
 
     if (loader && typeof loader === 'function') {
-      const _loader = loader as () => Promise<{ default: ComponentType<any> }>;
+      const _loader = loader as () => Promise<{
+        default: ComponentType<unknown>;
+      }>;
       return _loader().catch((error) => {
-        throw new PageLoadError(error);
+        throw new PageLoadError(error as Error);
       });
     } else {
       throw new PageLoadError(new Error(`bad page at path "${path}"`));
