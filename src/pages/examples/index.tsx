@@ -1,6 +1,6 @@
+import { useDrag } from '@use-gesture/react';
 import React, { useRef, useState } from 'react';
 import styles from './index.module.scss';
-import { useDrag } from '@use-gesture/react';
 
 export default function Examples() {
   const [left, setLeft] = useState(0);

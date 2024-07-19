@@ -43,8 +43,9 @@ module.exports = {
     'unicorn/no-array-reduce': 'off',
     'unicorn/no-array-for-each': 'warn',
     'unicorn/no-for-loop': 'warn',
-    'no-constant-condition': 'warn',
+    'unicorn/prefer-at': 'warn',
     'unicorn/prefer-switch': 'warn',
+    'no-constant-condition': 'warn',
 
     // @typescript-eslint custom rules
     '@typescript-eslint/no-floating-promises': 'off',

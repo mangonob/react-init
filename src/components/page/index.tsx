@@ -1,7 +1,7 @@
 import { Spin } from 'antd';
 import React, { Attributes, ComponentType, Suspense } from 'react';
 import styles from './index.module.scss';
-import PageLoadError from './error';
+import PageLoadError from './error-boundary/error';
 
 export interface PageProps<P> {
   path: string;

@@ -1,0 +1,17 @@
+.page-load-error-boundary {
+  :global(.ant-result-content) {
+    padding: 0;
+    margin-top: 30px;
+  }
+
+  .error-alert {
+    padding: 20px;
+
+    .error-message {
+      .view-more {
+        color: var(--main-color);
+        margin-left: 6px;
+      }
+    }
+  }
+}
