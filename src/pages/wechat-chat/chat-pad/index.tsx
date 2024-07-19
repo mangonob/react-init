@@ -53,7 +53,7 @@ function ChatPad(props: ChatPadProps, ref: Ref<ChatPadInstance>) {
 
   return (
     <div
-      className={classNames(styles.chatPad, className)}
+      className={classNames(styles.chatPad, className, 'theme-light')}
       ref={container}
       {...extra}
     >

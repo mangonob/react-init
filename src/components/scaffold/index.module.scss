@@ -29,7 +29,11 @@
   .silder {
     background-color: var(--menu-background-color);
     border-right: 1px solid var(--border-color-secondary);
-    transition: border-color 0s;
+    transition:
+      border-color 0s,
+      width 250ms,
+      min-width 250ms,
+      max-width 250ms;
     position: relative;
 
     .resize-handler {
