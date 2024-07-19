@@ -1,7 +1,7 @@
-import { Button, Result, Spin } from 'antd';
+import { Spin } from 'antd';
 import React, { Attributes, ComponentType, Suspense } from 'react';
-import { useNavigate, useRouteError } from 'react-router';
 import styles from './index.module.scss';
+import PageLoadError from './error';
 
 export interface PageProps<P> {
   path: string;
@@ -34,37 +34,10 @@ export function Page<P extends Attributes>(props: PageProps<P>) {
   });
 
   return (
-    <Suspense fallback={<Spin className={styles.spin}></Spin>}>
+    <Suspense
+      fallback={<Spin className={styles.spin} delay={33} tip="Loading"></Spin>}
+    >
       <Lazy {...(_props as P)} />
     </Suspense>
-  );
-}
-
-export class PageLoadError extends Error {
-  error: Error;
-
-  constructor(error: Error) {
-    super();
-    this.error = error;
-  }
-}
-
-export function PageLoadErrorBoundary() {
-  const error = useRouteError();
-  const navigate = useNavigate();
-
-  return error instanceof PageLoadError ? (
-    <Result
-      status="404"
-      title="404"
-      subTitle="Sorry, the page you visited does not exist."
-      extra={
-        <Button type="primary" onClick={() => navigate('/')}>
-          回首页
-        </Button>
-      }
-    />
-  ) : (
-    <p>{`Error: ${(error as Error).message}`}</p>
   );
 }

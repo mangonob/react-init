@@ -8,7 +8,8 @@ import {
   createHashRouter,
   useLocation,
 } from 'react-router-dom';
-import { Page, PageLoadErrorBoundary } from './components/page';
+import { Page } from './components/page';
+import PageLoadErrorBoundary from './components/page/error-boundary';
 import { useKeyboardShortcut } from './hooks';
 
 import 'antd/es/style/reset.css';
