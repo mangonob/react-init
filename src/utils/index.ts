@@ -1,4 +1,6 @@
 export * from './statistics';
+export * from './change-case';
+export * from './download';
 
 /**
  * A function that does nothing and ignores its input.

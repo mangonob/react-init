@@ -1,5 +1,56 @@
+@property --progress-outline-gradient-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 258deg;
+}
+
+@keyframes outlineLoop {
+  from {
+    --progress-outline-gradient-angle: 258deg;
+  }
+  to {
+    --progress-outline-gradient-angle: -102deg;
+  }
+}
+
 .progress-outline {
-  width: 100px;
-  height: 100px;
-  background-color: red;
+  display: inline-flex;
+  position: relative;
+  padding: var(--progress-outline-padding);
+  z-index: 0;
+
+  &::before {
+    content: '';
+    z-index: -2;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+        var(--progress-outline-gradient-angle),
+        var(--progress-outline-border-trace) 36.34%,
+        rgb(from var(--progress-outline-border) r g b / 0.25) 50.92%,
+        transparent 63.72%
+      ),
+      var(--progress-outline-border);
+    animation: outlineLoop 2s linear infinite;
+    border-radius: var(--progress-outline-border-radius);
+  }
+
+  &::after {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    background-color: var(--progress-outline-background);
+    top: var(--progress-outline-border-width);
+    left: var(--progress-outline-border-width);
+    bottom: var(--progress-outline-border-width);
+    right: var(--progress-outline-border-width);
+    border-radius: calc(
+      var(--progress-outline-border-radius) - var(
+          --progress-outline-border-width
+        )
+    );
+  }
 }

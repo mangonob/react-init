@@ -1,13 +1,10 @@
 .examples {
-  position: relative;
-
-  .block {
-    touch-action: none;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    background-color: var(--red-color-level-06);
-    top: 0;
-    left: 0;
+  .progress {
+    font-size: 14px;
+    color: var(--text-color-primary);
+  }
+  .task-name {
+    font-size: 12px;
+    color: var(--text-color-secondary);
   }
 }
