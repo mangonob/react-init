@@ -3,6 +3,7 @@ import { Flex, Space } from 'antd';
 import React from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
 import styles from './index.module.scss';
+import SubwayFlow from 'src/components/subway-flow';
 
 export default function Examples() {
   return (
@@ -21,6 +22,7 @@ export default function Examples() {
             </ProgressOutline>
           );
         })}
+        <SubwayFlow />
       </Flex>
     </div>
   );
