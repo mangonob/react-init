@@ -1,29 +1,14 @@
-import { ClockCircleFilled } from '@ant-design/icons';
-import { Flex, Space } from 'antd';
+import { Flex } from 'antd';
 import React from 'react';
-import ProgressOutline from 'src/components/progress-outline.tsx';
-import styles from './index.module.scss';
 import SubwayFlow from 'src/components/subway-flow';
-import { SubwayItem, SubwayItemKey } from 'src/components/subway-flow/model';
 import { BluePrint } from 'src/components/subway-flow/hooks';
+import { SubwayItem, SubwayItemKey } from 'src/components/subway-flow/model';
+import styles from './index.module.scss';
 
 export default function Examples() {
   return (
     <div className={styles.examples}>
       <Flex wrap gap={16}>
-        {Array.from({ length: 4 }).map((_, i) => {
-          return (
-            <ProgressOutline key={i}>
-              <Flex vertical align="center">
-                <Space>
-                  <ClockCircleFilled />
-                  <span className={styles.progress}>7/17</span>
-                </Space>
-                <span className={styles.taskName}>Settlement Task</span>
-              </Flex>
-            </ProgressOutline>
-          );
-        })}
         <SubwayFlow items={mockItem} blueprint={mockBluePrint} />
       </Flex>
     </div>
