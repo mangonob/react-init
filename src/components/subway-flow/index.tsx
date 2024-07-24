@@ -202,34 +202,55 @@ const mockBluePrint: BluePrint = {
   nodes: [
     {
       id: SubwayItemKey.DayBegin,
+      row: 2,
+      column: 1,
       children: [SubwayItemKey.ImportFaFile, SubwayItemKey.ImportApplication],
     },
     {
       id: SubwayItemKey.ImportApplication,
+      row: 1,
+      column: 3,
       children: [SubwayItemKey.ImportFastRedeem],
     },
     {
       id: SubwayItemKey.ImportFaFile,
+      row: 2,
+      column: 2,
       children: [SubwayItemKey.ImportNav],
     },
     {
       id: SubwayItemKey.ImportNav,
+      row: 2,
+      column: 3,
       children: [SubwayItemKey.RightsDistrubute, SubwayItemKey.ExportNav],
     },
     {
+      id: SubwayItemKey.ExportNav,
+      row: 3,
+      column: 4,
+    },
+    {
       id: SubwayItemKey.ImportFastRedeem,
+      row: 1,
+      column: 4,
       children: [SubwayItemKey.IncomeTransfer],
     },
     {
       id: SubwayItemKey.RightsDistrubute,
+      row: 2,
+      column: 4,
       children: [SubwayItemKey.IncomeTransfer],
     },
     {
       id: SubwayItemKey.IncomeTransfer,
+      row: 2,
+      column: 5,
       children: [SubwayItemKey.ClearTradeApp],
     },
     {
       id: SubwayItemKey.ClearTradeApp,
+      row: 2,
+      column: 6,
       children: [
         SubwayItemKey.ExportIncome,
         SubwayItemKey.PrdTradeConvert,
@@ -237,28 +258,55 @@ const mockBluePrint: BluePrint = {
       ],
     },
     {
+      id: SubwayItemKey.ExportIncome,
+      row: 1,
+      column: 7,
+    },
+    {
       id: SubwayItemKey.PrdTradeConvert,
+      row: 2,
+      column: 7,
       children: [SubwayItemKey.PrdTradeTotalControl],
     },
     {
+      id: SubwayItemKey.CreditRepay,
+      row: 3,
+      column: 7,
+    },
+    {
       id: SubwayItemKey.PrdTradeTotalControl,
+      row: 2,
+      column: 8,
       children: [SubwayItemKey.PrdPtfTotalControl],
     },
     {
       id: SubwayItemKey.ImportExceptionWithdraw,
+      row: 1,
+      column: 9,
       children: [SubwayItemKey.ExceptionWithdraw],
     },
     {
       id: SubwayItemKey.PrdPtfTotalControl,
+      row: 2,
+      column: 9,
       children: [SubwayItemKey.ExceptionWithdraw],
     },
     {
       id: SubwayItemKey.ExceptionWithdraw,
+      row: 2,
+      column: 10,
       children: [SubwayItemKey.ClearPost],
     },
     {
+      id: SubwayItemKey.ClearPost,
+      row: 2,
+      column: 11,
+      children: [SubwayItemKey.RightsRegister],
+    },
+    {
       id: SubwayItemKey.RightsRegister,
-      parents: [SubwayItemKey.ClearPost],
+      row: 2,
+      column: 12,
       children: [
         SubwayItemKey.SaTotalControl,
         SubwayItemKey.ExportFaFile,
@@ -268,30 +316,40 @@ const mockBluePrint: BluePrint = {
     },
     {
       id: SubwayItemKey.SaTotalControl,
+      row: 1,
+      column: 13,
       children: [SubwayItemKey.ExportCfm],
     },
     {
       id: SubwayItemKey.DayEnd,
+      row: 2,
+      column: 15,
       parents: [
         SubwayItemKey.ExportCfm,
         SubwayItemKey.ExportFaFile,
         SubwayItemKey.ExportOtherFile,
+        SubwayItemKey.Settlement,
       ],
     },
     {
-      id: SubwayItemKey.DayEnd,
-      parents: [SubwayItemKey.ExportOtherFile, SubwayItemKey.Settlement],
+      id: SubwayItemKey.ExportCfm,
+      row: 1,
+      column: 14,
+    },
+    {
+      id: SubwayItemKey.ExportFaFile,
+      row: 2,
+      column: 13,
+    },
+    {
+      id: SubwayItemKey.ExportOtherFile,
+      row: 3,
+      column: 13,
+    },
+    {
+      id: SubwayItemKey.Settlement,
+      row: 4,
+      column: 13,
     },
   ],
 };
-
-function createMatrix<T = unknown>(
-  row: number,
-  column: number
-): (T | undefined)[][] {
-  const matrix = Array.from({ length: row });
-  for (let i = 0; i < row; ++i) {
-    matrix[i] = Array.from({ length: column });
-  }
-  return matrix as (T | undefined)[][];
-}
