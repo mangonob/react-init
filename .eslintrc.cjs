@@ -45,6 +45,7 @@ module.exports = {
     'unicorn/no-for-loop': 'warn',
     'unicorn/prefer-at': 'warn',
     'unicorn/prefer-switch': 'warn',
+    'unicorn/no-negated-condition': 'off',
     'no-constant-condition': 'warn',
 
     // @typescript-eslint custom rules

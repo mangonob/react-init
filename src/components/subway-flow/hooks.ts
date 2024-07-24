@@ -1,11 +1,12 @@
+import { groupBy } from 'lodash-es';
 import { useCallback, useMemo } from 'react';
 import { SubwayItem } from './model';
-import { groupBy } from 'lodash-es';
 
 export interface BluePrintNode {
   id: string;
   row: number;
   column: number;
+  verticalAdjustment?: number;
   children?: string[];
   parents?: string[];
 }
@@ -33,8 +34,7 @@ export function useSubwayAutoLayout(items: SubwayItem[], blueprint: BluePrint) {
   );
 
   const visibleNodes = useVisibleNodes(nodes, isNodeHidden);
-  console.info('Visible nodes', visibleNodes);
-  useCompactNodes(visibleNodes);
+  const compact = useCompactNodes(visibleNodes);
 
   return void 0;
 }
@@ -158,48 +158,141 @@ function useCompactNodes(
       }
     );
     const { maxRow, maxColumn } = range;
-    const map = createMatrix<string>(maxColumn + 1, maxRow + 1);
+    const map = new Matrix<string>(maxRow, maxColumn);
     for (const node of dump) {
       const { column, row, id } = node;
-      map[column][row] = id;
+      map.set(id, row, column);
     }
-    for (let i = 1; i < map.length; i++) {
-      const hasValue = map[i].reduce((hasAny, ele) => !!ele || hasAny, false);
-      if (!hasValue) {
-        map.splice(i, 1);
+
+    console.info('Minimap:');
+    console.info(map.toString());
+
+    for (let i = 1; i <= map.row; ++i) {
+      const hasAny = map
+        .getVector({ row: i })
+        .reduce((has, v) => has || !!v, false);
+      if (!hasAny) {
+        map.removeRow(i);
         i--;
       }
     }
-    console.info('Minimap:');
-    console.info(subwayNodesMinimap(map, maxRow, map.length - 1));
+
+    for (let i = 1; i <= map.column; ++i) {
+      const hasAny = map
+        .getVector({ column: i })
+        .reduce((has, v) => has || !!v, false);
+      if (!hasAny) {
+        map.removeColumn(i);
+        i--;
+      }
+    }
+
+    console.info('Compact minimap:');
+    console.info(map.toString());
+
+    map.forEach((k, i, j) => {
+      const node = nodeMap.get(k);
+      if (node) {
+        node.row = i;
+        node.column = j;
+      } else {
+        console.error('node not found with key', k);
+      }
+    });
+
     return dump;
   }, [nodes]);
 }
 
-function createMatrix<T = unknown>(
-  row: number,
-  column: number
-): (T | undefined)[][] {
-  const matrix = Array.from({ length: row });
-  for (let i = 0; i < row; ++i) {
-    matrix[i] = Array.from({ length: column });
-  }
-  return matrix as (T | undefined)[][];
-}
+class Matrix<T> {
+  private elem: (T | undefined)[][];
+  private _column: number;
+  private _row: number;
 
-function subwayNodesMinimap(
-  map: unknown[][],
-  row: number,
-  column: number
-): string {
-  const descriptions: string[] = [];
-  for (let i = 1; i <= row; ++i) {
-    const desc: string[] = [];
-    for (let j = 1; j <= column; ++j) {
-      const n = map[j][i];
-      desc.push(n ? 'x' : ' ');
+  constructor(row: number, column: number) {
+    this.elem = Array.from({ length: row + 1 });
+    this._column = column;
+    this._row = row;
+    for (let i = 0; i < row + 1; ++i) {
+      this.elem[i] = Array.from({ length: column + 1 });
     }
-    descriptions.push(desc.join(''));
   }
-  return descriptions.join('\n');
+
+  get column(): number {
+    return this._column;
+  }
+
+  get row(): number {
+    return this._row;
+  }
+
+  removeColumn(column: number): boolean {
+    if (column >= 1 && column <= this.column) {
+      for (let i = 0; i <= this.row; ++i) {
+        this.elem[i].splice(column, 1);
+      }
+      this._column -= 1;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeRow(row: number): boolean {
+    if (row >= 1 && row <= this.row) {
+      this.elem.splice(row, 1);
+      this._row -= 1;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getVector(param: { row: number } | { column: number }): (T | undefined)[] {
+    if ('row' in param) {
+      const { row } = param;
+      return this.elem[row].slice(1);
+    } else if ('column' in param) {
+      const { column } = param;
+      const vector: (T | undefined)[] = [];
+      for (let i = 1; i <= this.row; ++i) {
+        vector.push(this.get(i, column));
+      }
+      return vector;
+    } else {
+      return [];
+    }
+  }
+
+  get(row: number, column: number): T | undefined {
+    return this.elem[row][column];
+  }
+
+  set(element: T | undefined, row: number, column: number): void {
+    this.elem[row][column] = element;
+  }
+
+  forEach(fn: (elem: T, row: number, column: number) => void) {
+    for (let i = 1; i <= this.row; ++i) {
+      for (let j = 1; j <= this.column; ++j) {
+        const elem = this.get(i, j);
+        if (elem !== void 0) {
+          fn(elem, i, j);
+        }
+      }
+    }
+  }
+
+  toString(): string {
+    const descriptions: string[] = [];
+    for (let i = 1; i <= this.row; ++i) {
+      const desc: string[] = [];
+      for (let j = 1; j <= this.column; ++j) {
+        const n = this.get(i, j);
+        desc.push(n ? 'x' : ' ');
+      }
+      descriptions.push(desc.join(''));
+    }
+    return descriptions.join('\n');
+  }
 }
