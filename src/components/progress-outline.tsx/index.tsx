@@ -11,6 +11,7 @@ export interface ProgressOutlineProps extends HTMLAttributes<HTMLDivElement> {
   borderRadius?: CSSProperties['borderRadius'];
   children?: ReactNode;
   padding?: CSSProperties['padding'];
+  progressing?: boolean;
 }
 
 export default function ProgressOutline(props: ProgressOutlineProps) {
@@ -24,6 +25,7 @@ export default function ProgressOutline(props: ProgressOutlineProps) {
     border = 'var(--border-color-secondary)',
     borderTrace = 'var(--border-color-primary)',
     background = 'var(--system-background-color)',
+    progressing = true,
     ...extra
   } = props;
 
@@ -45,7 +47,11 @@ export default function ProgressOutline(props: ProgressOutlineProps) {
 
   return (
     <div
-      className={classNames(styles.progressOutline, className)}
+      className={classNames(
+        styles.progressOutline,
+        { [styles.progressing]: progressing },
+        className
+      )}
       style={{ ...injection, ...style } as CSSProperties}
       {...extra}
     >

@@ -1,11 +1,27 @@
 .subway-item-view {
-  .progress {
-    font-size: 14px;
-    color: var(--text-color-primary);
+  .content {
+    min-width: 80px;
+
+    .progress {
+      font-size: 14px;
+      color: var(--text-color-primary);
+    }
+
+    .task-name {
+      font-size: 12px;
+      color: var(--text-color-secondary);
+    }
   }
 
-  .task-name {
-    font-size: 12px;
-    color: var(--text-color-secondary);
+  &.error {
+    .icon {
+      color: var(--danger-color-normal);
+    }
+  }
+
+  &.success {
+    .icon {
+      color: var(--success-color-normal);
+    }
   }
 }

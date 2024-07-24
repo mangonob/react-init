@@ -1,5 +1,5 @@
 import { groupBy } from 'lodash-es';
-import { useCallback, useMemo } from 'react';
+import { CSSProperties, useCallback, useMemo } from 'react';
 import { Matrix, Size, SubwayItem, SubwayItemDimension } from './model';
 import { Edge, Node } from '@xyflow/react';
 
@@ -8,6 +8,7 @@ export interface BluePrintNode {
   row: number;
   column: number;
   verticalAdjustment?: number;
+  anchorPriority?: number;
   children?: string[];
   parents?: string[];
 }
@@ -246,9 +247,9 @@ export function useFlowNodes(
 ): UseFlowNodes {
   const {
     estimateItemHeight = 'auto',
-    rowSpacing = 20,
-    columnSpacing = 60,
-    columnAlign = 'center',
+    rowSpacing = 8,
+    columnSpacing = 40,
+    columnAlign = 'left',
   } = customized;
   const nodeMap = useMemo(
     () => new Map(compactNodes.map((n) => [n.id, n])),
@@ -336,5 +337,22 @@ export function useFlowNodes(
 }
 
 export function useFlowEdges(compactNodes: NormalFormBluePrintNode[]): Edge[] {
-  return [];
+  return useMemo(() => {
+    const style: CSSProperties = {
+      strokeWidth: 8,
+      stroke: 'var(--border-color-primary)',
+    };
+
+    return compactNodes.flatMap((node) => {
+      const { id, children = [] } = node;
+      return children.map((childId) => {
+        return {
+          id: `${id}-${childId}`,
+          source: id,
+          target: childId,
+          style,
+        } as Edge;
+      });
+    });
+  }, [compactNodes]);
 }

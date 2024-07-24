@@ -1,11 +1,15 @@
-import { ClockCircleFilled } from '@ant-design/icons';
-import { Handle, Position } from '@xyflow/react';
+import {
+  CheckCircleFilled,
+  ClockCircleFilled,
+  CloseCircleFilled,
+} from '@ant-design/icons';
 import { Flex, Space } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
 import { SubwayFlowContext } from '../context';
 import { SubwayItem } from '../model';
 import styles from './index.module.scss';
+import classNames from 'classnames';
 
 export interface SubwayItemViewProps {
   item: SubwayItem;
@@ -13,7 +17,7 @@ export interface SubwayItemViewProps {
 
 export default function SubwayItemView(props: SubwayItemViewProps) {
   const { item } = props;
-  const { id: itemId } = item;
+  const { id: itemId, count, total, status, subject } = item;
   const [element, setElement] = useState<HTMLDivElement>();
   const eventObserver = useContext(SubwayFlowContext);
 
@@ -45,28 +49,39 @@ export default function SubwayItemView(props: SubwayItemViewProps) {
     }
   }, [element, itemId, eventObserver]);
 
+  const renderIcon = () => {
+    switch (status) {
+      case 'error':
+        return <CloseCircleFilled />;
+      case 'normal':
+        return <ClockCircleFilled />;
+      case 'progressing':
+        return <ClockCircleFilled />;
+      case 'success':
+        return <CheckCircleFilled />;
+    }
+  };
+
   return (
     <div
-      className={styles.subwayItemView}
+      className={classNames(styles.subwayItemView, {
+        [styles.success]: status === 'success',
+        [styles.error]: status === 'error',
+      })}
       ref={(ele) => setElement(ele || void 0)}
     >
-      <ProgressOutline>
-        <Handle
-          type="target"
-          position={Position.Left}
-          style={{ opacity: 0, marginLeft: 10 }}
-        />
-        <Handle
-          type="source"
-          position={Position.Right}
-          style={{ opacity: 0, marginRight: 10 }}
-        />
-        <Flex vertical align="center">
+      <ProgressOutline
+        padding={'6px 14px'}
+        progressing={status === 'progressing'}
+      >
+        <Flex vertical align="center" className={styles.content}>
           <Space>
-            <ClockCircleFilled />
-            <span className={styles.progress}>7/17</span>
+            <div className={styles.icon}>{renderIcon()}</div>
+            <span className={styles.progress}>
+              {count}/{total}
+            </span>
           </Space>
-          <span className={styles.taskName}>Settlement Task</span>
+          <span className={styles.taskName}>{subject}</span>
         </Flex>
       </ProgressOutline>
     </div>

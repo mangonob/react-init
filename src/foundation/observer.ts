@@ -15,7 +15,6 @@ export function createObserver<E = unknown>(): Observable<E> {
     },
     dispatch(e) {
       subscribes.forEach((sub) => sub(e));
-      subscribes.clear();
     },
   };
 }

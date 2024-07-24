@@ -29,6 +29,12 @@
     right: 0;
     bottom: 0;
     left: 0;
+    background: var(--progress-outline-border);
+    border-radius: var(--progress-outline-border-radius);
+  }
+
+  &.progressing::before {
+    opacity: 0.5;
     background: linear-gradient(
         var(--progress-outline-gradient-angle),
         var(--progress-outline-border-trace) 36.34%,
@@ -37,7 +43,6 @@
       ),
       var(--progress-outline-border);
     animation: outlineLoop 2s linear infinite;
-    border-radius: var(--progress-outline-border-radius);
   }
 
   &::after {

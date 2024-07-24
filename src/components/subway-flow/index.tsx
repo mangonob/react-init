@@ -1,9 +1,8 @@
-import { Edge, Node, ReactFlow } from '@xyflow/react';
+import { ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import React, {
-  CSSProperties,
   HTMLAttributes,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -18,12 +17,7 @@ import {
   useSubwayAutoLayout,
 } from './hooks';
 import styles from './index.module.scss';
-import {
-  SubwayItem,
-  SubwayItemDimension,
-  SubwayItemEvent,
-  SubwayItemKey,
-} from './model';
+import { SubwayItem, SubwayItemDimension, SubwayItemEvent } from './model';
 import SubwayItemNode from './subway-item-node';
 
 interface SubwayFlowProps
@@ -62,7 +56,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
   });
   const edges = useFlowEdges(compactNodes);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const unsubscribe = observer.subscribe((e) => {
       switch (e.type) {
         case 'sizeChanged': {
@@ -75,6 +69,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
         }
       }
     });
+
     return () => {
       unsubscribe();
       itemSizeCollector.current.clear();
@@ -87,6 +82,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
       <div className={styles.subwayFlow} {...extra}>
         <ReactFlow
           nodes={nodes}
+          edges={edges}
           draggable={false}
           minZoom={1}
           maxZoom={1}
@@ -97,78 +93,3 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     </SubwayFlowProvider>
   );
 }
-
-const mockNodes: Node[] = [
-  {
-    id: 'x-0',
-    position: {
-      x: 0,
-      y: 0,
-    },
-    data: {
-      item: {
-        id: SubwayItemKey.ExportFaFile,
-        count: 1,
-        total: 1,
-        status: 'normal',
-        subject: '导出估值文件',
-      },
-    },
-    type: 'SubwayItemNode',
-  },
-  {
-    id: 'x-1',
-    position: {
-      x: 160,
-      y: 0,
-    },
-    data: {
-      item: {
-        id: SubwayItemKey.ExceptionWithdraw,
-        count: 1,
-        total: 1,
-        status: 'normal',
-        subject: '异常撤单',
-      },
-    },
-    type: 'SubwayItemNode',
-  },
-  {
-    id: 'x-2',
-    position: {
-      x: 320,
-      y: 30,
-    },
-    data: {
-      item: {
-        id: SubwayItemKey.SaTotalControl,
-        count: 1,
-        total: 1,
-        status: 'normal',
-        subject: '渠道总控',
-      },
-    },
-    type: 'SubwayItemNode',
-  },
-];
-
-const edgeStyle: CSSProperties = {
-  strokeWidth: 8,
-  stroke: 'var(--border-color-primary)',
-};
-
-const mockEdges: Edge[] = [
-  {
-    id: 'edge-x0-x1',
-    source: 'x-0',
-    target: 'x-1',
-    interactionWidth: 30,
-    style: edgeStyle,
-  },
-  {
-    id: 'edge-x1-x2',
-    source: 'x-1',
-    target: 'x-2',
-    style: edgeStyle,
-  },
-];
