@@ -3,17 +3,17 @@ import { Handle, Position } from '@xyflow/react';
 import { Flex, Space } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
-import styles from './index.module.scss';
 import { SubwayFlowContext } from '../context';
 import { SubwayItem } from '../model';
+import styles from './index.module.scss';
 
 export interface SubwayItemViewProps {
-  data: SubwayItem;
+  item: SubwayItem;
 }
 
 export default function SubwayItemView(props: SubwayItemViewProps) {
-  const { data } = props;
-  const { id: itemId } = data;
+  const { item } = props;
+  const { id: itemId } = item;
   const [element, setElement] = useState<HTMLDivElement>();
   const eventObserver = useContext(SubwayFlowContext);
 

@@ -1,6 +1,7 @@
 import { groupBy } from 'lodash-es';
 import { useCallback, useMemo } from 'react';
-import { SubwayItem } from './model';
+import { Matrix, Size, SubwayItem, SubwayItemDimension } from './model';
+import { Edge, Node } from '@xyflow/react';
 
 export interface BluePrintNode {
   id: string;
@@ -11,7 +12,7 @@ export interface BluePrintNode {
   parents?: string[];
 }
 
-type NormalFormBluePrintNode = Omit<BluePrintNode, 'parents'>;
+export type NormalFormBluePrintNode = Omit<BluePrintNode, 'parents'>;
 
 export interface BluePrint {
   nodes: BluePrintNode[];
@@ -20,7 +21,16 @@ export interface BluePrint {
 
 const defaultIsItemHiddenFn = (item: SubwayItem) => item.total <= 0;
 
-export function useSubwayAutoLayout(items: SubwayItem[], blueprint: BluePrint) {
+export interface SubwayAutoLayout {
+  visibleItems: SubwayItem[];
+  compactNodes: NormalFormBluePrintNode[];
+  map: Matrix<string>;
+}
+
+export function useSubwayAutoLayout(
+  items: SubwayItem[],
+  blueprint: BluePrint
+): SubwayAutoLayout {
   const { nodes: _nodes, isItemHiddenFn = defaultIsItemHiddenFn } = blueprint;
   const nodes = useNormalFormNodes(_nodes);
 
@@ -33,10 +43,13 @@ export function useSubwayAutoLayout(items: SubwayItem[], blueprint: BluePrint) {
     [isItemHiddenFn, items]
   );
 
+  const visibleItems = useMemo(() => {
+    return items.filter((item) => !isItemHiddenFn(item));
+  }, [isItemHiddenFn, items]);
   const visibleNodes = useVisibleNodes(nodes, isNodeHidden);
-  const compact = useCompactNodes(visibleNodes);
+  const { compactNodes, map } = useCompactNodes(visibleNodes);
 
-  return void 0;
+  return { visibleItems, compactNodes, map };
 }
 
 function useNormalFormNodes(nodes: BluePrintNode[]): NormalFormBluePrintNode[] {
@@ -133,13 +146,9 @@ interface Range {
   minColumn: number;
 }
 
-function useCompactNodes(
-  nodes: NormalFormBluePrintNode[]
-): NormalFormBluePrintNode[] {
+function useNodesRange(nodes: NormalFormBluePrintNode[]): Range {
   return useMemo(() => {
-    const dump = nodes.slice();
-    const nodeMap = new Map(dump.map((node) => [node.id, node]));
-    const range = nodes.reduce(
+    return nodes.reduce(
       (range: Range, node): Range => {
         const { maxColumn, maxRow, minColumn, minRow } = range;
         const { row, column } = node;
@@ -157,6 +166,20 @@ function useCompactNodes(
         minRow: Number.POSITIVE_INFINITY,
       }
     );
+  }, [nodes]);
+}
+
+export interface UseCompactNodes {
+  compactNodes: NormalFormBluePrintNode[];
+  map: Matrix<string>;
+}
+
+function useCompactNodes(nodes: NormalFormBluePrintNode[]): UseCompactNodes {
+  const range = useNodesRange(nodes);
+
+  return useMemo(() => {
+    const dump = nodes.slice();
+    const nodeMap = new Map(dump.map((node) => [node.id, node]));
     const { maxRow, maxColumn } = range;
     const map = new Matrix<string>(maxRow, maxColumn);
     for (const node of dump) {
@@ -164,9 +187,7 @@ function useCompactNodes(
       map.set(id, row, column);
     }
 
-    console.info('Minimap:');
-    console.info(map.toString());
-
+    // Remove empty row
     for (let i = 1; i <= map.row; ++i) {
       const hasAny = map
         .getVector({ row: i })
@@ -177,6 +198,7 @@ function useCompactNodes(
       }
     }
 
+    // Remove empty column
     for (let i = 1; i <= map.column; ++i) {
       const hasAny = map
         .getVector({ column: i })
@@ -186,9 +208,6 @@ function useCompactNodes(
         i--;
       }
     }
-
-    console.info('Compact minimap:');
-    console.info(map.toString());
 
     map.forEach((k, i, j) => {
       const node = nodeMap.get(k);
@@ -200,99 +219,122 @@ function useCompactNodes(
       }
     });
 
-    return dump;
-  }, [nodes]);
+    return {
+      compactNodes: dump,
+      map,
+    };
+  }, [nodes, range]);
 }
 
-class Matrix<T> {
-  private elem: (T | undefined)[][];
-  private _column: number;
-  private _row: number;
+export interface SubwayViewCustomized {
+  estimateItemHeight?: number | 'auto';
+  rowSpacing?: number;
+  columnSpacing?: number;
+  columnAlign?: 'center' | 'left' | 'right';
+}
+export interface UseFlowNodes {
+  nodes: Node[];
+  containerSize?: Size;
+}
 
-  constructor(row: number, column: number) {
-    this.elem = Array.from({ length: row + 1 });
-    this._column = column;
-    this._row = row;
-    for (let i = 0; i < row + 1; ++i) {
-      this.elem[i] = Array.from({ length: column + 1 });
-    }
-  }
+export function useFlowNodes(
+  items: SubwayItem[],
+  compactNodes: NormalFormBluePrintNode[],
+  map: Matrix<string>,
+  sizes: Map<string, SubwayItemDimension>,
+  customized: SubwayViewCustomized
+): UseFlowNodes {
+  const {
+    estimateItemHeight = 'auto',
+    rowSpacing = 20,
+    columnSpacing = 60,
+    columnAlign = 'center',
+  } = customized;
+  const nodeMap = useMemo(
+    () => new Map(compactNodes.map((n) => [n.id, n])),
+    [compactNodes]
+  );
 
-  get column(): number {
-    return this._column;
-  }
+  return useMemo(() => {
+    const flowNodes = items.map((item): Node => {
+      return {
+        id: item.id,
+        position: {
+          x: -9999,
+          y: -9999,
+        },
+        data: { item },
+        type: 'SubwayItemNode',
+      };
+    });
 
-  get row(): number {
-    return this._row;
-  }
-
-  removeColumn(column: number): boolean {
-    if (column >= 1 && column <= this.column) {
-      for (let i = 0; i <= this.row; ++i) {
-        this.elem[i].splice(column, 1);
+    if (sizes.size > 0 && items.length > 0) {
+      const rowHeight =
+        estimateItemHeight === 'auto'
+          ? Array.from(sizes.values())[0].height
+          : estimateItemHeight;
+      const columnWidths = Array.from<number>({ length: map.column });
+      columnWidths[0] = 0;
+      for (let i = 1; i <= map.column; ++i) {
+        const columnWidth = map
+          .getVector({ column: i })
+          .reduce((width, nodeId) => {
+            if (nodeId) {
+              const node = sizes.get(nodeId);
+              return node ? Math.max(width, node.width) : width;
+            } else {
+              return width;
+            }
+          }, 0);
+        columnWidths[i] = columnWidth;
       }
-      this._column -= 1;
-      return true;
-    } else {
-      return false;
-    }
-  }
 
-  removeRow(row: number): boolean {
-    if (row >= 1 && row <= this.row) {
-      this.elem.splice(row, 1);
-      this._row -= 1;
-      return true;
-    } else {
-      return false;
-    }
-  }
+      const flowNodeMap = new Map(flowNodes.map((n) => [n.id, n]));
 
-  getVector(param: { row: number } | { column: number }): (T | undefined)[] {
-    if ('row' in param) {
-      const { row } = param;
-      return this.elem[row].slice(1);
-    } else if ('column' in param) {
-      const { column } = param;
-      const vector: (T | undefined)[] = [];
-      for (let i = 1; i <= this.row; ++i) {
-        vector.push(this.get(i, column));
-      }
-      return vector;
-    } else {
-      return [];
-    }
-  }
-
-  get(row: number, column: number): T | undefined {
-    return this.elem[row][column];
-  }
-
-  set(element: T | undefined, row: number, column: number): void {
-    this.elem[row][column] = element;
-  }
-
-  forEach(fn: (elem: T, row: number, column: number) => void) {
-    for (let i = 1; i <= this.row; ++i) {
-      for (let j = 1; j <= this.column; ++j) {
-        const elem = this.get(i, j);
-        if (elem !== void 0) {
-          fn(elem, i, j);
+      map.forEach((id, row, column) => {
+        const size = sizes.get(id);
+        const flowNode = flowNodeMap.get(id);
+        const node = nodeMap.get(id);
+        if (flowNode && node && size) {
+          const { width } = size;
+          const { verticalAdjustment = 0 } = node;
+          const y = (row - 1 + verticalAdjustment) * (rowHeight + rowSpacing);
+          const widthAcc =
+            columnWidths.slice(1, column).reduce((s, w) => s + w, 0) +
+            columnSpacing * (column - 1);
+          const columnWidth = columnWidths[column];
+          const offset = (() => {
+            switch (columnAlign) {
+              case 'center':
+                return (columnWidth - width) / 2;
+              case 'left':
+                return 0;
+              case 'right':
+                return columnWidth - width;
+            }
+          })();
+          const x = widthAcc + offset;
+          flowNode.position = { x, y };
         }
-      }
-    }
-  }
+      });
 
-  toString(): string {
-    const descriptions: string[] = [];
-    for (let i = 1; i <= this.row; ++i) {
-      const desc: string[] = [];
-      for (let j = 1; j <= this.column; ++j) {
-        const n = this.get(i, j);
-        desc.push(n ? 'x' : ' ');
-      }
-      descriptions.push(desc.join(''));
+      // TODO: container Rect
+      return { nodes: flowNodes };
+    } else {
+      return { nodes: flowNodes };
     }
-    return descriptions.join('\n');
-  }
+  }, [
+    columnAlign,
+    columnSpacing,
+    estimateItemHeight,
+    items,
+    map,
+    nodeMap,
+    rowSpacing,
+    sizes,
+  ]);
+}
+
+export function useFlowEdges(compactNodes: NormalFormBluePrintNode[]): Edge[] {
+  return [];
 }

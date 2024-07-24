@@ -8,10 +8,12 @@ export interface SubwayItem {
   subject: ReactNode;
 }
 
-export interface SubwayItemDimension {
+export interface Size {
   width: number;
   height: number;
 }
+
+export type SubwayItemDimension = Size;
 
 export type SubwayItemEvent = { type: 'sizeChanged' } & SubwayItemDimension & {
     id: string;
@@ -72,4 +74,97 @@ export enum SubwayItemKey {
   ExportOtherFile = 'x-export-other-file',
   /** 导入估值文件 */
   ImportFaFile = 'x-import-fa-file',
+}
+
+export class Matrix<T> {
+  private elem: (T | undefined)[][];
+  private _column: number;
+  private _row: number;
+
+  constructor(row: number, column: number) {
+    this.elem = Array.from({ length: row + 1 });
+    this._column = column;
+    this._row = row;
+    for (let i = 0; i < row + 1; ++i) {
+      this.elem[i] = Array.from({ length: column + 1 });
+    }
+  }
+
+  get column(): number {
+    return this._column;
+  }
+
+  get row(): number {
+    return this._row;
+  }
+
+  removeColumn(column: number): boolean {
+    if (column >= 1 && column <= this.column) {
+      for (let i = 0; i <= this.row; ++i) {
+        this.elem[i].splice(column, 1);
+      }
+      this._column -= 1;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  removeRow(row: number): boolean {
+    if (row >= 1 && row <= this.row) {
+      this.elem.splice(row, 1);
+      this._row -= 1;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getVector(param: { row: number } | { column: number }): (T | undefined)[] {
+    if ('row' in param) {
+      const { row } = param;
+      return this.elem[row].slice(1);
+    } else if ('column' in param) {
+      const { column } = param;
+      const vector: (T | undefined)[] = [];
+      for (let i = 1; i <= this.row; ++i) {
+        vector.push(this.get(i, column));
+      }
+      return vector;
+    } else {
+      return [];
+    }
+  }
+
+  get(row: number, column: number): T | undefined {
+    return this.elem[row][column];
+  }
+
+  set(element: T | undefined, row: number, column: number): void {
+    this.elem[row][column] = element;
+  }
+
+  forEach(fn: (elem: T, row: number, column: number) => void) {
+    for (let i = 1; i <= this.row; ++i) {
+      for (let j = 1; j <= this.column; ++j) {
+        const elem = this.get(i, j);
+        if (elem !== void 0) {
+          fn(elem, i, j);
+        }
+      }
+    }
+  }
+
+  toString(): string {
+    const descriptions: string[] = [];
+    for (let i = 1; i <= this.row; ++i) {
+      const desc: string[] = [];
+      for (let j = 1; j <= this.column; ++j) {
+        const n = this.get(i, j);
+        desc.push(n ? 'x' : ' ');
+      }
+      descriptions.push(desc.join(''));
+    }
+    return descriptions.join('\n');
+  }
 }
