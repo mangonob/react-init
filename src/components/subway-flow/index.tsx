@@ -5,7 +5,7 @@ import { createObserver } from 'src/foundation/observer';
 import { SubwayFlowProvider } from './context';
 import { BluePrint, useSubwayAutoLayout } from './hooks';
 import styles from './index.module.scss';
-import { SubwayItem, SubwayItemDimensionEvent } from './model';
+import { SubwayItem, SubwayItemEvent } from './model';
 import SubwayItemView from './subway-item-view';
 
 interface SubwayFlowProps extends HTMLAttributes<HTMLDivElement> {
@@ -26,10 +26,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
 
   useSubwayAutoLayout(items, blueprint);
 
-  const observer = useMemo(
-    () => createObserver<SubwayItemDimensionEvent>(),
-    []
-  );
+  const observer = useMemo(() => createObserver<SubwayItemEvent>(), []);
 
   return (
     <SubwayFlowProvider value={observer}>

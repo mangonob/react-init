@@ -1,4 +1,10 @@
 .subway-flow {
   height: 300px;
   width: 100%;
+
+  :global {
+    .react-flow__panel.react-flow__attribution {
+      display: none;
+    }
+  }
 }

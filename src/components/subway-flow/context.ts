@@ -1,9 +1,9 @@
 import { createContext } from 'react';
 import { Observable } from 'src/foundation/observer';
-import { SubwayItemDimensionEvent } from './model';
+import { SubwayItemEvent } from './model';
 
-const SubwayFlowContext = createContext<Observable<SubwayItemDimensionEvent>>(
-  void 0 as unknown as Observable<SubwayItemDimensionEvent>
+export const SubwayFlowContext = createContext<Observable<SubwayItemEvent>>(
+  void 0 as unknown as Observable<SubwayItemEvent>
 );
 
 export const SubwayFlowProvider = SubwayFlowContext.Provider;

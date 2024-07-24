@@ -13,9 +13,9 @@ export interface SubwayItemDimension {
   height: number;
 }
 
-export interface SubwayItemDimensionEvent extends SubwayItemDimension {
-  id: string;
-}
+export type SubwayItemEvent = { type: 'sizeChanged' } & SubwayItemDimension & {
+    id: string;
+  };
 
 export type ItemInfo = Map<string, SubwayItemDimension>;
 
