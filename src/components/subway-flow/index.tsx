@@ -1,6 +1,7 @@
 import { ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import React, {
+  CSSProperties,
   HTMLAttributes,
   useLayoutEffect,
   useMemo,
@@ -39,6 +40,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     columnSpacing,
     rowSpacing,
     columnAlign,
+    style,
     ...extra
   } = props;
 
@@ -86,19 +88,29 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     };
   }, [items, observer]);
 
+  const _style = useMemo((): CSSProperties => {
+    const dimensions = viewport
+      ? { width: viewport.width, height: viewport.height }
+      : { width: 1, height: 1 };
+
+    return {
+      ...dimensions,
+      ...style,
+    };
+  }, [viewport, style]);
+
   return (
     <SubwayFlowProvider value={observer}>
-      <div className={styles.subwayFlow} {...extra}>
-        <div
-          className={styles.flowContainer}
-          style={viewport && { ...viewport }}
-        >
+      <div className={styles.subwayFlow} style={_style} {...extra}>
+        <div style={_style}>
           <ReactFlow
+            className={styles.flow}
             nodes={nodes}
             edges={edges}
             draggable={false}
             panOnDrag={false}
             panOnScroll={false}
+            elementsSelectable={false}
             minZoom={1}
             maxZoom={1}
             nodeTypes={{ SubwayItemNode }}

@@ -8,8 +8,15 @@ import styles from './index.module.scss';
 export default function Examples() {
   return (
     <div className={styles.examples}>
-      <Flex wrap gap={16}>
-        <SubwayFlow items={mockItem} blueprint={mockBluePrint} />
+      <Flex wrap gap={16} vertical>
+        <div className={styles.subwayScroller}>
+          <SubwayFlow
+            items={mockItem}
+            blueprint={mockBluePrint}
+            style={{ minHeight: 228 }}
+          />
+        </div>
+        <h1>Examples</h1>
       </Flex>
     </div>
   );

@@ -5,18 +5,18 @@ import {
 } from '@ant-design/icons';
 import { Flex, Space } from 'antd';
 import classNames from 'classnames';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { HTMLAttributes, useContext, useEffect, useState } from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
 import { SubwayFlowContext } from '../context';
 import { SubwayItem } from '../model';
 import styles from './index.module.scss';
 
-export interface SubwayItemViewProps {
+export interface SubwayItemViewProps extends HTMLAttributes<HTMLDivElement> {
   item: SubwayItem;
 }
 
 export default function SubwayItemView(props: SubwayItemViewProps) {
-  const { item } = props;
+  const { item, className, ...extra } = props;
   const { id: itemId, count, total, status, subject } = item;
   const [element, setElement] = useState<HTMLDivElement>();
   const eventObserver = useContext(SubwayFlowContext);
@@ -64,11 +64,16 @@ export default function SubwayItemView(props: SubwayItemViewProps) {
 
   return (
     <div
-      className={classNames(styles.subwayItemView, {
-        [styles.success]: status === 'success',
-        [styles.error]: status === 'error',
-      })}
+      className={classNames(
+        styles.subwayItemView,
+        {
+          [styles.success]: status === 'success',
+          [styles.error]: status === 'error',
+        },
+        className
+      )}
       ref={(ele) => setElement(ele || void 0)}
+      {...extra}
     >
       <ProgressOutline
         padding={'6px 14px'}

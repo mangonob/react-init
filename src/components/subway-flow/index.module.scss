@@ -1,13 +1,15 @@
 .subway-flow {
-  width: 100%;
-
-  .flow-container {
-    min-width: 100%;
+  .flow {
+    pointer-events: none;
   }
 
   :global {
     .react-flow__panel.react-flow__attribution {
       display: none;
+    }
+
+    .simplebar-track.simplebar-horizontal .simplebar-scrollbar::before {
+      bottom: 0px;
     }
   }
 }
