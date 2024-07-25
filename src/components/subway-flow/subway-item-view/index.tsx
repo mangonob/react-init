@@ -4,12 +4,12 @@ import {
   CloseCircleFilled,
 } from '@ant-design/icons';
 import { Flex, Space } from 'antd';
+import classNames from 'classnames';
 import React, { useContext, useEffect, useState } from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
 import { SubwayFlowContext } from '../context';
 import { SubwayItem } from '../model';
 import styles from './index.module.scss';
-import classNames from 'classnames';
 
 export interface SubwayItemViewProps {
   item: SubwayItem;

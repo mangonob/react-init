@@ -18,6 +18,7 @@ import {
 } from './hooks';
 import styles from './index.module.scss';
 import { SubwayItem, SubwayItemDimension, SubwayItemEvent } from './model';
+import SubwayFlowEdge from './subway-flow-edge';
 import SubwayItemNode from './subway-item-node';
 
 interface SubwayFlowProps
@@ -48,13 +49,20 @@ export default function SubwayFlow(props: SubwayFlowProps) {
   );
   const itemSizeCollector = useRef(new Map<string, SubwayItemDimension>());
   const [sizes, setSizes] = useState(new Map<string, SubwayItemDimension>());
-  const { nodes } = useFlowNodes(visibleItems, compactNodes, map, sizes, {
+  const customized = {
     estimateItemHeight,
     rowSpacing,
     columnAlign,
     columnSpacing,
-  });
-  const edges = useFlowEdges(compactNodes);
+  };
+  const { nodes } = useFlowNodes(
+    visibleItems,
+    compactNodes,
+    map,
+    sizes,
+    customized
+  );
+  const edges = useFlowEdges(compactNodes, customized);
 
   useLayoutEffect(() => {
     const unsubscribe = observer.subscribe((e) => {
@@ -84,9 +92,12 @@ export default function SubwayFlow(props: SubwayFlowProps) {
           nodes={nodes}
           edges={edges}
           draggable={false}
+          panOnDrag={false}
+          panOnScroll={false}
           minZoom={1}
           maxZoom={1}
           nodeTypes={{ SubwayItemNode }}
+          edgeTypes={{ SubwayFlowEdge }}
           fitView={false}
         ></ReactFlow>
       </div>

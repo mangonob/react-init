@@ -1,7 +1,9 @@
+import { Edge, Node } from '@xyflow/react';
 import { groupBy } from 'lodash-es';
 import { CSSProperties, useCallback, useMemo } from 'react';
 import { Matrix, Size, SubwayItem, SubwayItemDimension } from './model';
-import { Edge, Node } from '@xyflow/react';
+import { SubwayFlowEdgeData } from './subway-flow-edge';
+import { SubwayItemNodeData } from './subway-item-node';
 
 export interface BluePrintNode {
   id: string;
@@ -238,6 +240,8 @@ export interface UseFlowNodes {
   containerSize?: Size;
 }
 
+const DEFAULT_COLUMN_SPACING = 40;
+
 export function useFlowNodes(
   items: SubwayItem[],
   compactNodes: NormalFormBluePrintNode[],
@@ -248,7 +252,7 @@ export function useFlowNodes(
   const {
     estimateItemHeight = 'auto',
     rowSpacing = 8,
-    columnSpacing = 40,
+    columnSpacing = DEFAULT_COLUMN_SPACING,
     columnAlign = 'left',
   } = customized;
   const nodeMap = useMemo(
@@ -257,13 +261,14 @@ export function useFlowNodes(
   );
 
   return useMemo(() => {
-    const flowNodes = items.map((item): Node => {
+    const flowNodes = items.map((item): Node<SubwayItemNodeData> => {
       return {
         id: item.id,
         position: {
           x: -9999,
           y: -9999,
         },
+        draggable: false,
         data: { item },
         type: 'SubwayItemNode',
       };
@@ -336,23 +341,50 @@ export function useFlowNodes(
   ]);
 }
 
-export function useFlowEdges(compactNodes: NormalFormBluePrintNode[]): Edge[] {
+export function useFlowEdges(
+  compactNodes: NormalFormBluePrintNode[],
+  customized: SubwayViewCustomized
+): Edge[] {
+  const { columnSpacing = DEFAULT_COLUMN_SPACING } = customized;
+
   return useMemo(() => {
     const style: CSSProperties = {
       strokeWidth: 8,
       stroke: 'var(--border-color-primary)',
     };
 
+    const nodeMap = new Map(compactNodes.map((n) => [n.id, n]));
+
     return compactNodes.flatMap((node) => {
       const { id, children = [] } = node;
+
       return children.map((childId) => {
+        const edgeType = ((): SubwayFlowEdgeData['type'] => {
+          const target = nodeMap.get(childId);
+          const targetPriority = target?.anchorPriority ?? 0;
+          const sourcePriority = node.anchorPriority ?? 0;
+          if (target && Math.abs(target.column - node.column) > 1) {
+            if (targetPriority > sourcePriority) {
+              return 'targetPrimary';
+            } else if (targetPriority < sourcePriority) {
+              return 'sourcePrimary';
+            } else {
+              return 'default';
+            }
+          }
+
+          return 'default';
+        })();
+
         return {
           id: `${id}-${childId}`,
           source: id,
           target: childId,
           style,
-        } as Edge;
+          data: { type: edgeType, primaryDistance: columnSpacing + 20 },
+          type: 'SubwayFlowEdge',
+        } as Edge<SubwayFlowEdgeData>;
       });
     });
-  }, [compactNodes]);
+  }, [columnSpacing, compactNodes]);
 }

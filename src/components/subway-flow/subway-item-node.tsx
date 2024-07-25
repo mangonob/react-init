@@ -3,8 +3,10 @@ import React from 'react';
 import { SubwayItem } from './model';
 import SubwayItemView from './subway-item-view';
 
+export type SubwayItemNodeData = { item: SubwayItem };
+
 export type SubwayItemProps = NodeProps<
-  Node<{ item: SubwayItem }, 'SubwayItemNode'>
+  Node<SubwayItemNodeData, 'SubwayItemNode'>
 >;
 
 export default function SubwayItemNode(props: SubwayItemProps) {

@@ -193,6 +193,7 @@ const mockBluePrint: BluePrint = {
       row: 2,
       column: 1,
       children: [SubwayItemKey.ImportFaFile, SubwayItemKey.ImportApplication],
+      anchorPriority: 1,
     },
     {
       id: SubwayItemKey.ImportApplication,
@@ -312,6 +313,7 @@ const mockBluePrint: BluePrint = {
       id: SubwayItemKey.DayEnd,
       row: 2,
       column: 15,
+      anchorPriority: 1,
       parents: [
         SubwayItemKey.ExportCfm,
         SubwayItemKey.ExportFaFile,
