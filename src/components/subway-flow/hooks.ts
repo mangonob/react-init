@@ -1,7 +1,7 @@
 import { Edge, Node } from '@xyflow/react';
 import { groupBy } from 'lodash-es';
 import { CSSProperties, useCallback, useMemo } from 'react';
-import { Matrix, Size, SubwayItem, SubwayItemDimension } from './model';
+import { Matrix, Rect, Size, SubwayItem, SubwayItemDimension } from './model';
 import { SubwayFlowEdgeData } from './subway-flow-edge';
 import { SubwayItemNodeData } from './subway-item-node';
 
@@ -237,7 +237,7 @@ export interface SubwayViewCustomized {
 }
 export interface UseFlowNodes {
   nodes: Node[];
-  containerSize?: Size;
+  viewport?: Size;
 }
 
 const DEFAULT_COLUMN_SPACING = 40;
@@ -296,6 +296,7 @@ export function useFlowNodes(
       }
 
       const flowNodeMap = new Map(flowNodes.map((n) => [n.id, n]));
+      const viewport = new Rect(0, 0, 0, 0);
 
       map.forEach((id, row, column) => {
         const size = sizes.get(id);
@@ -321,11 +322,11 @@ export function useFlowNodes(
           })();
           const x = widthAcc + offset;
           flowNode.position = { x, y };
+          viewport.extendRect(new Rect(x, y, size.width, size.height));
         }
       });
 
-      // TODO: container Rect
-      return { nodes: flowNodes };
+      return { nodes: flowNodes, viewport: viewport.ceil() };
     } else {
       return { nodes: flowNodes };
     }

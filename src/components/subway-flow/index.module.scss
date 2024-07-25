@@ -1,6 +1,9 @@
 .subway-flow {
-  height: 300px;
   width: 100%;
+
+  .flow-container {
+    min-width: 100%;
+  }
 
   :global {
     .react-flow__panel.react-flow__attribution {

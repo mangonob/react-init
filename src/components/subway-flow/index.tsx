@@ -55,13 +55,14 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     columnAlign,
     columnSpacing,
   };
-  const { nodes } = useFlowNodes(
+  const { nodes, viewport } = useFlowNodes(
     visibleItems,
     compactNodes,
     map,
     sizes,
     customized
   );
+
   const edges = useFlowEdges(compactNodes, customized);
 
   useLayoutEffect(() => {
@@ -88,18 +89,23 @@ export default function SubwayFlow(props: SubwayFlowProps) {
   return (
     <SubwayFlowProvider value={observer}>
       <div className={styles.subwayFlow} {...extra}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          draggable={false}
-          panOnDrag={false}
-          panOnScroll={false}
-          minZoom={1}
-          maxZoom={1}
-          nodeTypes={{ SubwayItemNode }}
-          edgeTypes={{ SubwayFlowEdge }}
-          fitView={false}
-        ></ReactFlow>
+        <div
+          className={styles.flowContainer}
+          style={viewport && { ...viewport }}
+        >
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            draggable={false}
+            panOnDrag={false}
+            panOnScroll={false}
+            minZoom={1}
+            maxZoom={1}
+            nodeTypes={{ SubwayItemNode }}
+            edgeTypes={{ SubwayFlowEdge }}
+            fitView={false}
+          ></ReactFlow>
+        </div>
       </div>
     </SubwayFlowProvider>
   );

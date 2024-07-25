@@ -13,6 +13,115 @@ export interface Size {
   height: number;
 }
 
+export interface Point {
+  x: number;
+  y: number;
+}
+
+export class Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+
+  get minX(): number {
+    return this.x;
+  }
+  get minY(): number {
+    return this.y;
+  }
+  get maxX(): number {
+    return this.x + this.width;
+  }
+
+  get maxY(): number {
+    return this.y + this.height;
+  }
+
+  get leftTop(): Point {
+    return {
+      x: this.x,
+      y: this.y,
+    };
+  }
+
+  get rightTop(): Point {
+    return {
+      x: this.x + this.width,
+      y: this.y,
+    };
+  }
+
+  get leftBottom(): Point {
+    return {
+      x: this.x,
+      y: this.y + this.height,
+    };
+  }
+
+  get rightBottom(): Point {
+    return {
+      x: this.x + this.width,
+      y: this.y + this.height,
+    };
+  }
+
+  constructor(
+    x: number = 0,
+    y: number = 0,
+    width: number = 0,
+    height: number = 0
+  ) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  extendPoint(point: Point) {
+    const { x: px, y: py } = point;
+    if (px < this.minX) {
+      this.width = this.maxX - px;
+      this.x = px;
+    }
+    if (px > this.maxX) {
+      this.width = px - this.minX;
+    }
+    if (py < this.minY) {
+      this.height = this.maxY - py;
+      this.y = py;
+    }
+    if (py > this.maxY) {
+      this.height = py - this.minY;
+    }
+  }
+
+  ceil(): Rect {
+    return new Rect(
+      Math.floor(this.x),
+      Math.floor(this.y),
+      Math.ceil(this.width),
+      Math.ceil(this.height)
+    );
+  }
+
+  floor(): Rect {
+    return new Rect(
+      Math.ceil(this.x),
+      Math.ceil(this.y),
+      Math.floor(this.width),
+      Math.floor(this.height)
+    );
+  }
+
+  extendRect(rect: Rect) {
+    this.extendPoint(rect.leftTop);
+    this.extendPoint(rect.rightTop);
+    this.extendPoint(rect.leftBottom);
+    this.extendPoint(rect.rightBottom);
+  }
+}
+
 export type SubwayItemDimension = Size;
 
 export type SubwayItemEvent = { type: 'sizeChanged' } & SubwayItemDimension & {
