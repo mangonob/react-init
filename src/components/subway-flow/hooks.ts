@@ -369,33 +369,40 @@ export function useFlowEdges(
     return compactNodes.flatMap((node) => {
       const { id, children = [] } = node;
 
-      return children.map((childId) => {
-        const edgeType = ((): SubwayFlowEdgeData['type'] => {
-          const target = nodeMap.get(childId);
-          const targetPriority = target?.anchorPriority ?? 0;
-          const sourcePriority = node.anchorPriority ?? 0;
-          if (target && Math.abs(target.column - node.column) > 1) {
-            if (targetPriority > sourcePriority) {
-              return 'targetPrimary';
-            } else if (targetPriority < sourcePriority) {
-              return 'sourcePrimary';
-            } else {
-              return 'default';
+      return children.flatMap((childId): Edge<SubwayFlowEdgeData>[] => {
+        const target = nodeMap.get(childId);
+
+        if (target) {
+          const edgeType = ((): SubwayFlowEdgeData['type'] => {
+            const targetPriority = target?.anchorPriority ?? 0;
+            const sourcePriority = node.anchorPriority ?? 0;
+            if (target && Math.abs(target.column - node.column) > 1) {
+              if (targetPriority > sourcePriority) {
+                return 'targetPrimary';
+              } else if (targetPriority < sourcePriority) {
+                return 'sourcePrimary';
+              } else {
+                return 'default';
+              }
             }
-          }
 
-          return 'default';
-        })();
+            return 'default';
+          })();
 
-        return {
-          id: `${id}-${childId}`,
-          source: id,
-          target: childId,
-          style,
-          selectable: false,
-          data: { type: edgeType, primaryDistance: columnSpacing + 20 },
-          type: 'SubwayFlowEdge',
-        } as Edge<SubwayFlowEdgeData>;
+          return [
+            {
+              id: `${id}-${childId}`,
+              source: id,
+              target: childId,
+              style,
+              selectable: false,
+              data: { type: edgeType, primaryDistance: columnSpacing + 20 },
+              type: 'SubwayFlowEdge',
+            },
+          ];
+        } else {
+          return [];
+        }
       });
     });
   }, [columnSpacing, compactNodes]);
