@@ -75,7 +75,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
           const { id, width, height } = e;
           itemSizeCollector.current.set(id, { width, height });
           if (itemSizeCollector.current.size === items.length) {
-            setSizes(itemSizeCollector.current);
+            setSizes(new Map(itemSizeCollector.current.entries()));
           }
           break;
         }
@@ -89,7 +89,18 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     };
   }, [items, observer]);
 
-  const _style = useMemo((): CSSProperties => {
+  const _style = ((): CSSProperties => {
+    const dimensions = viewport
+      ? { width: viewport.width, height: viewport.height }
+      : { width: 9999, height: 9999 };
+
+    return {
+      ...dimensions,
+      ...style,
+    };
+  })();
+
+  const _containerStyle = ((): CSSProperties => {
     const dimensions = viewport
       ? { width: viewport.width, height: viewport.height }
       : { width: 1, height: 1 };
@@ -98,11 +109,11 @@ export default function SubwayFlow(props: SubwayFlowProps) {
       ...dimensions,
       ...style,
     };
-  }, [viewport, style]);
+  })();
 
   return (
     <SubwayFlowProvider value={observer}>
-      <div className={styles.subwayFlow} style={_style} {...extra}>
+      <div className={styles.subwayFlow} style={_containerStyle} {...extra}>
         <div style={_style}>
           <ReactFlow
             className={styles.flow}

@@ -1,14 +1,7 @@
 import { Edge, Node } from '@xyflow/react';
 import { groupBy } from 'lodash-es';
 import { CSSProperties, useCallback, useMemo } from 'react';
-import {
-  Matrix,
-  Rect,
-  Size,
-  SubwayItem,
-  SubwayItemDimension,
-  SubwayItemKey,
-} from './model';
+import { Matrix, Rect, Size, SubwayItem, SubwayItemDimension } from './model';
 import { SubwayFlowEdgeData } from './subway-flow-edge';
 import { SubwayItemNodeData } from './subway-item-node';
 

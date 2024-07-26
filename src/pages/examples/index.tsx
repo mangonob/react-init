@@ -12,7 +12,7 @@ export default function Examples() {
         <div className={styles.subwayScroller}>
           <SubwayFlow
             items={mockItem}
-            blueprint={mockBluePrint}
+            blueprint={mockBlueprint}
             style={{ minHeight: 228 }}
             onItemClick={(item) => console.log('Click item', item)}
           />
@@ -195,7 +195,7 @@ const mockItem: SubwayItem[] = [
   },
 ];
 
-const mockBluePrint: BluePrint = {
+const mockBlueprint: BluePrint = {
   nodes: [
     {
       id: SubwayItemKey.DayBegin,
