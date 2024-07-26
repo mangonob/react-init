@@ -1,9 +1,8 @@
 import { Handle, Node, NodeProps, Position } from '@xyflow/react';
 import React from 'react';
-import { SubwayItem } from './model';
-import SubwayItemView from './subway-item-view';
+import SubwayItemView, { SubwayItemViewProps } from './subway-item-view';
 
-export type SubwayItemNodeData = { item: SubwayItem };
+export type SubwayItemNodeData = Pick<SubwayItemViewProps, 'item' | 'onClick'>;
 
 export type SubwayItemProps = NodeProps<
   Node<SubwayItemNodeData, 'SubwayItemNode'>
@@ -24,7 +23,7 @@ export default function SubwayItemNode(props: SubwayItemProps) {
         position={Position.Right}
         style={{ opacity: 0, marginRight: 10 }}
       />
-      <SubwayItemView item={data.item}></SubwayItemView>
+      <SubwayItemView {...data}></SubwayItemView>
     </div>
   );
 }

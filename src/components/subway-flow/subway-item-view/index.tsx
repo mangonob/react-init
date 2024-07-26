@@ -69,6 +69,7 @@ export default function SubwayItemView(props: SubwayItemViewProps) {
         {
           [styles.success]: status === 'success',
           [styles.error]: status === 'error',
+          [styles.progressing]: status === 'progressing',
         },
         className
       )}
@@ -77,6 +78,7 @@ export default function SubwayItemView(props: SubwayItemViewProps) {
     >
       <ProgressOutline
         padding={'6px 14px'}
+        borderWidth={1}
         progressing={status === 'progressing'}
       >
         <Flex vertical align="center" className={styles.content}>

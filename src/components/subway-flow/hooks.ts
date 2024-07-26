@@ -247,7 +247,8 @@ export function useFlowNodes(
   compactNodes: NormalFormBluePrintNode[],
   map: Matrix<string>,
   sizes: Map<string, SubwayItemDimension>,
-  customized: SubwayViewCustomized
+  customized: SubwayViewCustomized,
+  onItemClick?: (item: SubwayItem) => void
 ): UseFlowNodes {
   const {
     estimateItemHeight = 'auto',
@@ -255,6 +256,7 @@ export function useFlowNodes(
     columnSpacing = DEFAULT_COLUMN_SPACING,
     columnAlign = 'left',
   } = customized;
+
   const nodeMap = useMemo(
     () => new Map(compactNodes.map((n) => [n.id, n])),
     [compactNodes]
@@ -269,7 +271,14 @@ export function useFlowNodes(
           y: -9999,
         },
         draggable: false,
-        data: { item },
+        data: {
+          item,
+          onClick: () => {
+            if (item.status !== 'disabled') {
+              onItemClick?.(item);
+            }
+          },
+        },
         type: 'SubwayItemNode',
       };
     });
@@ -337,6 +346,7 @@ export function useFlowNodes(
     items,
     map,
     nodeMap,
+    onItemClick,
     rowSpacing,
     sizes,
   ]);
@@ -382,6 +392,7 @@ export function useFlowEdges(
           source: id,
           target: childId,
           style,
+          selectable: false,
           data: { type: edgeType, primaryDistance: columnSpacing + 20 },
           type: 'SubwayFlowEdge',
         } as Edge<SubwayFlowEdgeData>;

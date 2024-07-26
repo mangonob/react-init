@@ -4,7 +4,7 @@ export interface SubwayItem {
   id: string;
   count: number;
   total: number;
-  status: 'success' | 'error' | 'normal' | 'progressing';
+  status: 'success' | 'error' | 'normal' | 'progressing' | 'disabled';
   subject: ReactNode;
 }
 

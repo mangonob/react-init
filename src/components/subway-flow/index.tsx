@@ -62,7 +62,8 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     compactNodes,
     map,
     sizes,
-    customized
+    customized,
+    onItemClick
   );
 
   const edges = useFlowEdges(compactNodes, customized);
@@ -110,7 +111,6 @@ export default function SubwayFlow(props: SubwayFlowProps) {
             draggable={false}
             panOnDrag={false}
             panOnScroll={false}
-            elementsSelectable={false}
             minZoom={1}
             maxZoom={1}
             nodeTypes={{ SubwayItemNode }}

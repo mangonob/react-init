@@ -13,6 +13,19 @@
     }
   }
 
+  &:hover {
+    .progress,
+    .task-name {
+      color: var(--main-color);
+    }
+  }
+
+  &:not(.progressing):hover {
+    :global(.progress-outline):before {
+      background: var(--main-color);
+    }
+  }
+
   &.error {
     .icon {
       color: var(--danger-color-normal);

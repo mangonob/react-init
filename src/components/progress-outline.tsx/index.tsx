@@ -48,6 +48,7 @@ export default function ProgressOutline(props: ProgressOutlineProps) {
   return (
     <div
       className={classNames(
+        'progress-outline',
         styles.progressOutline,
         { [styles.progressing]: progressing },
         className
