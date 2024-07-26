@@ -1,7 +1,14 @@
 import { Edge, Node } from '@xyflow/react';
 import { groupBy } from 'lodash-es';
 import { CSSProperties, useCallback, useMemo } from 'react';
-import { Matrix, Rect, Size, SubwayItem, SubwayItemDimension } from './model';
+import {
+  Matrix,
+  Rect,
+  Size,
+  SubwayItem,
+  SubwayItemDimension,
+  SubwayItemKey,
+} from './model';
 import { SubwayFlowEdgeData } from './subway-flow-edge';
 import { SubwayItemNodeData } from './subway-item-node';
 
@@ -289,14 +296,14 @@ export function useFlowNodes(
           ? Array.from(sizes.values())[0].height
           : estimateItemHeight;
       const columnWidths = Array.from<number>({ length: map.column });
-      columnWidths[0] = 0;
+
       for (let i = 1; i <= map.column; ++i) {
         const columnWidth = map
           .getVector({ column: i })
           .reduce((width, nodeId) => {
             if (nodeId) {
-              const node = sizes.get(nodeId);
-              return node ? Math.max(width, node.width) : width;
+              const size = sizes.get(nodeId);
+              return size ? Math.max(width, size.width) : width;
             } else {
               return width;
             }

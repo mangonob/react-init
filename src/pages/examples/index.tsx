@@ -162,7 +162,8 @@ const mockItem: SubwayItem[] = [
     count: 7,
     total: 10,
     status: 'normal',
-    subject: '导出估值文件',
+    subject:
+      '导出估值文件，搞个超长的名字试一试最好是能直接把下一列的节点都戳出去',
   },
   {
     id: SubwayItemKey.ExportOtherFile,
