@@ -85,7 +85,6 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     return () => {
       unsubscribe();
       itemSizeCollector.current.clear();
-      setSizes(new Map());
     };
   }, [items, observer]);
 
