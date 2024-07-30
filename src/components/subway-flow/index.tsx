@@ -4,6 +4,7 @@ import { isEqual } from 'lodash-es';
 import React, {
   CSSProperties,
   HTMLAttributes,
+  useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
@@ -19,7 +20,12 @@ import {
   useSubwayAutoLayout,
 } from './hooks';
 import styles from './index.module.scss';
-import { SubwayItem, SubwayItemDimension, SubwayItemEvent } from './model';
+import {
+  Size,
+  SubwayItem,
+  SubwayItemDimension,
+  SubwayItemEvent,
+} from './model';
 import SubwayFlowEdge from './subway-flow-edge';
 import SubwayItemNode from './subway-item-node';
 
@@ -42,6 +48,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     rowSpacing,
     columnAlign,
     style,
+    estimateItemSize,
     ...extra
   } = props;
 
@@ -51,7 +58,18 @@ export default function SubwayFlow(props: SubwayFlowProps) {
     blueprint
   );
   const itemSizeCollector = useRef(new Map<string, SubwayItemDimension>());
-  const [sizes, setSizes] = useState(new Map<string, SubwayItemDimension>());
+  const defaultSizes = (() => {
+    if (estimateItemSize && items.length > 0) {
+      const sizesEntries = items.map((item): [string, Size] => [
+        item.id,
+        estimateItemSize(item),
+      ]);
+      return new Map(sizesEntries);
+    }
+  })();
+  const [sizes, setSizes] = useState(
+    defaultSizes ?? new Map<string, SubwayItemDimension>()
+  );
   const customized = {
     estimateItemHeight,
     rowSpacing,
@@ -69,6 +87,17 @@ export default function SubwayFlow(props: SubwayFlowProps) {
 
   const edges = useFlowEdges(compactNodes, customized);
 
+  useEffect(() => {
+    if (estimateItemSize && sizes.size === 0 && visibleItems.length > 0) {
+      const sizesEntries = visibleItems.map((item): [string, Size] => [
+        item.id,
+        estimateItemSize(item),
+      ]);
+      setSizes(new Map(sizesEntries));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visibleItems]);
+
   useLayoutEffect(() => {
     const unsubscribe = observer.subscribe((e) => {
       switch (e.type) {
@@ -77,7 +106,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
 
           if (!isEqual(itemSizeCollector.current.get(id), { width, height })) {
             itemSizeCollector.current.set(id, { width, height });
-            if (itemSizeCollector.current.size === items.length) {
+            if (itemSizeCollector.current.size === visibleItems.length) {
               setSizes(new Map(itemSizeCollector.current.entries()));
             }
           }
@@ -91,7 +120,7 @@ export default function SubwayFlow(props: SubwayFlowProps) {
       unsubscribe();
       itemSizeCollector.current.clear();
     };
-  }, [items, observer]);
+  }, [visibleItems, observer]);
 
   const _style = ((): CSSProperties => {
     const dimensions = viewport

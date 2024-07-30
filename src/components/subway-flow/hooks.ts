@@ -231,6 +231,7 @@ function useCompactNodes(nodes: NormalFormBluePrintNode[]): UseCompactNodes {
 
 export interface SubwayViewCustomized {
   estimateItemHeight?: number | 'auto';
+  estimateItemSize?: (item: SubwayItem) => Size;
   rowSpacing?: number;
   columnSpacing?: number;
   columnAlign?: 'center' | 'left' | 'right';
