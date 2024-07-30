@@ -1,5 +1,6 @@
 import { ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { isEqual } from 'lodash-es';
 import React, {
   CSSProperties,
   HTMLAttributes,
@@ -73,10 +74,14 @@ export default function SubwayFlow(props: SubwayFlowProps) {
       switch (e.type) {
         case 'sizeChanged': {
           const { id, width, height } = e;
-          itemSizeCollector.current.set(id, { width, height });
-          if (itemSizeCollector.current.size === items.length) {
-            setSizes(new Map(itemSizeCollector.current.entries()));
+
+          if (!isEqual(itemSizeCollector.current.get(id), { width, height })) {
+            itemSizeCollector.current.set(id, { width, height });
+            if (itemSizeCollector.current.size === items.length) {
+              setSizes(new Map(itemSizeCollector.current.entries()));
+            }
           }
+
           break;
         }
       }

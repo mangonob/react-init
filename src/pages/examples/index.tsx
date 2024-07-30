@@ -14,7 +14,6 @@ export default function Examples() {
             items={mockItem}
             blueprint={mockBlueprint}
             style={{ minHeight: 228 }}
-            onItemClick={(item) => console.log('Click item', item)}
           />
         </div>
         <h1>Examples</h1>
