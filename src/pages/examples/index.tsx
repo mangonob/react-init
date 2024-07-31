@@ -1,9 +1,10 @@
 import { Flex } from 'antd';
 import React from 'react';
 import SubwayFlow from 'src/components/subway-flow';
-import { BluePrint } from 'src/components/subway-flow/hooks';
-import { SubwayItem, SubwayItemKey } from 'src/components/subway-flow/model';
+import { Blueprint } from 'src/components/subway-flow/hooks';
+import { SubwayItem } from 'src/components/subway-flow/model';
 import styles from './index.module.scss';
+import { SubwayItemKey } from './model';
 
 export default function Examples() {
   return (
@@ -194,7 +195,7 @@ const mockItem: SubwayItem[] = [
   },
 ];
 
-const mockBlueprint: BluePrint = {
+const mockBlueprint: Blueprint = {
   nodes: [
     {
       id: SubwayItemKey.DayBegin,

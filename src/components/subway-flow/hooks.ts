@@ -8,11 +8,14 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Matrix, Rect, Size, SubwayItem, SubwayItemDimension } from './model';
+import { Matrix, Rect, Size, SubwayItem, SubwayItemDimensions } from './model';
 import { SubwayFlowEdgeData } from './subway-flow-edge';
 import { SubwayItemNodeData } from './subway-item-node';
 
-export interface BluePrintNode {
+/**
+ * Description node in the subway flow blueprint.
+ */
+export interface BlueprintNode {
   id: string;
   row: number;
   column: number;
@@ -22,30 +25,33 @@ export interface BluePrintNode {
   parents?: string[];
 }
 
-export type NormalFormBluePrintNode = Omit<BluePrintNode, 'parents'>;
+export type NormalFormBlueprintNode = Omit<BlueprintNode, 'parents'>;
 
-export interface BluePrint {
-  nodes: BluePrintNode[];
+/**
+ * Subway flow blueprint, describes the structure of the subway flow.
+ */
+export interface Blueprint {
+  nodes: BlueprintNode[];
   isItemHiddenFn?: (_: SubwayItem) => boolean;
 }
 
-const defaultIsItemHiddenFn = (item: SubwayItem) => item.total <= 0;
+const defaultIsItemHiddenFn = (item: SubwayItem) => !!item.isHidden;
 
 export interface SubwayAutoLayout {
   visibleItems: SubwayItem[];
-  compactNodes: NormalFormBluePrintNode[];
+  compactNodes: NormalFormBlueprintNode[];
   map: Matrix<string>;
 }
 
 export function useSubwayAutoLayout(
   items: SubwayItem[],
-  blueprint: BluePrint
+  blueprint: Blueprint
 ): SubwayAutoLayout {
   const { nodes: _nodes, isItemHiddenFn = defaultIsItemHiddenFn } = blueprint;
   const nodes = useNormalFormNodes(_nodes);
 
   const isNodeHidden = useCallback(
-    (idOrNode: string | NormalFormBluePrintNode) => {
+    (idOrNode: string | NormalFormBlueprintNode) => {
       const nid = typeof idOrNode === 'string' ? idOrNode : idOrNode.id;
       const item = items.find((i) => i.id === nid);
       return item ? isItemHiddenFn(item) : true;
@@ -62,13 +68,13 @@ export function useSubwayAutoLayout(
   return { visibleItems, compactNodes, map };
 }
 
-function useNormalFormNodes(nodes: BluePrintNode[]): NormalFormBluePrintNode[] {
+function useNormalFormNodes(nodes: BlueprintNode[]): NormalFormBlueprintNode[] {
   return useMemo(() => {
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
-    const normalform: NormalFormBluePrintNode[] = nodes.flatMap((node) => {
+    const normalform: NormalFormBlueprintNode[] = nodes.flatMap((node) => {
       const { id, children, parents, ...extra } = node;
       if (parents && parents.length > 0) {
-        const reverse = parents.flatMap((parent): BluePrintNode[] => {
+        const reverse = parents.flatMap((parent): BlueprintNode[] => {
           const pnode = nodeMap.get(parent);
           if (pnode) {
             const { children: _, ...extra } = pnode;
@@ -89,7 +95,7 @@ function useNormalFormNodes(nodes: BluePrintNode[]): NormalFormBluePrintNode[] {
     });
 
     const group = groupBy(normalform, (node) => node.id);
-    const merged: NormalFormBluePrintNode[] = Object.entries(group).map(
+    const merged: NormalFormBlueprintNode[] = Object.entries(group).map(
       ([, nodes]) => {
         const allChildren = nodes.flatMap((m) => m.children ?? []);
         return {
@@ -104,9 +110,9 @@ function useNormalFormNodes(nodes: BluePrintNode[]): NormalFormBluePrintNode[] {
 }
 
 function useVisibleNodes(
-  nodes: NormalFormBluePrintNode[],
-  isNodeHidden: (idOrNode: string | NormalFormBluePrintNode) => boolean
-): BluePrintNode[] {
+  nodes: NormalFormBlueprintNode[],
+  isNodeHidden: (idOrNode: string | NormalFormBlueprintNode) => boolean
+): BlueprintNode[] {
   return useMemo(() => {
     const nodeMap = new Map(nodes.map((node) => [node.id, node]));
     const allParent = nodes.map((node) => node.id);
@@ -114,7 +120,7 @@ function useVisibleNodes(
       Array.from(new Set(nodes.flatMap((node) => node.children ?? [])))
     );
     const roots = allParent.filter((id) => !allChildren.has(id));
-    const visible: BluePrintNode[] = [];
+    const visible: BlueprintNode[] = [];
     const stack = roots.slice();
     const visited = new Map<string, boolean>();
     while (stack.length > 0) {
@@ -149,6 +155,9 @@ function useVisibleNodes(
   }, [isNodeHidden, nodes]);
 }
 
+/**
+ * Represents a 2 dimensions range of grid.
+ */
 interface Range {
   maxRow: number;
   minRow: number;
@@ -156,7 +165,7 @@ interface Range {
   minColumn: number;
 }
 
-function useNodesRange(nodes: NormalFormBluePrintNode[]): Range {
+function useNodesRange(nodes: NormalFormBlueprintNode[]): Range {
   return useMemo(() => {
     return nodes.reduce(
       (range: Range, node): Range => {
@@ -180,11 +189,11 @@ function useNodesRange(nodes: NormalFormBluePrintNode[]): Range {
 }
 
 export interface UseCompactNodes {
-  compactNodes: NormalFormBluePrintNode[];
+  compactNodes: NormalFormBlueprintNode[];
   map: Matrix<string>;
 }
 
-function useCompactNodes(nodes: NormalFormBluePrintNode[]): UseCompactNodes {
+function useCompactNodes(nodes: NormalFormBlueprintNode[]): UseCompactNodes {
   const range = useNodesRange(nodes);
 
   return useMemo(() => {
@@ -251,9 +260,9 @@ const DEFAULT_COLUMN_SPACING = 40;
 
 export function useFlowNodes(
   items: SubwayItem[],
-  compactNodes: NormalFormBluePrintNode[],
+  compactNodes: NormalFormBlueprintNode[],
   map: Matrix<string>,
-  sizes: Map<string, SubwayItemDimension>,
+  sizes: Map<string, SubwayItemDimensions>,
   customized: SubwayViewCustomized,
   onItemClick?: (item: SubwayItem) => void
 ): UseFlowNodes {
@@ -360,7 +369,7 @@ export function useFlowNodes(
 }
 
 export function useFlowEdges(
-  compactNodes: NormalFormBluePrintNode[],
+  compactNodes: NormalFormBlueprintNode[],
   customized: SubwayViewCustomized
 ): Edge[] {
   const { columnSpacing = DEFAULT_COLUMN_SPACING } = customized;
@@ -422,8 +431,8 @@ export function useFlowEdges(
  */
 export function useNodeSizes(
   ref: RefObject<HTMLDivElement>
-): Map<string, SubwayItemDimension> {
-  const [sizes, setSizes] = useState(new Map<string, SubwayItemDimension>());
+): Map<string, SubwayItemDimensions> {
+  const [sizes, setSizes] = useState(new Map<string, SubwayItemDimensions>());
 
   useLayoutEffect(() => {
     if (ref.current) {

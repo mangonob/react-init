@@ -2,7 +2,7 @@ import { ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import React, { CSSProperties, HTMLAttributes, useRef } from 'react';
 import {
-  BluePrint,
+  Blueprint,
   SubwayViewCustomized,
   useFlowEdges,
   useFlowNodes,
@@ -20,7 +20,7 @@ interface SubwayFlowProps
   items?: SubwayItem[];
   onItemClick?: (item: SubwayItem) => void;
   onViewportChanged?: (width: number, height: number) => void;
-  blueprint?: BluePrint;
+  blueprint?: Blueprint;
 }
 
 export default function SubwayFlow(props: SubwayFlowProps) {

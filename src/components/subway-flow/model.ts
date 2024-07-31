@@ -6,38 +6,68 @@ export interface SubwayItem {
   total: number;
   status: 'success' | 'error' | 'normal' | 'progressing' | 'disabled';
   subject: ReactNode;
+  isHidden?: boolean;
 }
 
+/** 2 dimensions size on surface */
 export interface Size {
   width: number;
   height: number;
 }
 
+/** 2 dimensions point on surface */
 export interface Point {
   x: number;
   y: number;
 }
 
+/**
+ * Represents a rectangle on 2 dimensions surface.
+ */
 export class Rect {
+  /** x-coordinate of the top-left corner of the rectangle.  */
   x: number;
+
+  /** y-coordinate of the top-left corner of the rectangle.  */
   y: number;
+
+  /** width of the rectangle.  */
   width: number;
+
+  /** height of the rectangle.  */
   height: number;
 
+  /**
+   * @returns minimum x-coordinate of the rectangle.
+   */
   get minX(): number {
     return this.x;
   }
+
+  /**
+   * @returns minimum y-coordinate of the rectangle.
+   */
   get minY(): number {
     return this.y;
   }
+
+  /**
+   * @returns maximum x-coordinate of the rectangle.
+   */
   get maxX(): number {
     return this.x + this.width;
   }
 
+  /**
+   * @returns maximum y-coordinate of the rectangle.
+   */
   get maxY(): number {
     return this.y + this.height;
   }
 
+  /**
+   * @returns The coordinates of the top-left corner of the rectangle as a Point object.
+   */
   get leftTop(): Point {
     return {
       x: this.x,
@@ -45,6 +75,9 @@ export class Rect {
     };
   }
 
+  /**
+   * @returns the coordinates of the top-right corner of the rectangle as a Point object.
+   */
   get rightTop(): Point {
     return {
       x: this.x + this.width,
@@ -52,6 +85,9 @@ export class Rect {
     };
   }
 
+  /**
+   * @returns the coordinates of the bottom-left corner of the rectangle as a Point object.
+   */
   get leftBottom(): Point {
     return {
       x: this.x,
@@ -59,6 +95,9 @@ export class Rect {
     };
   }
 
+  /**
+   * @returns the coordinates of the bottom-right corner of the rectangle as a Point object.
+   */
   get rightBottom(): Point {
     return {
       x: this.x + this.width,
@@ -66,6 +105,13 @@ export class Rect {
     };
   }
 
+  /**
+   * construct a new Rect instance.
+   * @param x - The x-coordinate of the top-left corner of the rectangle.
+   * @param y - The y-coordinate of the top-left corner of the rectangle.
+   * @param width - The width of the rectangle.
+   * @param height - The height of the rectangle.
+   */
   constructor(
     x: number = 0,
     y: number = 0,
@@ -78,6 +124,10 @@ export class Rect {
     this.height = height;
   }
 
+  /**
+   * Extends the rectangle to include the specified point.
+   * @param point - The point to extend the rectangle to.
+   */
   extendPoint(point: Point) {
     const { x: px, y: py } = point;
     if (px < this.minX) {
@@ -96,6 +146,10 @@ export class Rect {
     }
   }
 
+  /**
+   * Returns a new rectangle with the coordinates rounded up to the nearest integer.
+   * @returns A new Rect instance with rounded coordinates.
+   */
   ceil(): Rect {
     return new Rect(
       Math.floor(this.x),
@@ -105,6 +159,10 @@ export class Rect {
     );
   }
 
+  /**
+   * Returns a new rectangle with the coordinates rounded down to the nearest integer.
+   * @returns A new Rect instance with rounded coordinates.
+   */
   floor(): Rect {
     return new Rect(
       Math.ceil(this.x),
@@ -114,6 +172,10 @@ export class Rect {
     );
   }
 
+  /**
+   * Extends the rectangle to include the specified rectangle.
+   * @param rect - The rectangle to extend the current rectangle to.
+   */
   extendRect(rect: Rect) {
     this.extendPoint(rect.leftTop);
     this.extendPoint(rect.rightTop);
@@ -122,68 +184,13 @@ export class Rect {
   }
 }
 
-export type SubwayItemDimension = Size;
+export type SubwayItemDimensions = Size;
 
-export type SubwayItemEvent = { type: 'sizeChanged' } & SubwayItemDimension & {
+export type SubwayItemEvent = { type: 'sizeChanged' } & SubwayItemDimensions & {
     id: string;
   };
 
-export type ItemInfo = Map<string, SubwayItemDimension>;
-
-export enum SubwayItemKey {
-  /** 导入申请  */
-  ImportApplication = 'x-import-application',
-  /** 渠道总控 */
-  SaTotalControl = 'x-sa-total-control',
-  /** 导出净值 */
-  ExportNav = 'x-export-nav',
-  /** 导出确认 */
-  ExportCfm = 'x-export-cfm',
-  /** 导入净值 */
-  ImportNav = 'x-import-nav',
-  /** 权益发放 */
-  RightsDistrubute = 'x-rights-distrubute',
-  /** 交易清算 */
-  ClearTradeApp = 'x-clear-trade-app',
-  /** 销售代码总控 */
-  PrdTradeTotalControl = 'x-prd-trade-total-control',
-  /** 产品代码总控 */
-  PrdPtfTotalControl = 'x-prd-ptf-total-control',
-  /** 清算过账 */
-  ClearPost = 'x-clear-post',
-  /** 权益登记 */
-  RightsRegister = 'x-rights-register',
-  /** 导出FA */
-  ExprotToFa = 'x-exprot-to-fa',
-  /** 日终任务 */
-  DayEnd = 'x-day-end',
-  /** 导出快熟 */
-  ImportFastRedeem = 'x-import-fast-redeem',
-  /** 收益转移 */
-  IncomeTransfer = 'x-income-transfer',
-  /** 导出收益 */
-  ExportIncome = 'x-export-income',
-  /** 资金结算 */
-  Settlement = 'x-settlement',
-  /** 日初任务 */
-  DayBegin = 'x-day-begin',
-  /** 垫资还款 */
-  CreditRepay = 'x-credit-repay',
-  /** 产品转换 */
-  PrdTradeConvert = 'x-prd-trade-convert',
-  /** 导入异常撤单 */
-  ImportExceptionWithdraw = 'x-import-exception-withdraw',
-  /** 异常撤单 */
-  ExceptionWithdraw = 'x-exception-withdraw',
-  /** T0.5垫资 */
-  IntradayCredit = 'x-intraday-credit',
-  /** 导出估值文件 */
-  ExportFaFile = 'x-export-fa-file',
-  /** 导出周边文件 */
-  ExportOtherFile = 'x-export-other-file',
-  /** 导入估值文件 */
-  ImportFaFile = 'x-import-fa-file',
-}
+export type ItemInfo = Map<string, SubwayItemDimensions>;
 
 export class Matrix<T> {
   private elem: (T | undefined)[][];
