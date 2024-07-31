@@ -12,7 +12,7 @@ export default function SubwayItemNode(props: SubwayItemProps) {
   const { data } = props;
 
   return (
-    <div>
+    <div className="subway-item-node" id={data.item.id}>
       <Handle
         type="target"
         position={Position.Left}

@@ -1,6 +1,13 @@
 import { Edge, Node } from '@xyflow/react';
 import { groupBy } from 'lodash-es';
-import { CSSProperties, useCallback, useMemo } from 'react';
+import {
+  CSSProperties,
+  RefObject,
+  useCallback,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Matrix, Rect, Size, SubwayItem, SubwayItemDimension } from './model';
 import { SubwayFlowEdgeData } from './subway-flow-edge';
 import { SubwayItemNodeData } from './subway-item-node';
@@ -231,7 +238,6 @@ function useCompactNodes(nodes: NormalFormBluePrintNode[]): UseCompactNodes {
 
 export interface SubwayViewCustomized {
   estimateItemHeight?: number | 'auto';
-  estimateItemSize?: (item: SubwayItem) => Size;
   rowSpacing?: number;
   columnSpacing?: number;
   columnAlign?: 'center' | 'left' | 'right';
@@ -407,4 +413,33 @@ export function useFlowEdges(
       });
     });
   }, [columnSpacing, compactNodes]);
+}
+
+/**
+ * Read the sizes of the flow nodes
+ * @param ref Ref of the container element
+ * @returns
+ */
+export function useNodeSizes(
+  ref: RefObject<HTMLDivElement>
+): Map<string, SubwayItemDimension> {
+  const [sizes, setSizes] = useState(new Map<string, SubwayItemDimension>());
+
+  useLayoutEffect(() => {
+    if (ref.current) {
+      const nodes = Array.from(
+        ref.current.querySelectorAll('.subway-item-node')
+      );
+      setSizes(
+        new Map(
+          nodes.map((n) => [
+            n.id,
+            { width: n.clientWidth, height: n.clientHeight },
+          ])
+        )
+      );
+    }
+  }, []);
+
+  return sizes;
 }

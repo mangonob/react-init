@@ -5,9 +5,8 @@ import {
 } from '@ant-design/icons';
 import { Flex, Space } from 'antd';
 import classNames from 'classnames';
-import React, { HTMLAttributes, useContext, useEffect, useState } from 'react';
+import React, { HTMLAttributes } from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
-import { SubwayFlowContext } from '../context';
 import { SubwayItem } from '../model';
 import styles from './index.module.scss';
 
@@ -17,37 +16,7 @@ export interface SubwayItemViewProps extends HTMLAttributes<HTMLDivElement> {
 
 export default function SubwayItemView(props: SubwayItemViewProps) {
   const { item, className, ...extra } = props;
-  const { id: itemId, count, total, status, subject } = item;
-  const [element, setElement] = useState<HTMLDivElement>();
-  const eventObserver = useContext(SubwayFlowContext);
-
-  useEffect(() => {
-    if (element) {
-      eventObserver.dispatch({
-        type: 'sizeChanged',
-        id: itemId,
-        width: element.clientWidth,
-        height: element.clientHeight,
-      });
-
-      const sizeObserver = new ResizeObserver((entries) => {
-        const [entry] = entries;
-        eventObserver.dispatch({
-          type: 'sizeChanged',
-          id: itemId,
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      });
-
-      sizeObserver.observe(element);
-
-      return () => {
-        sizeObserver.unobserve(element);
-        sizeObserver.disconnect();
-      };
-    }
-  }, [element, itemId, eventObserver]);
+  const { count, total, status, subject } = item;
 
   const renderIcon = () => {
     switch (status) {
@@ -73,7 +42,6 @@ export default function SubwayItemView(props: SubwayItemViewProps) {
         },
         className
       )}
-      ref={(ele) => setElement(ele || void 0)}
       {...extra}
     >
       <ProgressOutline
