@@ -1,5 +1,3 @@
-- title: Parser
-  target: /parser
 - title: Playground
   target: /examples
   iconName: example
