@@ -10,7 +10,8 @@ export type Token =
         | 'mod'
         | 'leftParent'
         | 'common'
-        | 'rightParent';
+        | 'rightParent'
+        | 'EOF';
     }
   | { type: 'number'; value: number }
   | {
@@ -27,6 +28,7 @@ export default function lexer(source: string): Token[] {
     tokens.push(token);
     rest = newRest;
   }
+  tokens.push({ type: 'EOF' });
   return tokens;
 }
 
@@ -75,6 +77,6 @@ function scan(source: string): [Token, string] {
   }
 }
 
-export function unexcept(content: string): never {
+function unexcept(content: string): never {
   throw new Error(`unexcepted char "${content}"`);
 }
