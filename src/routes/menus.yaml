@@ -10,3 +10,5 @@
 - title: Differ
   target: /differ
   iconName: differ
+- title: Forms
+  target: /forms
