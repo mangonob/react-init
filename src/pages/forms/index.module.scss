@@ -1,0 +1,26 @@
+.forms {
+  height: 100%;
+  overflow: hidden;
+
+  .loading {
+    &,
+    :global(.ant-spin-container) {
+      height: 100%;
+    }
+  }
+
+  .tabs {
+    height: 100%;
+    :global {
+      .ant-tabs-nav {
+        margin-bottom: 0;
+      }
+
+      .ant-tabs-content-holder {
+        padding-top: 20px;
+        flex: 1;
+        overflow-y: scroll;
+      }
+    }
+  }
+}
