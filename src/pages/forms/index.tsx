@@ -57,7 +57,7 @@ export default function Forms() {
                               }
                             ).errorFields;
 
-                            requestIdleCallback(() => {
+                            requestAnimationFrame(() => {
                               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
                               const bad = errorFields[0]?.name;
                               if (bad) {

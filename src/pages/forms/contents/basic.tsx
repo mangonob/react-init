@@ -7,7 +7,7 @@ export default function Basic() {
       <Form.Item label="姓名" name="name" required rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-      <Form.Item label="性别" name="sex" required rules={[{ required: true }]}>
+      <Form.Item label="性别" name="sex" required>
         <Switch />
       </Form.Item>
       <Form.Item

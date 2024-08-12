@@ -15,6 +15,7 @@ export function Apply() {
       <Form.Item
         label="是否持有日本护照"
         name="hasJPPassport"
+        required
         valuePropName="checked"
       >
         <Switch />

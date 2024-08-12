@@ -4,7 +4,7 @@ export function jumpToErrorOccurTabIfNeeded(
   setActiveKey: (_: string) => void,
   onFinished?: () => void
 ) {
-  requestIdleCallback(() => {
+  setTimeout(() => {
     const tabPanels = Array.from(
       tabElement.querySelectorAll(
         ':scope > .ant-tabs-content-holder > .ant-tabs-content > .ant-tabs-tabpane'
@@ -38,5 +38,5 @@ export function jumpToErrorOccurTabIfNeeded(
     }
 
     onFinished?.();
-  });
+  }, 50);
 }
