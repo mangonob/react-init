@@ -1,6 +1,6 @@
-import { Button, Form, Spin, Tabs } from 'antd';
-import { NamePath } from 'antd/es/form/interface';
+import { Button, Form, Spin, Tabs, message } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { FormError } from 'src/models';
 import { Apply } from './contents/apply';
 import Basic from './contents/basic';
 import Partners from './contents/partners';
@@ -41,7 +41,7 @@ export default function Forms() {
                     .then((values) => {
                       console.info('Values', values);
                     })
-                    .catch((error) => {
+                    .catch((error: FormError) => {
                       const tabElement = document.querySelector(
                         `.${styles.tabs}`
                       );
@@ -51,17 +51,11 @@ export default function Forms() {
                           activeKey,
                           setActiveKey,
                           () => {
-                            const errorFields = (
-                              error as {
-                                errorFields: { name: NamePath }[];
-                              }
-                            ).errorFields;
-
                             requestAnimationFrame(() => {
-                              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                              const bad = errorFields[0]?.name;
-                              if (bad) {
-                                form.scrollToField(bad);
+                              const { errorFields } = error;
+                              const [bad] = errorFields;
+                              if (bad.name) {
+                                form.scrollToField(bad.name);
                               }
                             });
                           }

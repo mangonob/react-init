@@ -30,10 +30,7 @@ export function jumpToErrorOccurTabIfNeeded(
       return [];
     });
 
-    if (
-      errorOccurTabKeys.length > 0 &&
-      !errorOccurTabKeys.includes(activeKey)
-    ) {
+    if (errorOccurTabKeys.length > 0 && activeKey !== errorOccurTabKeys[0]) {
       setActiveKey(errorOccurTabKeys[0]);
     }
 
