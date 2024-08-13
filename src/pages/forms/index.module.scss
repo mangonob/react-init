@@ -2,6 +2,11 @@
   height: 100%;
   overflow: hidden;
 
+  :global(.ant-form-item-label) {
+    min-width: 100px;
+    text-align: left;
+  }
+
   .loading {
     &,
     :global(.ant-spin-container) {
