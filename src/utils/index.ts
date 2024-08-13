@@ -1,4 +1,3 @@
-export * from './statistics';
 export * from './change-case';
 export * from './download';
 
@@ -31,28 +30,4 @@ export function optional<T, U>(
   map: (_: T) => U | undefined
 ): U | undefined {
   return maybe === undefined ? void 0 : map(maybe);
-}
-
-/**
- * A function that searches for all occurrences of a substring in a text.
- * @param text - The text to search in.
- * @param substring - The substring to search for.
- * @returns An array of indices where the substring is found in the text.
- */
-export function searchAll(text: string, substring: string): number[] {
-  if (substring.length > 0) {
-    const found = text.search(substring);
-
-    if (found >= 0) {
-      const offset = found + substring.length;
-      return [
-        found,
-        ...searchAll(text.slice(offset), substring).map((i) => i + offset),
-      ];
-    } else {
-      return [];
-    }
-  } else {
-    return [];
-  }
 }
