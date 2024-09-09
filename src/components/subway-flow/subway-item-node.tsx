@@ -1,5 +1,4 @@
 import { Handle, Node, NodeProps, Position } from '@xyflow/react';
-import React from 'react';
 import SubwayItemView, { SubwayItemViewProps } from './subway-item-view';
 
 export type SubwayItemNodeData = Pick<SubwayItemViewProps, 'item' | 'onClick'>;

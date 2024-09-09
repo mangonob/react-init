@@ -1,7 +1,7 @@
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Steps } from 'antd';
 import { nanoid } from 'nanoid';
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { SELF_USER_ID } from '../user-editor/models';
 import { useMessages } from './hooks';
 import styles from './index.module.scss';

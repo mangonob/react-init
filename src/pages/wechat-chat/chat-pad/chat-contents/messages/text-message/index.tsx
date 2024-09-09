@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { MessageContext } from '../../message-render';
 import styles from './index.module.scss';
 

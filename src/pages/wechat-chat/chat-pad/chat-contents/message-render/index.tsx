@@ -1,6 +1,6 @@
 import { Flex } from 'antd';
 import classNames from 'classnames';
-import React, { HTMLAttributes, createContext } from 'react';
+import { HTMLAttributes, createContext } from 'react';
 import Reversed from 'src/components/reversed';
 import { useGeneralSettings } from 'src/pages/wechat-chat/editor/general-editor/hooks';
 import { useChatUsers } from 'src/pages/wechat-chat/editor/user-editor/hooks';

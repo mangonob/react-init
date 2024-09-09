@@ -2,7 +2,7 @@ import { Flex } from 'antd';
 import classNames from 'classnames';
 import html2canvas from 'html2canvas';
 import { nanoid } from 'nanoid';
-import React, {
+import {
   HTMLAttributes,
   Ref,
   forwardRef,

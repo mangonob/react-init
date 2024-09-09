@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { kebabCase, pascalCase } from 'src/utils';
 import styles from './index.module.scss';
 

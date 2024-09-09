@@ -1,5 +1,5 @@
 import { Alert, Button, Result, Space } from 'antd';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useRouteError } from 'react-router';
 import PageLoadError from './error';
 import styles from './index.module.scss';

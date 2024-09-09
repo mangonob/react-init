@@ -1,6 +1,6 @@
 import { Flex } from 'antd';
 import classNames from 'classnames';
-import React, { PropsWithChildren, ReactNode } from 'react';
+import { PropsWithChildren, ReactNode } from 'react';
 import styles from './index.module.scss';
 
 export interface BlockProps extends PropsWithChildren<unknown> {

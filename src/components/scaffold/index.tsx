@@ -1,7 +1,7 @@
 import { useDrag } from '@use-gesture/react';
 import { Layout } from 'antd';
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet } from 'react-router';
 import { useLocalStorage } from 'react-use';

@@ -6,7 +6,7 @@ import {
   getBezierPath,
   getStraightPath,
 } from '@xyflow/react';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 export type SubwayFlowEdgeData = {
   type: 'sourcePrimary' | 'targetPrimary' | 'default';

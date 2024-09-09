@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Menu, MenuProps } from 'antd';
 import { isArray } from 'lodash-es';
-import React, { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import menus from 'src/routes/menus.yaml';
 

@@ -1,5 +1,4 @@
 import { Col, Flex, Row } from 'antd';
-import React from 'react';
 import { ColorPalette } from './palette';
 
 export function Colors() {

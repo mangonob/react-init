@@ -2,7 +2,7 @@ import { MinusCircleFilled } from '@ant-design/icons';
 import { Col, DatePicker, Flex, Form, Input, Row, Select } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import dayjs from 'dayjs';
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import {
   ChatMessage,
   ChatMessageTypes,

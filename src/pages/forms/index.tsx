@@ -1,5 +1,5 @@
-import { Button, Form, Spin, Tabs, message } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Form, Spin, Tabs } from 'antd';
+import { useEffect, useState } from 'react';
 import { FormError } from 'src/models';
 import { Apply } from './contents/apply';
 import Basic from './contents/basic';

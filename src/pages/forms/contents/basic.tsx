@@ -1,5 +1,4 @@
 import { Form, Input, Switch } from 'antd';
-import React from 'react';
 
 export default function Basic() {
   return (

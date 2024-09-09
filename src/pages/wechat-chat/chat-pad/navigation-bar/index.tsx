@@ -1,12 +1,12 @@
 import { Flex } from 'antd';
-import React, { HTMLAttributes, useEffect, useReducer, useState } from 'react';
-import styles from './index.module.scss';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
+import { HTMLAttributes, useEffect, useReducer, useState } from 'react';
 import cellSignalSrc from './assets/cell-signal.svg';
 import batterySrc from './assets/ios-battery.svg';
 import backSrc from './assets/navigation-bar-back.svg';
 import moreSrc from './assets/navigation-bar-more.svg';
+import styles from './index.module.scss';
 
 interface NavigationBarProps extends HTMLAttributes<HTMLDivElement> {
   title?: string;

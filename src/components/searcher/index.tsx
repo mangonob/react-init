@@ -1,11 +1,11 @@
 import { Button, Col, Flex, Form, Row, Space } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { Store } from 'antd/es/form/interface';
-import React, { Children, PropsWithChildren } from 'react';
+import { Children, PropsWithChildren } from 'react';
 
 import { ColProps } from 'antd/lib';
-import styles from './index.module.scss';
 import { ResponsiveBuilder } from '../responsive-builder';
+import styles from './index.module.scss';
 
 export type SearcherProps<D> = PropsWithChildren<{
   onSearch?: (formData: D) => void;

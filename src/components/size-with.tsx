@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { useElementSize } from 'src/hooks';
 
 export interface SizeWithProps extends HTMLAttributes<HTMLDivElement> {

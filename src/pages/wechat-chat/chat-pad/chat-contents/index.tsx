@@ -1,6 +1,6 @@
 import { Flex } from 'antd';
 import classNames from 'classnames';
-import React, { HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import { ChatMessage } from '../../models';
 import styles from './index.module.scss';
 import MessageRender from './message-render';

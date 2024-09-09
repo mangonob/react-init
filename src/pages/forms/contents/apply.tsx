@@ -1,5 +1,4 @@
 import { Form, Input, Switch } from 'antd';
-import React from 'react';
 
 export function Apply() {
   return (

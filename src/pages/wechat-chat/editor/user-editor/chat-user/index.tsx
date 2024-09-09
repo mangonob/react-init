@@ -1,7 +1,6 @@
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { Button, Flex, Input, Upload } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
 import { whenOr } from 'src/utils';
 import { ChatUserModel, SELF_USER_ID } from '../models';
 import styles from './index.module.scss';

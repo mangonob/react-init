@@ -1,6 +1,6 @@
 import { ReactFlow } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import React, { CSSProperties, HTMLAttributes, useRef } from 'react';
+import { CSSProperties, HTMLAttributes, useRef } from 'react';
 import {
   Blueprint,
   SubwayViewCustomized,

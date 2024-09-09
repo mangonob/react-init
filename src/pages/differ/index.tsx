@@ -1,5 +1,4 @@
 import { Form, Input, Space } from 'antd';
-import React from 'react';
 import { useState } from 'react';
 import TextDiff from 'src/components/text-diff';
 

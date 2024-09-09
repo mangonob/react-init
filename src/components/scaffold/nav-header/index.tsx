@@ -1,7 +1,6 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Space, Switch } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
 import { useTheme } from 'src/hooks';
 import useHyperMode from 'src/hooks/hyper';
 import styles from './index.module.scss';

@@ -1,7 +1,7 @@
 import { message } from 'antd';
 import classNames from 'classnames';
 import color from 'color';
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useCSSVar } from 'src/hooks/css-var';
 
 import styles from './index.module.scss';

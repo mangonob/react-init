@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Flex, Space } from 'antd';
 import classNames from 'classnames';
-import React, { HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 import ProgressOutline from 'src/components/progress-outline.tsx';
 import { SubwayItem } from '../model';
 import styles from './index.module.scss';

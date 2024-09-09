@@ -1,10 +1,10 @@
 import { Flex } from 'antd';
-import React, { HTMLAttributes } from 'react';
-import styles from './index.module.scss';
 import classNames from 'classnames';
+import { HTMLAttributes } from 'react';
 import addSrc from './assets/input-bar-add.png';
 import emojiSrc from './assets/input-bar-emoji.png';
 import voiceSrc from './assets/input-bar-voice.png';
+import styles from './index.module.scss';
 
 export default function InputBar(props: HTMLAttributes<HTMLDivElement>) {
   const { className, ...extra } = props;

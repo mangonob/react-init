@@ -1,11 +1,10 @@
 import { Flex } from 'antd';
 import classNames from 'classnames';
-import React from 'react';
 import { Block } from 'src/components';
+import GeneralEditor from './general-editor';
 import styles from './index.module.scss';
 import MessageEditor from './message-editor';
 import UserEditor from './user-editor';
-import GeneralEditor from './general-editor';
 
 export interface WechatChatEditorProps {
   className?: string;

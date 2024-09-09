@@ -1,5 +1,5 @@
 import { Input, Space } from 'antd';
-import React, { HTMLAttributes } from 'react';
+import { HTMLAttributes } from 'react';
 
 export type Values = [string | undefined, string | undefined];
 

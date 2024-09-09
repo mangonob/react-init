@@ -1,10 +1,9 @@
-import React from 'react';
+import { Flex } from 'antd';
 import SubwayFlow from 'src/components/subway-flow';
 import { Blueprint } from 'src/components/subway-flow/hooks';
 import { SubwayItem } from 'src/components/subway-flow/model';
 import styles from './index.module.scss';
 import { SubwayItemKey } from './model';
-import { Flex } from 'antd';
 
 export default function Examples() {
   return (

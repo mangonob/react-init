@@ -1,5 +1,4 @@
 import { Form, Input, InputNumber, Switch } from 'antd';
-import React from 'react';
 import { useGeneralSettings } from './hooks';
 
 export default function GeneralEditor() {

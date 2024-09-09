@@ -1,6 +1,6 @@
 /* eslint-disable unicorn/no-for-loop */
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { longestCommonSubsequence } from 'src/foundation';
 
 import styles from './index.module.scss';
