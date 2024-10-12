@@ -1,7 +1,9 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.formatOnSave": true,
+  "editor.indentSize": "tabSize",
+  "editor.tabSize": 2,
   "files.exclude": {
     "**/node_modules": true
-  }
+  },
 }
