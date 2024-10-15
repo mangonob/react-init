@@ -35,5 +35,5 @@ export function jumpToErrorOccurTabIfNeeded(
     }
 
     onFinished?.();
-  }, 50);
+  }, 100);
 }
