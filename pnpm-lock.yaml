@@ -38,6 +38,9 @@ dependencies:
   framer-motion:
     specifier: ^11.0.13
     version: 11.0.13(react-dom@18.2.0)(react@18.2.0)
+  highs:
+    specifier: ^1.8.0
+    version: 1.8.0
   html2canvas:
     specifier: ^1.4.1
     version: 1.4.1
@@ -2876,6 +2879,10 @@ packages:
     dependencies:
       function-bind: 1.1.2
     dev: true
+
+  /highs@1.8.0:
+    resolution: {integrity: sha512-0QFXXjU/mxU1y3Ec44QpESq6STkPauNDfIPf0welcUGjilpVYnfH9RepBvr0t9YDQPUniIcZTX9xyxqxF668ag==}
+    dev: false
 
   /hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
