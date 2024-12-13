@@ -1,3 +1,3 @@
 export default function Examples() {
-  return <span>Playground</span>;
+  return <h1>Playground</h1>;
 }

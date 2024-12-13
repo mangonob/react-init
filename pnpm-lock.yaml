@@ -47,6 +47,9 @@ dependencies:
   immer:
     specifier: ^10.0.4
     version: 10.0.4
+  leader-line:
+    specifier: ^1.0.7
+    version: 1.0.7
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -3290,6 +3293,10 @@ packages:
     dependencies:
       language-subtag-registry: 0.3.22
     dev: true
+
+  /leader-line@1.0.7:
+    resolution: {integrity: sha512-PhJpQLV7XychSIuGPD0TEqR9PgRYBbrhReaOcmHFOVtTw4dWKfUMAtOb7UP7xTsoib6sFzq2giQeOUHy7LCuJQ==}
+    dev: false
 
   /less@4.2.0:
     resolution: {integrity: sha512-P3b3HJDBtSzsXUl0im2L7gTO5Ubg8mEN6G8qoTS77iXxXX4Hvu4Qj540PZDvQ8V6DmX6iXo98k7Md0Cm1PrLaA==}

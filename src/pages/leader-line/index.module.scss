@@ -1,0 +1,29 @@
+.examples {
+  .container {
+    height: 1000px;
+    width: 1000px;
+    position: relative;
+
+    .block {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 80px;
+      height: 40px;
+      border-radius: 10px;
+      color: white;
+      font-weight: bold;
+
+      &.source {
+        background-color: rosybrown;
+      }
+
+      &.target {
+        background-color: green;
+        top: 500px;
+        left: 400px;
+      }
+    }
+  }
+}

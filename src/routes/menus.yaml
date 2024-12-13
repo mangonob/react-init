@@ -1,6 +1,9 @@
 - title: Playground
   target: /examples
   iconName: example
+- title: LeaderLine
+  target: /leader-line
+  iconName: example
 - title: 微信对话模拟器
   target: /wechat-chat
   iconName: wechat
