@@ -1,4 +1,5 @@
 import loader from 'highs';
+import { shuffle } from 'lodash-es';
 
 const ROWS = Array.from({ length: 9 }).map((_, i) => i);
 const COLS = ROWS.slice();
@@ -214,4 +215,74 @@ export function unzipSudoku(description: string): number[][] {
     values[x][y] = value;
   }
   return values;
+}
+
+function generateCell(count: number): number[][] {
+  const datas = Array.from({ length: count }).map(() => [] as number[]);
+
+  if (count % 2) datas[4][4] = 1;
+  const indexes = shuffle(Array.from({ length: 40 }).map((_, i) => i)).slice(
+    0,
+    Math.floor(count / 2)
+  );
+
+  for (const idx of indexes) {
+    const i = Math.floor(Number(idx) / 9);
+    const j = Number(idx) % 9;
+    datas[i][j] = 1;
+  }
+
+  return datas;
+}
+
+function generate1to9(): number[] {
+  return shuffle(range(1, 9));
+}
+
+function range(start: number, end?: number): number[] {
+  if (end === void 0) {
+    return Array.from({ length: start }).map((_, i) => i);
+  } else {
+    const step = start <= end ? 1 : -1;
+    const length = Math.abs(end - start) + 1;
+    return Array.from({ length }).map((_, i) => start + i * step);
+  }
+}
+
+function generateValues(): number[][] {
+  const datas = range(9).map(() => range(9).map(() => 0));
+  for (let i = 0; i < 3; ++i) {
+    const values = generate1to9();
+    for (let j = 0; j < 9; ++j) {
+      const row = i * 3 + Math.floor(j / 3);
+      const col = i * 3 + (j % 3);
+      datas[row][col] = values[j];
+    }
+  }
+
+  return datas;
+}
+
+export async function generateSudoku(count: number): Promise<number[][]> {
+  let cnt = 0;
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const values = generateValues();
+    return values;
+    const cells = generateCell(count);
+    for (let i = 0; i < 9; ++i) {
+      for (let j = 0; j < 9; ++j) {
+        if (!cells[i][j]) {
+          values[i][j] = 0;
+        }
+      }
+    }
+    console.info('generateSudoku try count', ++cnt);
+
+    const [, solved] = await solveSudoku(values);
+    if (solved) {
+      return values;
+    }
+  }
 }

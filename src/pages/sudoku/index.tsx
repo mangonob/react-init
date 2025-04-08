@@ -2,7 +2,13 @@ import { Button, Flex, Input, Modal, Popover, Spin } from 'antd';
 import { useState } from 'react';
 import styles from './index.module.scss';
 import NumberPad from './number-pad';
-import { cell2grid, solveSudoku, unzipSudoku, zipSudoku } from './utils';
+import {
+  cell2grid,
+  generateSudoku,
+  solveSudoku,
+  unzipSudoku,
+  zipSudoku,
+} from './utils';
 
 export default function Sudoku() {
   const [description, setDescription] = useState(
@@ -67,6 +73,14 @@ export default function Sudoku() {
           Sudoku Go!
         </Button>
         <Button
+          onClick={async () => {
+            const values = await generateSudoku(24);
+            setValues(values);
+          }}
+        >
+          Random!
+        </Button>
+        <Button
           onClick={() => {
             setValues(Array.from({ length: 9 }).map(() => []));
           }}
@@ -122,7 +136,7 @@ function SudokuCell(props: SudokuCellProps) {
       placement="bottom"
     >
       <div className={styles.cell}>
-        <span>{value}</span>
+        {(value && <span>{value}</span>) || void 0}
       </div>
     </Popover>
   );

@@ -52,8 +52,10 @@ $border-color: black;
       justify-content: center;
       align-items: center;
       position: relative;
+
       & > span {
-        font-size: 20px;
+        font-size: 24px;
+        font-weight: 500;
       }
 
       .inputer {
