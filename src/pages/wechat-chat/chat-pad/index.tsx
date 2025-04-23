@@ -2,13 +2,7 @@ import { Flex } from 'antd';
 import classNames from 'classnames';
 import html2canvas from 'html2canvas';
 import { nanoid } from 'nanoid';
-import {
-  HTMLAttributes,
-  Ref,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { HTMLAttributes, Ref, useImperativeHandle, useRef } from 'react';
 import { download } from 'src/utils/download';
 import { ChatMessage } from '../models';
 import ChatContents from './chat-contents';
@@ -20,14 +14,15 @@ export interface ChatPadProps extends HTMLAttributes<HTMLDivElement> {
   title?: string;
   unreadCount?: number;
   messages?: ChatMessage[];
+  ref: Ref<ChatPadInstance>;
 }
 
 export interface ChatPadInstance {
   export: () => Promise<void> | void;
 }
 
-function ChatPad(props: ChatPadProps, ref: Ref<ChatPadInstance>) {
-  const { title, unreadCount, messages, className, ...extra } = props;
+export default function ChatPad(props: ChatPadProps) {
+  const { title, unreadCount, messages, className, ref, ...extra } = props;
   const container = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => {
@@ -65,5 +60,3 @@ function ChatPad(props: ChatPadProps, ref: Ref<ChatPadInstance>) {
     </div>
   );
 }
-
-export default forwardRef(ChatPad);

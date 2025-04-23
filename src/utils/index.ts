@@ -31,3 +31,7 @@ export function optional<T, U>(
 ): U | undefined {
   return maybe === undefined ? void 0 : map(maybe);
 }
+
+export function cast<T, U>(obj: T): U {
+  return obj as unknown as U;
+}

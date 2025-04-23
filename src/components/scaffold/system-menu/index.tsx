@@ -9,11 +9,11 @@ import { Menu, MenuProps } from 'antd';
 import { isArray } from 'lodash-es';
 import { ReactNode, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router';
-import menus from 'src/routes/menus.yaml';
+import { useMenus } from 'src/routes/hooks';
 
 interface SystemMenuProps extends MenuProps {}
 
-type MenuItem = {
+export type MenuItem = {
   title: string;
   iconName?: string;
   key?: string;
@@ -32,11 +32,11 @@ export default function SystemMenu(props: SystemMenuProps) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const _menus = menus as MenuItem[];
+  const menus = useMenus();
 
   const items = useMemo((): NonNullable<MenuProps['items']> => {
-    return isArray(_menus)
-      ? _menus.map((m, i) => {
+    return isArray(menus)
+      ? menus.map((m, i) => {
           const { title, iconName } = m;
           const icons: Record<string, ReactNode> = {
             example: <ExperimentOutlined />,
@@ -61,9 +61,9 @@ export default function SystemMenu(props: SystemMenuProps) {
           } as NonNullable<MenuProps['items']>[number];
         })
       : [];
-  }, [_menus, pathname, navigate]);
+  }, [menus, pathname, navigate]);
 
-  const selectedByRoute = _menus.findIndex((m) => {
+  const selectedByRoute = menus.findIndex((m) => {
     if ('target' in m) {
       return m.target === pathname;
     }
@@ -71,7 +71,7 @@ export default function SystemMenu(props: SystemMenuProps) {
 
   const key =
     selectedByRoute >= 0
-      ? itemKey(_menus[selectedByRoute], selectedByRoute)
+      ? itemKey(menus[selectedByRoute], selectedByRoute)
       : void 0;
 
   return (
