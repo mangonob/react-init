@@ -1,4 +1,5 @@
-*.log
+*.local
+.log
 dist/
 *.swp
 .DS_Store
