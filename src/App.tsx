@@ -24,7 +24,7 @@ const defaultQueryClient = new QueryClient({
 
 export default function App() {
   useKeyboardShortcut('Shift+Alt+D', () => {
-    if (import.meta.env.MODE === 'development') {
+    if (__DEV__) {
       // eslint-disable-next-line no-debugger
       debugger;
     }

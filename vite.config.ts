@@ -7,20 +7,25 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), tsconfigPaths(), ViteYaml()],
-  css: {
-    modules: {
-      localsConvention: 'camelCaseOnly',
+export default defineConfig((env) => {
+  return {
+    plugins: [react(), tsconfigPaths(), ViteYaml()],
+    css: {
+      modules: {
+        localsConvention: 'camelCaseOnly',
+      },
     },
-  },
-  build: {
-    rollupOptions: {
-      plugins: [
-        visualizer({
-          filename: path.resolve(__dirname, 'dist/stats.html'),
-        }),
-      ],
+    build: {
+      rollupOptions: {
+        plugins: [
+          visualizer({
+            filename: path.resolve(__dirname, 'dist/stats.html'),
+          }),
+        ],
+      },
     },
-  },
+    define: {
+      __DEV__: env.mode === 'development',
+    },
+  };
 });
