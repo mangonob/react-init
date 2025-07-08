@@ -1,4 +1,5 @@
 import { Form, Input, InputNumber, Switch } from 'antd';
+
 import { useGeneralSettings } from './hooks';
 
 export default function GeneralEditor() {

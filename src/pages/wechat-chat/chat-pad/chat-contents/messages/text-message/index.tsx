@@ -1,7 +1,8 @@
 import cc from 'classcat';
 import { useContext } from 'react';
-import { MessageContext } from '../../message-render';
+
 import styles from './index.module.scss';
+import { MessageContext } from '../../message-render';
 
 export interface TextMessageProps {
   content?: string;

@@ -3,6 +3,7 @@ import { Avatar, Layout, Space, Switch } from 'antd';
 import cc from 'classcat';
 import { useTheme } from 'src/hooks';
 import useHyperMode from 'src/hooks/hyper';
+
 import styles from './index.module.scss';
 
 export interface NavHeaderProps {

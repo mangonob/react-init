@@ -1,4 +1,5 @@
 import { Col, Flex, Row } from 'antd';
+
 import { ColorPalette } from './palette';
 
 export function Colors() {

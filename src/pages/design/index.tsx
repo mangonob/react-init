@@ -1,6 +1,7 @@
 import { Tabs } from 'antd';
 import { TabsProps } from 'antd/lib';
 import { useState } from 'react';
+
 import { Colors, Fonts } from './children';
 
 export default function Design() {

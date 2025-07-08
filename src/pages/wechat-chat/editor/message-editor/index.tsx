@@ -2,10 +2,11 @@ import { PlusCircleOutlined } from '@ant-design/icons';
 import { Button, Steps } from 'antd';
 import { nanoid } from 'nanoid';
 import { memo } from 'react';
-import { SELF_USER_ID } from '../user-editor/models';
+
 import { useMessages } from './hooks';
 import styles from './index.module.scss';
 import MessageItem from './message-item';
+import { SELF_USER_ID } from '../user-editor/models';
 
 export default function MessageEditor() {
   const { add, remove, messages, update } = useMessages();

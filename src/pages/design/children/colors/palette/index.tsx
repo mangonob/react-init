@@ -1,9 +1,9 @@
 import { message } from 'antd';
+import cc from 'classcat';
 import color from 'color';
 import { useCallback } from 'react';
 import { useCSSVar } from 'src/hooks/css-var';
 
-import cc from 'classcat';
 import styles from './index.module.scss';
 
 export interface ColorPaletteProps {

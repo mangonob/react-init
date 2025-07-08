@@ -1,6 +1,7 @@
 import { DownloadOutlined } from '@ant-design/icons';
 import { Flex } from 'antd';
 import { useMemo, useRef } from 'react';
+
 import ChatPad, { ChatPadInstance } from './chat-pad';
 import WechatChatEditor from './editor';
 import { useGeneralSettings } from './editor/general-editor/hooks';

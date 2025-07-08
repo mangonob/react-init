@@ -1,7 +1,8 @@
+import { nanoid } from 'nanoid';
 import { create } from 'zustand';
+
 import { ChatMessage } from '../../models';
 import { SELF_USER_ID } from '../user-editor/models';
-import { nanoid } from 'nanoid';
 
 export interface MessageState {
   messages: ChatMessage[];

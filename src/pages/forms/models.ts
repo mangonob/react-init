@@ -10,7 +10,7 @@ export interface Application {
   partners: Partner[];
 }
 
-export interface Partner {}
+export type Partner = object;
 
 export type Loadable<T = unknown, E = Error> =
   | {

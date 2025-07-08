@@ -1,6 +1,7 @@
 import cc from 'classcat';
 import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { kebabCase, pascalCase } from 'src/utils';
+
 import styles from './index.module.scss';
 
 export interface ProgressOutlineProps extends HTMLAttributes<HTMLDivElement> {

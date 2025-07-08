@@ -6,14 +6,16 @@ import { useGeneralSettings } from 'src/pages/wechat-chat/editor/general-editor/
 import { useChatUsers } from 'src/pages/wechat-chat/editor/user-editor/hooks';
 import { SELF_USER_ID } from 'src/pages/wechat-chat/editor/user-editor/models';
 import { ChatMessage } from 'src/pages/wechat-chat/models';
+
+import styles from './index.module.scss';
 import ImageMessage from '../messages/image-message';
 import TextMessage from '../messages/text-message';
-import styles from './index.module.scss';
 
 export interface MessageContextValue {
   direction: 'left' | 'right';
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const MessageContext = createContext<MessageContextValue>({
   direction: 'left',
 });

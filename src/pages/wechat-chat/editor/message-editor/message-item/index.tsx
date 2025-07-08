@@ -9,6 +9,7 @@ import {
   chatMessageTypeDescription,
 } from 'src/pages/wechat-chat/models';
 import { optional } from 'src/utils';
+
 import styles from './index.module.scss';
 import UserSelector from './user-selector';
 

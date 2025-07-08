@@ -1,9 +1,10 @@
 import { Flex } from 'antd';
 import cc from 'classcat';
 import { HTMLAttributes } from 'react';
-import { ChatMessage } from '../../models';
+
 import styles from './index.module.scss';
 import MessageRender from './message-render';
+import { ChatMessage } from '../../models';
 
 interface ChatContentsProps extends HTMLAttributes<HTMLDivElement> {
   messages?: ChatMessage[];

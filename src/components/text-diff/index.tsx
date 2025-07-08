@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/no-for-loop */
+import cc from 'classcat';
 import { useMemo } from 'react';
 import { longestCommonSubsequence } from 'src/foundation';
 
-import cc from 'classcat';
 import styles from './index.module.scss';
 
 export interface TextDiffProps {

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { ChatUserModel, SELF_USER_ID } from './models';
 import { createJSONStorage, persist } from 'zustand/middleware';
+
+import { ChatUserModel, SELF_USER_ID } from './models';
 
 export interface UserState {
   users: ChatUserModel[];

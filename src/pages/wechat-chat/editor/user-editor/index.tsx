@@ -3,6 +3,7 @@ import { Flex, Form, Space } from 'antd';
 import cc from 'classcat';
 import { nanoid } from 'nanoid';
 import { memo } from 'react';
+
 import ChatUser from './chat-user';
 import { useChatUsers } from './hooks';
 import styles from './index.module.scss';

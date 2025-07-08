@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { Application, Loadable } from './models';
 
 export function useApplication(): Loadable<Application> {

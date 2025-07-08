@@ -1,6 +1,7 @@
 import { Select } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { useMemo } from 'react';
+
 import { useChatUsers } from '../../user-editor/hooks';
 import { SELF_USER_ID } from '../../user-editor/models';
 

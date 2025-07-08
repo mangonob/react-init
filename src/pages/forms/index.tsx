@@ -1,6 +1,7 @@
 import { Button, Form, Spin, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { FormError } from 'src/models';
+
 import { Apply } from './contents/apply';
 import Basic from './contents/basic';
 import Partners from './contents/partners';

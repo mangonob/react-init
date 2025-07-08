@@ -2,6 +2,7 @@ import { Flex } from 'antd';
 import cc from 'classcat';
 import dayjs from 'dayjs';
 import { HTMLAttributes, useEffect, useReducer, useState } from 'react';
+
 import cellSignalSrc from './assets/cell-signal.svg';
 import batterySrc from './assets/ios-battery.svg';
 import backSrc from './assets/navigation-bar-back.svg';

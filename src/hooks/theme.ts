@@ -39,9 +39,8 @@ export function useTheme<T>(selector?: (s: ThemeState) => T): unknown {
       c.startsWith(prefix)
     );
     const className = `${prefix}${theme}`;
-    themed
-      .filter((c) => c !== className)
-      .forEach((c) => ele.classList.remove(c));
+    for (const c of themed
+      .filter((c) => c !== className)) ele.classList.remove(c);
     if (!ele.classList.contains(className)) {
       ele.classList.add(className);
     }

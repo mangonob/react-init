@@ -1,9 +1,9 @@
 import { Button, Col, Flex, Form, Row, Space } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { Store } from 'antd/es/form/interface';
+import { ColProps } from 'antd/lib';
 import { Children, PropsWithChildren } from 'react';
 
-import { ColProps } from 'antd/lib';
 import { ResponsiveBuilder } from '../responsive-builder';
 import styles from './index.module.scss';
 

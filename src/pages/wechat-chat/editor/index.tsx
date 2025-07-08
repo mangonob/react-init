@@ -1,6 +1,7 @@
 import { Flex } from 'antd';
 import cc from 'classcat';
 import { Block } from 'src/components';
+
 import GeneralEditor from './general-editor';
 import styles from './index.module.scss';
 import MessageEditor from './message-editor';

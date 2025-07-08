@@ -1,9 +1,9 @@
-/* eslint-disable unicorn/filename-case */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
+
 import { useKeyboardShortcut } from './hooks';
 import { useRouter } from './routes/hooks';
 
@@ -24,8 +24,10 @@ const defaultQueryClient = new QueryClient({
 
 export default function App() {
   useKeyboardShortcut('Shift+Alt+D', () => {
-    // eslint-disable-next-line no-debugger
-    debugger;
+    if (import.meta.env.MODE === 'development') {
+      // eslint-disable-next-line no-debugger
+      debugger;
+    }
   });
 
   const router = useRouter();

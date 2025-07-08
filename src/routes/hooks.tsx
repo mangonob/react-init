@@ -7,6 +7,8 @@ import menus from 'src/routes/menus.yaml';
 import { createArray } from 'src/utils/array';
 
 export function useRouter(): DataRouter {
+  const [firstMenu] = useMenus();
+
   return useMemo(() => {
     const modules = {
       ...import.meta.glob('/src/pages/*/index.tsx'),
@@ -37,7 +39,6 @@ export function useRouter(): DataRouter {
       }
     );
 
-    const [firstMenu] = useMenus();
     const firstMenuHasTarget = firstMenu && 'target' in firstMenu;
 
     return createHashRouter([
@@ -58,7 +59,7 @@ export function useRouter(): DataRouter {
         ]),
       },
     ]);
-  }, []);
+  }, [firstMenu]);
 }
 
 export function useMenus(): MenuItem[] {

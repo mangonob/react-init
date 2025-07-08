@@ -11,7 +11,7 @@ import { ReactNode, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { useMenus } from 'src/routes/hooks';
 
-interface SystemMenuProps extends MenuProps {}
+type SystemMenuProps = MenuProps;
 
 export type MenuItem = {
   title: string;
