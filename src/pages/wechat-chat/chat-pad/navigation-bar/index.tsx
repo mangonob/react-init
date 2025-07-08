@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import dayjs from 'dayjs';
 import { HTMLAttributes, useEffect, useReducer, useState } from 'react';
 import cellSignalSrc from './assets/cell-signal.svg';
@@ -54,11 +54,7 @@ export default function NavigationBar(props: NavigationBarProps) {
   }, [isInputing]);
 
   return (
-    <Flex
-      className={classNames(styles.navigationBar, className)}
-      vertical
-      {...extra}
-    >
+    <Flex className={cc([styles.navigationBar, className])} vertical {...extra}>
       <Flex className={styles.safeArea} align="center" gap={20}>
         <span>{dayjs(date).format('HH:mm')}</span>
         <div style={{ flex: 1 }}></div>

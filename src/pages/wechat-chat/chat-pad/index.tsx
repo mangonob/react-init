@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import html2canvas from 'html2canvas';
 import { nanoid } from 'nanoid';
 import { HTMLAttributes, Ref, useImperativeHandle, useRef } from 'react';
@@ -48,7 +48,7 @@ export default function ChatPad(props: ChatPadProps) {
 
   return (
     <div
-      className={classNames(styles.chatPad, className, 'theme-light')}
+      className={cc([styles.chatPad, className, 'theme-light'])}
       ref={container}
       {...extra}
     >

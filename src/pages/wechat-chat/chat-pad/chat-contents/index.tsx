@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { HTMLAttributes } from 'react';
 import { ChatMessage } from '../../models';
 import styles from './index.module.scss';
@@ -25,7 +25,7 @@ export default function ChatContents(props: ChatContentsProps) {
 
   return (
     <Flex
-      className={classNames(className, styles.chatContents)}
+      className={cc([className, styles.chatContents])}
       vertical
       gap={36}
       {...extra}

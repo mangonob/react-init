@@ -1,6 +1,5 @@
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { Button, Flex, Input, Upload } from 'antd';
-import classNames from 'classnames';
 import { whenOr } from 'src/utils';
 import { ChatUserModel, SELF_USER_ID } from '../models';
 import styles from './index.module.scss';
@@ -36,7 +35,7 @@ export default function ChatUser(props: ChatUserProps) {
         }}
         itemRender={() => void 0}
       >
-        <div className={classNames(styles.uploader)}>
+        <div className={styles.uploader}>
           {whenOr(
             avatar,
             <img src={avatar} />,

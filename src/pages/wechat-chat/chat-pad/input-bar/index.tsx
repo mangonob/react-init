@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { HTMLAttributes } from 'react';
 import addSrc from './assets/input-bar-add.png';
 import emojiSrc from './assets/input-bar-emoji.png';
@@ -10,11 +10,7 @@ export default function InputBar(props: HTMLAttributes<HTMLDivElement>) {
   const { className, ...extra } = props;
 
   return (
-    <Flex
-      className={classNames(styles.inputBar, className)}
-      vertical
-      {...extra}
-    >
+    <Flex className={cc([styles.inputBar, className])} vertical {...extra}>
       <Flex className={styles.inputs} align="center" gap={32}>
         <img src={voiceSrc} />
         <div className={styles.inputBox}></div>

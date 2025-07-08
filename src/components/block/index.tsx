@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { PropsWithChildren, ReactNode } from 'react';
 import styles from './index.module.scss';
 
@@ -13,7 +13,7 @@ export default function Block(props: BlockProps) {
 
   return (
     <Flex
-      className={classNames(styles.block, className)}
+      className={cc([styles.block, className])}
       align="stretch"
       vertical
       gap={16}

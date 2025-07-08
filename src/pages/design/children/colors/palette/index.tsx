@@ -1,9 +1,9 @@
 import { message } from 'antd';
-import classNames from 'classnames';
 import color from 'color';
 import { useCallback } from 'react';
 import { useCSSVar } from 'src/hooks/css-var';
 
+import cc from 'classcat';
 import styles from './index.module.scss';
 
 export interface ColorPaletteProps {
@@ -71,13 +71,13 @@ function ColorItem(props: ColorItemProps) {
 
   return (
     <div
-      className={classNames(
+      className={cc([
         styles.paletteItem,
         isDark ? styles.dark : styles.light,
         {
           [styles.hasTitle]: label,
-        }
-      )}
+        },
+      ])}
       style={{ backgroundColor: `var(${varName})` }}
       onClick={() => onCopy(value)}
       onMouseEnter={() => onChanged?.(value)}

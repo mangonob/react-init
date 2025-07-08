@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { Block } from 'src/components';
 import GeneralEditor from './general-editor';
 import styles from './index.module.scss';
@@ -15,7 +15,7 @@ export default function WechatChatEditor(props: WechatChatEditorProps) {
 
   return (
     <Flex
-      className={classNames(styles.wechatChatEditor, className)}
+      className={cc([styles.wechatChatEditor, className])}
       vertical
       gap={30}
     >

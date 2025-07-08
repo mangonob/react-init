@@ -1,6 +1,6 @@
 import { useDrag } from '@use-gesture/react';
 import { Layout } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Outlet } from 'react-router';
@@ -59,9 +59,12 @@ export default function Scaffold() {
         />
         <Layout>
           <Layout.Sider
-            className={classNames(styles.silder, {
-              [styles.draging]: isDarging,
-            })}
+            className={cc([
+              styles.silder,
+              {
+                [styles.draging]: isDarging,
+              },
+            ])}
             width={silderWidth}
             collapsed={isSiderCollapsed}
             collapsedWidth={0}

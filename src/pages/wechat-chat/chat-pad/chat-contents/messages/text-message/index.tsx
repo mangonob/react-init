@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import cc from 'classcat';
 import { useContext } from 'react';
 import { MessageContext } from '../../message-render';
 import styles from './index.module.scss';
@@ -12,8 +12,6 @@ export default function TextMessage(props: TextMessageProps) {
   const { direction } = useContext(MessageContext);
 
   return (
-    <div className={classNames(styles.textMessage, styles[direction])}>
-      {content}
-    </div>
+    <div className={cc([styles.textMessage, styles[direction]])}>{content}</div>
   );
 }

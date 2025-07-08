@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import cc from 'classcat';
 import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { kebabCase, pascalCase } from 'src/utils';
 import styles from './index.module.scss';
@@ -47,12 +47,12 @@ export default function ProgressOutline(props: ProgressOutlineProps) {
 
   return (
     <div
-      className={classNames(
+      className={cc([
         'progress-outline',
         styles.progressOutline,
         { [styles.progressing]: progressing },
-        className
-      )}
+        className,
+      ])}
       style={{ ...injection, ...style } as CSSProperties}
       {...extra}
     >

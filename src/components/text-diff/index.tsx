@@ -1,8 +1,8 @@
 /* eslint-disable unicorn/no-for-loop */
-import classNames from 'classnames';
 import { useMemo } from 'react';
 import { longestCommonSubsequence } from 'src/foundation';
 
+import cc from 'classcat';
 import styles from './index.module.scss';
 
 export interface TextDiffProps {
@@ -21,7 +21,7 @@ export default function TextDiff(props: TextDiffProps) {
         const { type, value } = item;
         return (
           <span
-            className={classNames({
+            className={cc({
               [styles.delete]: type === 'delete',
               [styles.insert]: type === 'insert',
             })}

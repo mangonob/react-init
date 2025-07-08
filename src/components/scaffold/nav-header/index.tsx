@@ -1,6 +1,6 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Avatar, Layout, Space, Switch } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { useTheme } from 'src/hooks';
 import useHyperMode from 'src/hooks/hyper';
 import styles from './index.module.scss';
@@ -17,9 +17,12 @@ export default function NavHeader(props: NavHeaderProps) {
 
   return (
     <Layout.Header
-      className={classNames(styles.navHeader, {
-        [styles.hyper]: isHyperMode,
-      })}
+      className={cc([
+        styles.navHeader,
+        {
+          [styles.hyper]: isHyperMode,
+        },
+      ])}
     >
       <div
         className={styles.leftDrawerMenu}

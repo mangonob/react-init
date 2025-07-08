@@ -1,5 +1,5 @@
 import { Flex } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { HTMLAttributes, createContext } from 'react';
 import Reversed from 'src/components/reversed';
 import { useGeneralSettings } from 'src/pages/wechat-chat/editor/general-editor/hooks';
@@ -50,7 +50,7 @@ export default function MessageRender(props: MessageRenderProps) {
 
   return (
     <Flex
-      className={classNames(className, styles[direction], styles.messageRender)}
+      className={cc([className, styles[direction], styles.messageRender])}
       justify="flex-start"
       gap={36}
       {...extra}

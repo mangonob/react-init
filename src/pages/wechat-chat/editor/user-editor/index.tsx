@@ -1,6 +1,6 @@
 import { UserAddOutlined } from '@ant-design/icons';
 import { Flex, Form, Space } from 'antd';
-import classNames from 'classnames';
+import cc from 'classcat';
 import { nanoid } from 'nanoid';
 import { memo } from 'react';
 import ChatUser from './chat-user';
@@ -20,7 +20,7 @@ export default function UserEditor(props: UserEditorProps) {
 
   return (
     <Form
-      className={classNames(styles.userEditor, className)}
+      className={cc([styles.userEditor, className])}
       form={form}
       initialValues={{ users }}
       onValuesChange={() => {
